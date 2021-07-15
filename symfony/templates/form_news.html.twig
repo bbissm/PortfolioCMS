@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+
+{% block title %}News{% endblock %}
+{% block body %}
+    <section class="news pt-6 pb-6">
+        <div class="inner-container">
+            {{ form_start(form) }}
+            <div class="my-custom-class-for-errors is-danger">
+                {{ form_errors(form) }}
+            </div>
+
+            <div class="field">
+                {{ form_label(form.name, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    {{ form_widget(form.name, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form_label(form.title, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    {{ form_widget(form.title, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form_label(form.text, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    {{ form_widget(form.text, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form_label(form.teaser, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    {{ form_widget(form.teaser, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form_label(form.date_created, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    {{ form_widget(form.date_created, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form_label(form.startdate, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    {{ form_widget(form.startdate, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form_label(form.enddate, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    {{ form_widget(form.enddate, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+            {{ form_end(form) }}
+            <a href="{{ path('homepage', {lang: lang}) }}">zur Homepage</a>
+        </div>
+    </section>
+
+{% endblock %}

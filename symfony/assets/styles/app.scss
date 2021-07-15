@@ -1,0 +1,10 @@
+//overrides
+$body-background-color: #efefef;
+// import scss Framework
+@import "~bulma";
+
+// import style templates
+@import "01-index";
+@import "02-header";
+
+

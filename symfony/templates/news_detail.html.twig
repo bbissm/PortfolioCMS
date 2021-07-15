@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+
+{% block title %}News{% endblock %}
+{% block body %}
+    <section class="news_detail pb-6">
+        <div class="inner-container">
+            <a href="{{ path('news', {lang: lang}) }}">zu den News</a>
+
+            <h1>{{ detail.title }}</h1>
+            <a class="button is-danger mb-5" href="{{ path('delete_news', {id:detail.id}) }}">Delete</a>
+            <a class="button is-info mb-5" href="{{ path('edit_news', {id:detail.id}) }}">Edit</a>
+
+            <div class="card mt-5">
+                <div class="card-image">
+                    <figure class="image is-4by3">
+                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-4">{{ detail.name }}</p>
+                            <p class="subtitle is-6">@{{ detail.title }}</p>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        {{ detail.text|markdown_to_html }}
+                        <a href="#">#css</a> <a href="#">#responsive</a>
+                        <br>
+                        <time datetime="2016-1-1">Created by {{ detail.name }} at {{ detail.startdate | date('d.m.Y') }}</time>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

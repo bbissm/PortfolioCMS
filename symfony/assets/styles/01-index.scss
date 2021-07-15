@@ -1,0 +1,21 @@
+html {
+    body{
+        height: 100%;
+        .main-content{
+            background-color: #fff;
+        }
+    }
+}
+.inner-container {
+    margin: 0 auto;
+    max-width: 1000px;
+    width: 100%;
+}
+h1 {
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 3rem;
+    padding-top: 3rem;
+    padding-bottom:3rem;
+    position: relative;
+}

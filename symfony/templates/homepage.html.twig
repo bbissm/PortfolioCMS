@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Homepage{% endblock %}
+{% block body %}
+    <section>
+        {{ dump(_route) }}
+        <div class="inner-container">
+            <h1>Your lucky number is {{ number }}</h1>
+            <a href="{{ path('news') }}">Link zu News</a>
+        </div>
+    </section>
+{% endblock %}
