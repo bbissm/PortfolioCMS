@@ -66,6 +66,8 @@ class Page
 
     public function getTemplate(): ?string
     {
+
+        //$template = str_replace('.html.twig', '',$this->template);
         return $this->template;
     }
 
