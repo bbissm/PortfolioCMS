@@ -14,15 +14,15 @@ class EventController extends BaseController
      */
     public function list(): Response
     {
-        $event = $this->getDoctrine()
+        $events = $this->getDoctrine()
             ->getRepository(Event::class)
             ->findAll();
-        if (!$event) {
+        if (!$events) {
             throw $this->createNotFoundException(
                 'No Events found'
             );
         }
-        return $this->render('event.html.twig', ['event'=>$event]);
+        return $this->render('event.html.twig', ['events'=>$events]);
 
     }
 }

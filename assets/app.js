@@ -10,3 +10,11 @@ import './styles/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
+import bulmaAccordion from 'bulma-accordion/dist/js/bulma-accordion';
+
+
+window.addEventListener("DOMContentLoaded", () => {
+    var accordions = bulmaAccordion.attach();
+
+});
+
