@@ -13,7 +13,7 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body class="container">
+    <body class="container template_{{ page.getTemplate()|replace({'.html.twig': ''}) }}">
         {% include "chunks/_header.html.twig" %}
         <div class="main-content">
             {% include 'chunks/flash_messages.html.twig' %}

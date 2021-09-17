@@ -2,10 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Member;
 use App\Entity\Event;
 use App\Entity\Page;
 use App\Entity\User;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -86,6 +86,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::subMenu('Models', 'fa fa-newspaper')->setSubItems([
                 MenuItem::linkToCrud('News', 'fa fa-tags', News::class),
                 MenuItem::linkToCrud('Event', 'fa fa-tags', Event::class),
+                MenuItem::linkToCrud('Member', 'fa fa-tags', Member::class),
             ]),
         ];
     }

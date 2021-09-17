@@ -4,9 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Page;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 
@@ -29,7 +27,7 @@ class BaseController extends AbstractController
 
     /**
      * Zuständig für Twig response
-     *
+     * addiert variablen zu den jeweiligen gerenderten templates
      **/
     public function render(string $view, array $parameters = [], Response $response = null): Response
     {
@@ -39,11 +37,11 @@ class BaseController extends AbstractController
         $this->pageInfos['menu'] = $pages;
 
 
-
         $parameters = array_merge($parameters,$this->pageInfos);
 
         /** @var Page $page  **/ // Hat kein Einfluss auf den Result
 
+        //getting template if page exists
         $page = $this->pageInfos['page'];
         if ($page != null) {
             if ( $page->getTemplate() != "") {
