@@ -5,40 +5,68 @@
     <section class="news pb-6">
         <div class="inner-container">
             <h1>{{ page.title }}</h1>
-            <div class="columns is-multiline">
-                {% for eventEntry in event %}
-                    <div class="column is-4">
-                        <div class="card ">
-                            <a href="{{ path('news_detail', {id: eventEntry.id}) }}">
-                                <div class="card-image">
-                                    <figure class="image is-4by3">
-                                        <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+            <section class="accordions">
+            {% for event in events %}
+                <article class="accordion">
+                    <div class="accodion-header toggle">
+                        <div class="head">
+                            <nav class="level">
+                                <div class="level-item location">
+                                    <p>{{ event.location|upper }}</p>
+                                </div>
+                                <div class="level-item date">
+                                    <p></p>
+                                </div>
+                                <div class="level-item category">
+                                    <p>Restaurant</p>
+                                </div>
+                                <div class="level-item beginning">
+                                    <p>{{ event.time }}</p>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="body p-2">
+                            <div class="columns is-mobile">
+                                <div class="column is-3">
+                                    <figure class="image">
+                                        <img class="object-fit-cover" src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.image }}" />
                                     </figure>
                                 </div>
-                            </a>
-                            <div class="card-content">
-                                <div class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-48x48">
-                                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                                        </figure>
-                                    </div>
-                                    <div class="media-content">
-                                        <p class="subtitle is-6">@{{ eventEntry.title }}</p>
-                                    </div>
+                                <div class="column is-9">
+                                    <h3 class="title">{{ event.title }}</h3>
                                 </div>
+                            </div>
 
-                                <div class="content">
-                                    {{ eventEntry.description }}
-                                    <a href="#">#css</a> <a href="#">#responsive</a>
-                                    <br>
-                                    <time datetime="2016-1-1"></time>
+
+                        </div>
+
+                        <span class="gg-chevron-down"></span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <div class="columns is-desktop">
+                                <div class="column eventInfos is-3">
+                                    <a class="button">Tickets</a>
+                                    <p>Tickets</p>
+                                    <p>Tickets</p>
+                                    <p>Tickets</p>
+                                    <p>Tickets</p>
+                                    <p>Tickets</p>
+                                </div>
+                                <div class="column eventContent is-4">
+                                    {{ event.description|markdown_to_html }}
+                                </div>
+                                <div class="column eventGallery is-5">
+                                    <figure class="image">
+                                        <img class="object-fit-cover" src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.image }}" />
+                                    </figure>
                                 </div>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
+                </article>
+            {% endfor %}
+            </section>
         </div>
     </section>
 
