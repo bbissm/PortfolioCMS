@@ -14,7 +14,6 @@ use App\Form\NewsType;
 /**
  * Class NewsController
  * @package App\Controller
- * Route(requirements={"lang": "de|fr|en"})
  */
 class NewsController extends BaseController
 {
@@ -23,11 +22,6 @@ class NewsController extends BaseController
      */
     public function list(Request $request): Response
     {
-        $routeName = $request->attributes->get('_route');
-        $routeParameters = $request->attributes->get('_route_params');
-        $allAttributes = $request->attributes->all();
-
-
         $news = $this->getDoctrine()
             ->getRepository(News::class)
             ->findAll();

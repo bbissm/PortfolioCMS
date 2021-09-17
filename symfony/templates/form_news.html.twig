@@ -1,4 +1,4 @@
-{% extends "base.html.twig" %}
+{% extends "./base.html.twig" %}
 
 {% block title %}News{% endblock %}
 {% block body %}
@@ -8,7 +8,6 @@
             <div class="my-custom-class-for-errors is-danger">
                 {{ form_errors(form) }}
             </div>
-
             <div class="field">
                 {{ form_label(form.name, null, {
                     'label_attr': {'class': 'label'}
@@ -66,7 +65,7 @@
                 </div>
             </div>
             {{ form_end(form) }}
-            <a href="{{ path('homepage', {lang: lang}) }}">zur Homepage</a>
+            <a href="{{ path('homepage') }}">zur Homepage</a>
         </div>
     </section>
 

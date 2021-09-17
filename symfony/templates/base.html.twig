@@ -16,6 +16,7 @@
     <body class="container">
         {% include "chunks/_header.html.twig" %}
         <div class="main-content">
+            {% include 'chunks/flash_messages.html.twig' %}
             {% block body %}{% endblock %}
         </div>
         {% include "chunks/_footer.html.twig" %}

@@ -4,7 +4,7 @@
 {% block body %}
     <section class="news_detail pb-6">
         <div class="inner-container">
-            <a href="{{ path('news', {lang: lang}) }}">zu den News</a>
+            <a href="{{ path('news') }}">zu den News</a>
 
             <h1>{{ detail.title }}</h1>
             <a class="button is-danger mb-5" href="{{ path('delete_news', {id:detail.id}) }}">Delete</a>

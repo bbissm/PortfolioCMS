@@ -94,6 +94,10 @@
       <excludeFolder url="file://$MODULE_DIR$/symfony/vendor/symfony/web-profiler-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/symfony/vendor/doctrine/doctrine-fixtures-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/symfony/vendor/doctrine/data-fixtures" />
+      <excludeFolder url="file://$MODULE_DIR$/symfony/vendor/symfony/polyfill-intl-idn" />
+      <excludeFolder url="file://$MODULE_DIR$/symfony/vendor/egulias/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/symfony/vendor/symfony/swiftmailer-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/symfony/vendor/swiftmailer/swiftmailer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

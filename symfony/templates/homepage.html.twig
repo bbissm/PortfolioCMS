@@ -3,9 +3,14 @@
 {% block title %}Homepage{% endblock %}
 {% block body %}
     <section>
-        {{ dump(_route) }}
         <div class="inner-container">
-            <h1>Your lucky number is {{ number }}</h1>
+            <pre>
+                {{ dump(page) }}
+                {% for menuItem in menu %}
+                    {{ dump(menuItem.title) }}
+                {% endfor %}
+            </pre>
+            <h1>{{ page.title }}</h1>
             <a href="{{ path('news') }}">Link zu News</a>
         </div>
     </section>

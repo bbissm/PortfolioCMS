@@ -2,7 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Event;
 use App\Entity\Page;
+use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -79,8 +82,10 @@ class DashboardController extends AbstractDashboardController
         return [
             MenuItem::linktoRoute('Back to website', 'fa fa-home', 'homepage'),
             MenuItem::linkToCrud('Page', 'fa fa-pager', Page::class),
+            MenuItem::linkToCrud('User', 'fa fa-user', User::class)->setPermission('ROLE_ADMIN'),
             MenuItem::subMenu('Models', 'fa fa-newspaper')->setSubItems([
                 MenuItem::linkToCrud('News', 'fa fa-tags', News::class),
+                MenuItem::linkToCrud('Event', 'fa fa-tags', Event::class),
             ]),
         ];
     }
@@ -94,4 +99,5 @@ class DashboardController extends AbstractDashboardController
             // Twig path but without the `@EasyAdmin/` prefix
             //->overrideTemplate('layout', 'admin/dashboard.html.twig')
     }
+
 }

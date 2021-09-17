@@ -3,6 +3,9 @@ $body-background-color: #efefef;
 // import scss Framework
 @import "~bulma";
 
+// import font-awesome
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
 // import style templates
 @import "01-index";
 @import "02-header";
