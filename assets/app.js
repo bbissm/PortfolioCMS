@@ -12,9 +12,12 @@ import './styles/app.scss';
 import './bootstrap';
 import bulmaAccordion from 'bulma-accordion/dist/js/bulma-accordion';
 
+//let accordions = document.querySelectorAll('.accordions');
+
+var accordions = bulmaAccordion.attach();
 
 window.addEventListener("DOMContentLoaded", () => {
-    var accordions = bulmaAccordion.attach();
+
 
 });
 

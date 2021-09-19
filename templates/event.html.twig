@@ -8,22 +8,22 @@
             <section class="accordions">
             {% for event in events %}
                 <article class="accordion">
-                    <div class="accodion-header toggle">
+                    <div class="accordion-header toggle">
                         <div class="head">
-                            <nav class="level">
-                                <div class="level-item location">
+                            <div class="columns is-mobile">
+                                <div class="column location is-1">
                                     <p>{{ event.location|upper }}</p>
                                 </div>
-                                <div class="level-item date">
-                                    <p></p>
+                                <div class="column date is-3 has-text-right">
+                                    <p>28.07.1997</p>
                                 </div>
-                                <div class="level-item category">
+                                <div class="column restaurant is-6">
                                     <p>Restaurant</p>
                                 </div>
-                                <div class="level-item beginning">
+                                <div class="column begin is-2">
                                     <p>{{ event.time }}</p>
                                 </div>
-                            </nav>
+                            </div>
                         </div>
                         <div class="body p-2">
                             <div class="columns is-mobile">
@@ -36,17 +36,14 @@
                                     <h3 class="title">{{ event.title }}</h3>
                                 </div>
                             </div>
-
-
+                            <div class="gg-chevron-down" aria-label="toggle"></div>
                         </div>
-
-                        <span class="gg-chevron-down"></span>
                     </div>
                     <div class="accordion-body">
                         <div class="accordion-content">
-                            <div class="columns is-desktop">
+                            <div class="columns is-tablet">
                                 <div class="column eventInfos is-3">
-                                    <a class="button">Tickets</a>
+                                    <a class="button red mb-5">Tickets</a>
                                     <p>Tickets</p>
                                     <p>Tickets</p>
                                     <p>Tickets</p>
