@@ -9,36 +9,26 @@
             {% for event in events %}
                 <article class="accordion">
                     <div class="accordion-header toggle">
-                        <div class="head">
-                            <div class="columns is-mobile">
-                                <div class="column location is-1">
-                                    <p>{{ event.location|upper }}</p>
-                                </div>
-                                <div class="column date is-3 has-text-right">
-                                    <p>28.07.1997</p>
-                                </div>
-                                <div class="column restaurant is-6">
-                                    <p>Restaurant</p>
-                                </div>
-                                <div class="column begin is-2">
-                                    <p>{{ event.time }}</p>
-                                </div>
+                        <div class="columns is-mobile">
+                            <div class="column is-3">
+                                <figure class="image">
+                                    <img class="object-fit-cover" src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.image }}" />
+                                </figure>
+                            </div>
+                            <div class="column is-5">
+                                <h3 class="title">{{ event.title }}</h3>
+                                <p class="location"><i class="far fa-building"></i>{{ event.location }}</p>
+                            </div>
+                            <div class="column date is-2">
+                                <p><i class="far fa-calendar"></i>29.07.1997</p>
+                            </div>
+                            <div class="column time is-2">
+                                <p><i class="far fa-clock"></i>{{ event.time }}</p>
                             </div>
                         </div>
-                        <div class="body p-2">
-                            <div class="columns is-mobile">
-                                <div class="column is-3">
-                                    <figure class="image">
-                                        <img class="object-fit-cover" src="{{ vich_uploader_asset(event, 'imageFile') }}" alt="{{ event.image }}" />
-                                    </figure>
-                                </div>
-                                <div class="column is-9">
-                                    <h3 class="title">{{ event.title }}</h3>
-                                </div>
-                            </div>
-                            <div class="gg-chevron-down" aria-label="toggle"></div>
-                        </div>
+                        <div class="gg-chevron-down" aria-label="toggle"></div>
                     </div>
+
                     <div class="accordion-body">
                         <div class="accordion-content">
                             <div class="columns is-tablet">

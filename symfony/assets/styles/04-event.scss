@@ -1,28 +1,18 @@
 body.template_event{
     .accordion{
+        margin-bottom: .75rem !important;
+        border-bottom: 1px solid #000;
         .accordion-header{
+            padding: 0;
             display: block;
             background-color: #fff;
-            .head{
-                margin-bottom: 3rem;
-                .columns{
-                    border-bottom: 2px solid #000;
-                    .column{
-                        padding:1rem;
-                        &:not(:last-of-type){
-                            border-right: 2px solid #000;
-                        }
-                        &.location{
-                            background-color: #000;
-                            p{
-                                color:#fff;
-                            }
-                        }
+            .columns{
+                margin-bottom: 0;
+                .column{
+                    i{
+                        margin-right: 1rem;
+                        color: rgba(0,0,0,0.5);
                     }
-
-                }
-                p{
-                    color:#000;
                 }
             }
             .body{
