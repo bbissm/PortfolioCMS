@@ -10,6 +10,9 @@ html {
     margin: 0 auto;
     max-width: 1000px;
     width: 100%;
+    @include until-widescreen{
+        padding: 0 1.5rem;
+    }
 }
 h1 {
     font-size: 2rem;
@@ -21,4 +24,96 @@ h1 {
 }
 .object-fit-cover{
     object-fit: cover;
+}
+
+.accordion{
+    &.is-active{
+        .accordion-header{
+            .gg-chevron-down{
+                &:after{
+                    transform: rotate(
+                                    225deg)!important;
+
+                    transition: transform .3s linear;
+                }
+            }
+        }
+        .accordion-body{
+            display: block;
+            animation: growDown 300ms ease-in-out forwards;
+            transform-origin: top center;
+            @keyframes growDown {
+                0% {
+                    transform: scaleY(0)
+                }
+                80% {
+                    transform: scaleY(1.1)
+                }
+                100% {
+                    transform: scaleY(1)
+                }
+            }
+        }
+    }
+    .accordion-header{
+        .gg-chevron-down{
+            background-color: transparent!important;
+            border: 2px solid transparent!important;
+            border-radius: 100px!important;
+            box-sizing: border-box!important;
+            color: #000!important;
+            display: block!important;
+            height: 100%!important;
+            max-height: 40px!important;
+            max-width: 40px!important;
+            position: relative!important;
+            position: absolute!important;
+            right: 0;
+            top: .2rem;
+            transform: scale(var(--ggs,1))!important;
+            width: 100%!important;
+            &:after{
+                border-bottom: 3px solid!important;
+                border-right: 3px solid!important;
+                box-sizing: border-box!important;
+                content: ""!important;
+                display: block!important;
+                height: 20px!important;
+                left: 4px!important;
+                position: absolute!important;
+                top: 2px!important;
+                transform: rotate(
+                                45deg)!important;
+                width: 20px!important;
+            }
+        }
+
+    }
+    .accordion-body{
+        display: none;
+    }
+}
+
+a.button{
+    border: 1px solid #000;
+    box-shadow: 4px 4px 0 0 #3e3e3e;
+    font-size: 1.333rem;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: normal;
+    line-height: normal;
+    padding: .5rem .7rem;
+    text-align: center;
+    width: fit-content;
+    &:hover{
+        box-shadow: 8px 8px 0 0 #3e3e3e;
+    }
+    &.big{
+        min-height: 5.167rem;
+    }
+    &.red{
+        background-color: #e63462;
+        color: #fff;
+    }
 }
