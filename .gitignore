@@ -7,7 +7,6 @@ dist
 browserconfig.xml
 humans.txt
 robots.txt
-site.webmanifest
 .editorconfig
 .gitattributes
 js/vendor
