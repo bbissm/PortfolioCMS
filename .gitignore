@@ -13,3 +13,9 @@ site.webmanifest
 .gitattributes
 js/vendor
 doc
+yarn-error.log
+yarn.lock
+LICENSE.txt
+.idea
+
+
