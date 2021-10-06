@@ -1,0 +1,12 @@
+{% block flash_messages %}
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="inner-container pt-6">
+                <div class="notification is-{{ type }}">
+                    <button class="close"></button>
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

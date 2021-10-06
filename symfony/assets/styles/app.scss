@@ -1,0 +1,28 @@
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/bulma";
+//overrides
+$body-background-color: #efefef;
+// import scss Framework
+@import "~bulma/sass/base/_all";
+@import "~bulma/sass/elements/_all";
+@import "~bulma/sass/form/_all";
+@import "~bulma/sass/components/_all";
+@import "~bulma/sass/grid/_all";
+@import "~bulma/sass/helpers/_all";
+@import "~bulma/sass/layout/_all";
+
+// import bulma-extension styles
+@import "~bulma-accordion/src/sass/index";
+
+
+// import font-awesome
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+// import style templates
+@import "01-index";
+@import "02-header";
+@import "03-team";
+@import "04-event";
+
+
+

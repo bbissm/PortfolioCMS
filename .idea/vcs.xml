@@ -2,5 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+<<<<<<< HEAD
+=======
+    <mapping directory="$PROJECT_DIR$/symfony" vcs="Git" />
+>>>>>>> 81d3c7e01bde3ff0a790545f4e843654a9777eb0
   </component>
 </project>

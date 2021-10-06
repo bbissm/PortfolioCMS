@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/symfony.iml" filepath="$PROJECT_DIR$/.idea/symfony.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/my-symfony.iml" filepath="$PROJECT_DIR$/.idea/my-symfony.iml" />
+>>>>>>> 81d3c7e01bde3ff0a790545f4e843654a9777eb0
     </modules>
   </component>
 </project>

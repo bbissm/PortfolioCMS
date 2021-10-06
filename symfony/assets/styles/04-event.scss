@@ -1,0 +1,28 @@
+body.template_event{
+    .accordion{
+        margin-bottom: .75rem !important;
+        border-bottom: 1px solid #000;
+        .accordion-header{
+            padding: 0;
+            display: block;
+            background-color: #fff;
+            .columns{
+                margin-bottom: 0;
+                .column{
+                    i{
+                        margin-right: 1rem;
+                        color: rgba(0,0,0,0.5);
+                    }
+                }
+            }
+            .body{
+                position: relative;
+            }
+        }
+        .accordion-body{
+            border:unset !important;
+            border-radius: unset !important;
+            background-color: #fff;
+        }
+    }
+}
