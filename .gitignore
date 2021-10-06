@@ -1,7 +1,7 @@
 # Include your project-specific ignores in this file
 # Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
 # Useful .gitignore templates: https://github.com/github/gitignore
-dist
+assets/dist
 .cache
 .htaccess
 browserconfig.xml
@@ -9,11 +9,10 @@ humans.txt
 robots.txt
 .editorconfig
 .gitattributes
-js/vendor
+assets/js/vendor
 doc
 yarn-error.log
 yarn.lock
 LICENSE.txt
 .idea
-
 

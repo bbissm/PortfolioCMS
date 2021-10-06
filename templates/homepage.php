@@ -23,7 +23,7 @@
         <div class="box">
             <div class="columns is-justify-content-space-between is-desktop">
                 <div class="column is-4 hasImage">
-                    <img src="img/me.png" alt="Martin Bissiger">
+                    <img src="../assets/img/me.png" alt="Martin Bissiger">
                 </div>
                 <div class="column is-6">
                     <h3>Martin Bissiger</h3>
@@ -40,7 +40,7 @@
         <h2>Hobbies</h2>
         <div class="columns">
             <div class="column">
-                <img src="img/me.png" alt="Martin Bissiger">
+                <img src="../assets/img/me.png" alt="Martin Bissiger">
             </div>
             <div class="column">
                 <h3>Hobby 1</h3>
@@ -49,7 +49,7 @@
         </div>
         <div class="columns is-flex-direction-row-reverse">
             <div class="column">
-                <img src="img/me.png" alt="Martin Bissiger">
+                <img src="../assets/img/me.png" alt="Martin Bissiger">
             </div>
             <div class="column">
                 <h3>Hobby 1</h3>
@@ -68,7 +68,7 @@
                 <div class="flip">
                     <div class="flip-inner">
                         <div class="flip-front">
-                            <img src="img/me.png" alt="Porject" style="width:100%;height:100%;object-fit: cover">
+                            <img src="../assets/img/me.png" alt="Porject" style="width:100%;height:100%;object-fit: cover">
                         </div>
                         <div class="flip-back box">
                             <h1>Project <?echo $i?></h1>
@@ -101,7 +101,7 @@
                         <section class="modal-card-body">
                             <div class="columns">
                                 <div class="column">
-                                    <img src="img/me.png" alt="Projekt">
+                                    <img src="../assets/img/me.png" alt="Projekt">
                                 </div>
                                 <div class="column">
                                     <h3>Titel</h3>
@@ -124,6 +124,9 @@
             <? } ?>
         </div>
     </section>
+    <div class="dividerContainer">
+        <div class="divider"></div>
+    </div>
 	<? include "chunks/contact.html" ?>
 </div>
 
