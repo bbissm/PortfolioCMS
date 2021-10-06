@@ -7,7 +7,9 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-
+.idea
+/.idea
+/.idea/*
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
