@@ -30,7 +30,7 @@
   
 **Fixtures laden**
 
-* symfony console doctrine:fixtures:load 
+* symfony console doctrine:fixtures:load -- WILL COMPLETELY OVERRIDE
   * --append - Damit ein Einträge nicht überschrieben werden.
 
 

@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
+use App\Entity\Location;
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
  * @Vich\Uploadable
@@ -21,7 +22,7 @@ class Event
     private $id;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $active;
 
@@ -31,40 +32,40 @@ class Event
     private $title;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $location;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $time;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
 
     /**
-     * @Vich\UploadableField(mapping="team_attachments", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="attachments", fileNameProperty="image")
      */
     private $imageFile;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="events")
+     */
+    private $location;
 
     public function getId(): ?int
     {
@@ -103,18 +104,6 @@ class Event
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getLocation(): ?string
-    {
-        return $this->location;
-    }
-
-    public function setLocation(string $location): self
-    {
-        $this->location = $location;
 
         return $this;
     }
@@ -186,5 +175,17 @@ class Event
             // if 'updatedAt' is not defined in your entity, use another property
             $this->updatedAt = new \DateTime('now');
         }
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): self
+    {
+        $this->location = $location;
+
+        return $this;
     }
 }

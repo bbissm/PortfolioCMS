@@ -16,9 +16,9 @@ class MemberController extends BaseController
             ->getRepository(Member::class)
             ->findAll();
 
-        return $this->render('member.html.twig', [
+        return $this->render('team.html.twig', [
                 'members' => $members,
-                'base_path' => '%app.path.team_attachments%'
+                'base_path' => '%app.path.attachments%'
         ]);
     }
 }

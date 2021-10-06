@@ -16,8 +16,41 @@ import bulmaAccordion from 'bulma-accordion/dist/js/bulma-accordion';
 
 var accordions = bulmaAccordion.attach();
 
+const grid = document.getElementById('skeletonGrid')
+const entries = document.querySelectorAll('.entry');
+const skeletonColumns = document.querySelectorAll('.skeletonColumn')
+
+
+
+
+entries.forEach(entry => {
+    entry.classList.remove('is-hidden');
+    /*skeletonColumns.forEach(skeletonColumn => {
+        skeletonColumn.querySelector('[data-title]').textContent = entry.querySelector('[data-title]').textContent
+        skeletonColumn.querySelector('[data-body]').textContent = entry.querySelector('[data-body]').textContent
+        console.log(entry.querySelector('[data-image]'));
+        skeletonColumn.querySelector('[data-image]').textContent = entry.querySelector('[data-image]')
+        grid.append(skeletonColumn)
+    })*/
+})
+
+skeletonColumns.forEach(skeletonColumn => {
+    skeletonColumn.classList.add('is-hidden');
+})
+
 window.addEventListener("DOMContentLoaded", () => {
+    let images = document.querySelectorAll('img');
+    let loadedImages = 0;
+    images.forEach(image => {
+        let isLoaded = image.complete && image.naturalHeight !== 0;
+        console.log(isLoaded);
+        if(isLoaded) {
+            loadedImages++;
+        }
+    })
+    console.log(loadedImages);
+    if (loadedImages == images.length) {
 
-
+    }
 });
 

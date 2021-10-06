@@ -3,8 +3,15 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Event;
-use App\Entity\VichImageField;
+use App\Entity\UploadImageField;
+use App\Form\EventType;
+use App\Form\LocationType;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Expr\Select;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -21,17 +28,17 @@ class EventCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+
         return [
             IdField::new('id')->hideOnForm(),
-
             TextField::new('title'),
-            TextField::new('location'),
+            AssociationField::new('location')
+                ->setFormType(EventType::class)
+                ->setFormTypeOption('by_reference', false)
+                ->onlyOnForms(),
             DateField::new('date'),
             TextField::new('time'),
             TextEditorField::new('description'),
-            VichImageField::new('image')->hideOnForm(),
-            VichImageField::new('imageFile')->onlyOnForms(),
-
         ];
     }
 

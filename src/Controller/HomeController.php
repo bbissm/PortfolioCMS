@@ -19,6 +19,7 @@ class HomeController extends BaseController
     */
     public function home(Request $request): Response
     {
+
         $number = random_int(0, 100);
 
         return $this->render('homepage.html.twig', [

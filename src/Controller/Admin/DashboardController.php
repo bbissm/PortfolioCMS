@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Attachment;
+use App\Entity\Location;
 use App\Entity\Member;
 use App\Entity\Event;
 use App\Entity\Page;
@@ -87,7 +89,9 @@ class DashboardController extends AbstractDashboardController
                 MenuItem::linkToCrud('News', 'fa fa-tags', News::class),
                 MenuItem::linkToCrud('Event', 'fa fa-tags', Event::class),
                 MenuItem::linkToCrud('Member', 'fa fa-tags', Member::class),
+                MenuItem::linkToCrud('Location', 'fa fa-map-marker-alt', Location::class),
             ]),
+            MenuItem::linkToCrud('Attachment', 'fa fa-folder', Attachment::class),
         ];
     }
 

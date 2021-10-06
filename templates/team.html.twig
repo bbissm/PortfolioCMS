@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Events{% endblock %}
+{% block body %}
+    <section class="news pb-6">
+        <div class="inner-container">
+            <h1>{{ page.title }}</h1>
+            <div class="columns is-multiline">
+                {% for member in members %}
+                <div class="column skeletonColumn is-4">
+                    <div class="memberContainer">
+                        <div class="imageContainer mb-5">
+                            <figure class="image is-square" data-image>
+                                <img class="object-fit-cover skeleton">
+                            </figure>
+                        </div>
+                        <div class="contentContainer">
+                            <div class="title3" data-title>
+                                <div class="skeleton skeleton-text"></div>
+                            </div>
+                            <div class="zitat" data-body>
+                                <div class="skeleton skeleton-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column entry is-4 is-hidden">
+                    <div class="memberContainer">
+                        <div class="imageContainer mb-5">
+                            <figure class="image is-square">
+                                <img class="object-fit-cover" src="{{ vich_uploader_asset(member, 'imageFile') }}" alt="{{ member.image }}" data-image/>
+                            </figure>
+                        </div>
+                        <div class="contentContainer">
+                            <h3 class="title3 mb-3" data-title>{{ member.name }}</h3>
+                            <span class="is-italic" data-body>~{{ member.zitat }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
