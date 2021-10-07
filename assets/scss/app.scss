@@ -1,0 +1,16 @@
+@charset "utf-8";
+@import "../../node_modules/bulma/sass/utilities/initial-variables";
+@import "../../node_modules/bulma/sass/utilities/functions";
+
+// overrides
+$family-serif: "Quicksand", serif;
+$family-primary: $family-serif;
+$grey-dark:#5d5a5a;
+
+@import "../../node_modules/bulma/bulma";
+// import font-awesome
+@import '../../node_modules/@fortawesome/fontawesome-free/css/all.css';
+@import '../../node_modules/swiper/swiper-bundle.css';
+
+@import "index";
+@import "components";

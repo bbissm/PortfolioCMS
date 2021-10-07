@@ -3,10 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/symfony.iml" filepath="$PROJECT_DIR$/.idea/symfony.iml" />
 =======
       <module fileurl="file://$PROJECT_DIR$/.idea/my-symfony.iml" filepath="$PROJECT_DIR$/.idea/my-symfony.iml" />
 >>>>>>> 81d3c7e01bde3ff0a790545f4e843654a9777eb0
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/portfolio.iml" filepath="$PROJECT_DIR$/.idea/portfolio.iml" />
+>>>>>>> a66e03afa73e934a06293a617cce5e43088df002
     </modules>
   </component>
 </project>

@@ -2,5 +2,10 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+<<<<<<< HEAD
+=======
+    <mapping directory="$PROJECT_DIR$/symfony-portfolio" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/symfony-portfolio/symfony-easyadmin" vcs="Git" />
+>>>>>>> a66e03afa73e934a06293a617cce5e43088df002
   </component>
 </project>
