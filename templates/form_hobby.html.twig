@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Hobby{% endblock %}
+{% block body %}
+<div class="container">
+    <section class="section">
+        <h1 class="title">Hobbyeintrag</h1>
+        <div class="inner-container">
+            {{ form_start(form) }}
+            <div class="my-custom-class-for-errors is-danger">
+                {{ form_errors(form) }}
+            </div>
+            <div class="field">
+                {{ form_label(form.title, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    {{ form_widget(form.title, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form_label(form.description, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    {{ form_widget(form.description, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+
+            <div class="field">
+                {{ form_widget(form.save, { 'label': 'Submit','attr': {'class': 'button','onclick':'window.location.hash = "hobby"'} }) }}
+            </div>
+            {{ form_end(form) }}
+            <a href="{{ path('homepage') }}">zur Homepage</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -96,7 +96,7 @@ class BackendAuthenticator extends AbstractFormLoginAuthenticator implements Pas
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('admin'));
+        return new RedirectResponse($this->urlGenerator->generate('homepage'));
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

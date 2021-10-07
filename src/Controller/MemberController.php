@@ -4,8 +4,9 @@ namespace App\Controller;
 use App\Entity\Member;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class MemberController extends BaseController
+class MemberController extends AbstractController
 {
     /**
      * @Route("/member", name="member")

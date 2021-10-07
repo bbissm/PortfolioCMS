@@ -1,0 +1,20 @@
+<section class="section" id="hobby">
+    <h2>Hobbies
+        <a class="ml-5 button is-success mb-5" href="{{ path('create_hobby') }}">Add Hobby</a>
+    </h2>
+
+    <div class="columns is-multiline is-desktop">
+        {% for hobby in hobbies %}
+            <div class="column is-half">
+                <img src="../assets/img/me.png" alt="Martin Bissiger">
+            </div>
+            <div class="column">
+                <h3>{{ hobby.title }}
+                    <a class="ml-3" href="{{ path('edit_hobby', {'id':hobby.id}) }}"><i class="fas fa-edit"></i></a>
+                    <a class="ml-3" href="{{ path('delete_hobby', {'id':hobby.id}) }}#hobby"><i class="fas fa-trash"></i></a>
+                </h3>
+                <p>{{ hobby.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>

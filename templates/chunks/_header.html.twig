@@ -1,85 +1,54 @@
-<nav class="navbar is-transparent">
-    <div class="inner-container">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="{{ path('homepage') }}">
-                <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-            </a>
-            <div class="navbar-burger" data-target="navbarExampleTransparentExample">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-
-        <div id="navbarExampleTransparentExample" class="navbar-menu">
+<nav class="navbar" id="nav">
+    <div class="container">
+        <div id="navMenu" class="navbar-menu">
             <div class="navbar-start">
-                {% for menuItem in menu %}
-                    <a class="navbar-item" href="{{ path(menuItem.route) }}">
-                        {{ menuItem.title }}
-                    </a>
-                {% endfor %}
+                <a href="/" class="navbar-item">
+                    Martin Bissiger
+                </a>
 
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link" href="https://bulma.io/documentation/overview/start/">
-                        Docs
-                    </a>
-                    <div class="navbar-dropdown is-boxed">
-                        <a class="navbar-item" href="https://bulma.io/documentation/overview/start/">
-                            Overview
-                        </a>
-                        <a class="navbar-item" href="https://bulma.io/documentation/overview/modifiers/">
-                            Modifiers
-                        </a>
-                        <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
-                            Columns
-                        </a>
-                        <a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
-                            Layout
-                        </a>
-                        <a class="navbar-item" href="https://bulma.io/documentation/form/general/">
-                            Form
-                        </a>
-                        <hr class="navbar-divider">
-                        <a class="navbar-item" href="https://bulma.io/documentation/elements/box/">
-                            Elements
-                        </a>
-                        <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
-                            Components
-                        </a>
-                    </div>
-                </div>
             </div>
-
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <div class="field is-grouped">
+                    <a onclick="scrollToEl(0)" class="navbar-item">
+                        Home
+                    </a>
+                    <a href="#about" class="navbar-item">
+                        About
+                    </a>
+                    <a href="#hobby" class="navbar-item">
+                        Hobbies
+                    </a>
+                    <a href="#work" class="navbar-item">
+                        Work
+                    </a>
+                    <a href="#work" class="navbar-item">
+                        Contact
+                    </a>
+                </div>
+                <div class="navbar-item">
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <p class="control">
-                            <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" data-social-target="https://bulma.io" target="_blank" href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=https://bulma.io&amp;via=jgthms">
+                            <a class="button is-success" href="/logout">
                               <span class="icon">
-                                <i class="fab fa-twitter"></i>
+                                <i class="fas fa-sign-in-alt"></i>
                               </span>
-                                <span>Tweet</span>
+                                <span>Logout</span>
                             </a>
                         </p>
-                        <p class="control">
-                            <a class="button is-primary" href="https://github.com/jgthms/bulma/releases/download/0.9.3/bulma-0.9.3.zip">
-                              <span class="icon">
-                                <i class="fas fa-download"></i>
-                              </span>
-                                <span>Download</span>
-                            </a>
-                        </p>
+                    {% else %}
                         <p class="control">
                             <a class="button is-success" href="/login">
                               <span class="icon">
                                 <i class="fas fa-sign-in-alt"></i>
                               </span>
-                                <span>Admin</span>
+                                <span>Login</span>
                             </a>
                         </p>
-                    </div>
+                    {% endif %}
                 </div>
+
             </div>
         </div>
     </div>
 </nav>
+

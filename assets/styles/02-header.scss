@@ -1,4 +1,6 @@
-nav {
-    padding: 2rem 0rem;
-    box-shadow: 0 12px 10px -10px rgb(0 0 0 / 15%);
+nav{
+    box-shadow: 0 12px 10px -10px rgba(0, 0, 0, 0.15);
+    position: fixed !important;
+    width: 100%;
+    top: 0;
 }

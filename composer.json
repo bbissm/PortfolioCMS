@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -83,6 +82,4 @@
         "symfony/stopwatch": "^5.3",
         "symfony/web-profiler-bundle": "^5.3"
     }
-=======
->>>>>>> 81d3c7e01bde3ff0a790545f4e843654a9777eb0
 }

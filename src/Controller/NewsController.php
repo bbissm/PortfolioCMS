@@ -15,7 +15,7 @@ use App\Form\NewsType;
  * Class NewsController
  * @package App\Controller
  */
-class NewsController extends BaseController
+class NewsController extends AbstractController
 {
     /**
      * @Route("/news", name="news")

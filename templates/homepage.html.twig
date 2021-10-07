@@ -2,16 +2,28 @@
 
 {% block title %}Homepage{% endblock %}
 {% block body %}
-    <section>
-        <div class="inner-container">
-            <pre>
-                {{ dump(page) }}
-                {% for menuItem in menu %}
-                    {{ dump(menuItem.title) }}
-                {% endfor %}
-            </pre>
-            <h1>{{ page.title }}</h1>
-            <a href="{{ path('news') }}">Link zu News</a>
-        </div>
-    </section>
+<section class="hero is-link is-fullheight-with-navbar ">
+    <div class="hero-body">
+        <h1 class="title has-text-grey-dark is-size-1">
+            Me. A developer and PC Intusiast.
+        </h1>
+        <a href="#about">
+            <div class="arrow-down">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </a>
+
+    </div>
+</section>
+<div class="container">
+    {%  include 'chunks/divider.html.twig' %}
+    {%  include 'about.html.twig' %}
+    {%  include 'chunks/divider.html.twig' %}
+    {%  include 'hobbies.html.twig' %}
+    {%  include 'chunks/divider.html.twig' %}
+    {%  include 'work.html.twig' %}
+    {%  include 'chunks/divider.html.twig' %}
+</div>
 {% endblock %}

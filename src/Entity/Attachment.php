@@ -7,7 +7,7 @@ use App\Entity\Member;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
+use App\Entity\Hobby;
 /**
  * @ORM\Entity(repositoryClass=AttachmentRepository::class)
  * @Vich\Uploadable
@@ -47,6 +47,11 @@ class Attachment
      * @ORM\ManyToOne(targetEntity="Member", inversedBy="attachments")
      */
     private $member;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Hobby", inversedBy="attachments")
+	 */
+	private $hobby;
 
     public function __construct()
     {
@@ -122,6 +127,18 @@ class Attachment
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getHobby(): ?Hobby
+    {
+        return $this->hobby;
+    }
+
+    public function setHobby(?Hobby $hobby): self
+    {
+        $this->hobby = $hobby;
 
         return $this;
     }
