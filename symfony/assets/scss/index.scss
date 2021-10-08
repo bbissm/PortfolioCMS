@@ -1,0 +1,96 @@
+nav{
+    box-shadow: 0 12px 10px -10px rgba(0, 0, 0, 0.15);
+    position: fixed !important;
+    width: 100%;
+    top: 0;
+}
+section.hero{
+    @include mobile() {
+        min-height: calc(80vh - 3.25rem) !important;
+    }
+    margin-top:56px;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(215,223,252,1) 0%, rgba(255,255,255,1) 0%, rgba(215,223,252,1) 84% );
+    .hero-body{
+        position: relative;
+    }
+}
+
+h2{
+    font-size:$size-2;
+    margin-bottom: $size-2;
+    @include tablet() {
+        text-align:center;
+    }
+}
+
+
+h3{
+    font-size:$size-3;
+    margin-bottom: $size-3;
+}
+
+section.section{
+    &.current{
+        animation:expand 1s ease-in-out;
+    }
+}
+
+@keyframes expand {
+    from {
+        transform: scale(0);
+        display: block;
+    }
+}
+
+section#work{
+    .project {
+        figure.image{
+            img{
+                object-fit: cover;
+            }
+        }
+        .modal{
+            .modal-card-foot{
+                a{
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    font-size: 1rem;
+                    transition: all .3s ease-in-out;
+
+                    &:not(:last-of-type) {
+                        margin-right: 2rem;
+                    }
+                    i{
+                        margin-left:.5rem;
+                        font-size: 2rem;
+                    }
+                    &:hover{
+                        box-shadow: 0 12px 10px -10px rgba(0, 0, 0, 0.15);
+                        transform: translate3d(0px, -10px, 0px);
+                    }
+                }
+            }
+        }
+    }
+}
+
+#contact{
+    .columns{
+        background-color:$grey-dark;
+        .column{
+            .left{
+                clip-path: polygon(0% 0%,100% 0%,66% 100%,0% 100%);
+                background-color: #fff;
+            }
+        }
+    }
+}
+
+footer{
+    background-image: radial-gradient( circle farthest-corner at -4% -12.9%,  rgba(74,98,110,1) 0.3%, rgba(30,33,48,1) 90.2% );
+}
+
+
+
+

@@ -1,0 +1,27 @@
+{
+  "name": "portfolio",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": "",
+  "license": "",
+  "author": "",
+  "scripts": {
+    "build": "parcel build index.php",
+    "dev": "parcel index.php --open",
+    "start": "npm run build && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-css": "node-sass --include-path scss assets/scss/app.scss   assets/css/main.css",
+    "watch-css": "nodemon -e scss -x \"yarn run build-css\""
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "bulma": "^0.9.3",
+    "node-sass": "^6.0.1",
+    "nodemon": "^2.0.13",
+    "sass": "^1.42.1",
+    "swiper": "^7.0.8"
+  }
+}
