@@ -1,55 +1,29 @@
 {
-<<<<<<< HEAD
-    "devDependencies": {
-        "@symfony/stimulus-bridge": "^2.0.0",
-        "@symfony/webpack-encore": "^1.0.0",
-        "core-js": "^3.0.0",
-        "regenerator-runtime": "^0.13.2",
-        "sass": "^1.35.2",
-        "sass-loader": "^12.1.0",
-        "stimulus": "^2.0.0",
-        "webpack-notifier": "^1.6.0"
-    },
-    "license": "UNLICENSED",
-    "private": true,
-    "scripts": {
-        "dev-server": "encore dev-server",
-        "dev": "encore dev",
-        "watch": "encore dev --watch",
-        "build": "encore production --progress"
-    },
-    "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.3",
-        "bulma": "^0.9.3",
-        "bulma-accordion": "^2.0.1",
-        "bulma-extensions": "^6.2.7",
-        "node-sass": "^6.0.1"
-    }
-=======
-  "name": "portfolio",
-  "version": "0.0.1",
-  "description": "",
-  "keywords": "",
-  "license": "",
-  "author": "",
-  "scripts": {
-    "build": "parcel build index.php",
-    "dev": "parcel index.php --open",
-    "start": "npm run build && npm run dev",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build-css": "node-sass --include-path scss assets/scss/app.scss   assets/css/main.css",
-    "watch-css": "nodemon -e scss -x \"yarn run build-css\""
-  },
   "devDependencies": {
-    "parcel-bundler": "^1.12.4"
+    "@symfony/stimulus-bridge": "^2.0.0",
+    "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/Resources/assets",
+    "@symfony/webpack-encore": "^1.0.0",
+    "core-js": "^3.0.0",
+    "regenerator-runtime": "^0.13.2",
+    "sass": "^1.35.2",
+    "sass-loader": "^12.1.0",
+    "stimulus": "^2.0.0",
+    "webpack-notifier": "^1.6.0"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "prod": "encore production --progress"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "bulma": "^0.9.3",
+    "bulma-accordion": "^2.0.1",
+    "bulma-extensions": "^6.2.7",
     "node-sass": "^6.0.1",
-    "nodemon": "^2.0.13",
-    "sass": "^1.42.1",
     "swiper": "^7.0.8"
   }
->>>>>>> a66e03afa73e934a06293a617cce5e43088df002
 }

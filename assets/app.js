@@ -8,6 +8,8 @@
 // any CSS you import will output into a single css file (app.scss in this case)
 import './styles/app.scss';
 
+import Swiper, { SwiperOptions, Keyboard, Pagination, Virtual, Navigation, Autoplay, Manipulation } from 'swiper';
+
 // start the Stimulus application
 import bulmaAccordion from 'bulma-accordion/dist/js/bulma-accordion';
 
@@ -124,7 +126,8 @@ links.forEach(link => {
 
 //scroll to container after page reload
 window.addEventListener('load',function (e) {
-        scrollToEl(location.hash);
+    if (location.hash) scrollToEl(location.hash);
+
 })
 
 document.addEventListener('scroll', function (e) {
@@ -149,3 +152,36 @@ document.addEventListener('scroll', function (e) {
         observer.observe(el)
     })
 })
+
+
+if (document.querySelector('.swiper') !== null) {
+    document.querySelectorAll('.swiper').forEach(container => {
+        // initialize swiper
+        new Swiper('.swiper', /** @type {SwiperOptions} */  {
+            modules: [Pagination, Keyboard, Virtual, Navigation, Autoplay, Manipulation],
+            initialSlide: 0,
+            slidesPerView: 1,
+            centeredSlides: true,
+            observer: true,
+            observeParents: true,
+            grabCursor: true,
+            loop: true,
+            autoplay: {
+                delay: 6000,
+                pauseOnMouseEnter: true,
+            },
+            keyboard: {
+                enabled: true,
+            },
+            navigation: {
+                nextEl: container.parentNode.querySelector('.swiper-button-next'),
+                prevEl: container.parentNode.querySelector('.swiper-button-prev'),
+            },
+            pagination: {
+                el: container.parentNode.querySelector('.swiper-pagination'),
+                type: 'bullets',
+                clickable: true,
+            },
+        });
+    })
+}

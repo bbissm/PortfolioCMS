@@ -22,19 +22,12 @@ class Attachment
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
 
     /**
-     * @Vich\UploadableField(mapping="member_attachments", fileNameProperty="image")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $imageFile;
 
@@ -49,9 +42,9 @@ class Attachment
     private $member;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Hobby", inversedBy="attachments")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
-	private $hobby;
+	private $hobby_id;
 
     public function __construct()
     {
@@ -61,6 +54,18 @@ class Attachment
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     public function getImage(): ?string
@@ -75,26 +80,6 @@ class Attachment
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
-
-    /**
-     * @param mixed $imageFile
-     * @throws \Exception
-     */
-    public function setImageFile(?File $imageFile): void
-    {
-        $this->imageFile = $imageFile;
-        if ($imageFile) {
-            $this->updatedAt = new \DateTime();
-        }
-    }
-
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -103,6 +88,18 @@ class Attachment
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getHobbyId(): ?int
+    {
+        return $this->hobby_id;
+    }
+
+    public function setHobbyId(int $hobby_id): self
+    {
+        $this->hobby_id = $hobby_id;
 
         return $this;
     }
@@ -119,26 +116,14 @@ class Attachment
         return $this;
     }
 
-    public function getName(): ?string
+    public function getImageFile(): ?string
     {
-        return $this->name;
+        return $this->imageFile;
     }
 
-    public function setName(string $name): self
+    public function setImageFile(?string $imageFile): self
     {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getHobby(): ?Hobby
-    {
-        return $this->hobby;
-    }
-
-    public function setHobby(?Hobby $hobby): self
-    {
-        $this->hobby = $hobby;
+        $this->imageFile = $imageFile;
 
         return $this;
     }

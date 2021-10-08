@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 ###> symfony/framework-bundle ###
-/.idea
 /.env.local
 /.env.local.php
 /.env.*.local
@@ -42,6 +40,4 @@ doc
 yarn-error.log
 yarn.lock
 LICENSE.txt
-.idea
->>>>>>> a66e03afa73e934a06293a617cce5e43088df002
 

@@ -2,18 +2,20 @@
 
 namespace App\Entity;
 
+use App\Entity\Attachment;
 use App\Repository\HobbyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Attachment;
+use File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
  * @ORM\Entity(repositoryClass=HobbyRepository::class)
  */
-class Hobby
+class Hobby implements \ArrayAccess
 {
     /**
      * @ORM\Id
@@ -30,16 +32,13 @@ class Hobby
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $Description;
+    private $description;
 
-	/**
-	 * @ORM\OneToMany(targetEntity="Attachment", mappedBy="member", cascade={"persist"})
-	 */
-	private $attachments;
+	public $attachments;
 
     public function __construct()
     {
-        $this->attachments = new ArrayCollection();
+		$this->updatedAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -61,44 +60,37 @@ class Hobby
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(?string $Description): self
+    public function setDescription(?string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Attachment[]
-     */
-    public function getAttachments(): Collection
-    {
-        return $this->attachments;
-    }
+	public function offsetExists($offset)
+	{
+		return property_exists($this, $offset);
+		// TODO: Implement offsetExists() method.
+	}
 
-    public function addAttachment(Attachment $attachment): self
-    {
-        if (!$this->attachments->contains($attachment)) {
-            $this->attachments[] = $attachment;
-            $attachment->setMember($this);
-        }
+	public function offsetGet($offset)
+	{
+		return $this->$offset;
+		// TODO: Implement offsetGet() method.
+	}
 
-        return $this;
-    }
+	public function offsetSet($offset, $value)
+	{
+		$this->$offset = $value;
+		// TODO: Implement offsetSet() method.
+	}
 
-    public function removeAttachment(Attachment $attachment): self
-    {
-        if ($this->attachments->removeElement($attachment)) {
-            // set the owning side to null (unless already changed)
-            if ($attachment->getMember() === $this) {
-                $attachment->setMember(null);
-            }
-        }
-
-        return $this;
-    }
-
+	public function offsetUnset($offset)
+	{
+		unset($this->$offset);
+		// TODO: Implement offsetUnset() method.
+	}
 }

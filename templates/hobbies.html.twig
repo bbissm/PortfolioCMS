@@ -1,12 +1,23 @@
 <section class="section" id="hobby">
+
     <h2>Hobbies
         <a class="ml-5 button is-success mb-5" href="{{ path('create_hobby') }}">Add Hobby</a>
     </h2>
 
     <div class="columns is-multiline is-desktop">
+
         {% for hobby in hobbies %}
-            <div class="column is-half">
-                <img src="../assets/img/me.png" alt="Martin Bissiger">
+            <div class="column is-half {% if hobby.attachments|length > 1 %}has-swiper{% endif %}">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        {% for attachment in hobby.attachments %}
+                            <div class="swiper-slide">
+                                <img src="{{ asset('/uploads/hobby/')~attachment.imageFile  }}" alt="{{ attachment.imageFile }}" style="object-fit: contain">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
             </div>
             <div class="column">
                 <h3>{{ hobby.title }}

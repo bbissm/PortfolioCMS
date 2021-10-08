@@ -386,3 +386,51 @@ a.button{
         background-color: hsl(200, 20%, 95%);
     }
 }
+
+.has-swiper {
+    $themeColor: #ffffff;
+    $colors: ("white": #ffffff, "black": #000000);
+    --swiper-theme-color: #333;
+    --swiper-pagination-color: #fff;
+    --swiper-navigation-size: 1.5rem;
+    @import "~swiper/css";
+    @import "~swiper/css/lazy";
+    @import "~swiper/css/navigation";
+    @import "~swiper/css/pagination";
+    @import "~swiper/css/scrollbar";
+    @import "~swiper/css/a11y";
+    @import "~swiper/css/thumbs";
+
+    position: relative;
+    z-index: 0;
+    .swiper {
+        height: 100%;
+        .swiper-slide {
+            width: 100%;
+            position: relative;
+            picture{
+                img{
+                    max-height: 400px!important;
+                    object-fit: contain!important;
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+    .swiper-pagination {
+        color: #fff;
+        width: 100%;
+        position: static;
+        margin-top: .5rem;
+        > span { padding: .5rem; margin: .25rem; opacity: 1; border: 2px solid #000; }
+    }
+    .swiper-button-next, .swiper-button-prev {
+        background-color: #fff;
+        padding: var(--swiper-navigation-size);
+        top: calc(50% - var(--swiper-navigation-size));
+        border-radius: var(--swiper-navigation-size);
+    }
+    @media only screen and (min-width: 80rem) {
+        .swiper-button-next, .swiper-button-prev { display: flex; }
+    }
+}

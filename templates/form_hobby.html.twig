@@ -27,6 +27,26 @@
                 </div>
             </div>
 
+
+            <div class="field">
+                {{ form_label(form.my_files, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="columns">
+                    {% for attachment in attachments %}
+                        <div class="column is-2">
+                            <figure class="image is-square">
+                                <img src="{{ '/uploads/hobby/'~attachment.imageFile }}" alt="{{ attachment.image }}" style="object-fit: cover">
+                            </figure>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="control">
+                    {{ form_widget(form.my_files, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+
             <div class="field">
                 {{ form_widget(form.save, { 'label': 'Submit','attr': {'class': 'button','onclick':'window.location.hash = "hobby"'} }) }}
             </div>

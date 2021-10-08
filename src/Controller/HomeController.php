@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Attachment;
 use App\Entity\Hobby;
+use ArrayObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,15 +23,23 @@ class HomeController extends AbstractController
     */
     public function home(Request $request): Response
     {
-		$hobby = $this->getDoctrine()
+
+		$hobbies = $this->getDoctrine()
 			->getRepository(Hobby::class)
 			->findAll();
+		$hobbyArray = [];
 
-		if (!$hobby) {
+		foreach ($hobbies as $key => $hobby) {
+			$attachments = $this->getDoctrine()
+				->getRepository(Attachment::class)
+				->findBy(['hobby_id' => $hobby->getId()]);
+			$hobby->attachments = $attachments;
+		}
+		if (!$hobbies) {
 			throw $this->createNotFoundException(
 				'No Hobby found'
 			);
 		}
-		return $this->render('homepage.html.twig', ['hobbies'=>$hobby]);
+		return $this->render('homepage.html.twig', ['hobbies'=>$hobbies]);
     }
 }

@@ -13,7 +13,6 @@ $body-background-color: #efefef;
 // import bulma-extension styles
 @import "../../node_modules/bulma-accordion/src/sass/index";
 
-
 // import font-awesome
 @import '../../node_modules/@fortawesome/fontawesome-free/css/all.css';
 
@@ -26,5 +25,6 @@ $body-background-color: #efefef;
 @import "02-header";
 @import "03-team";
 @import "04-event";
+@import "05-hobby";
 @import "10-components";
 

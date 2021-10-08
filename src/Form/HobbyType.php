@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\File;
 use App\Entity\Attachment;
 use App\Entity\Hobby;
 use Doctrine\ORM\EntityRepository;
@@ -16,7 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Entity\File;
+use Symfony\UX\Dropzone\Form\DropzoneType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 
 class HobbyType extends AbstractType
@@ -26,11 +28,12 @@ class HobbyType extends AbstractType
 		$builder
 			->add('title', TextType::class)
 			->add('description',TextType::class)
-			->add('attachments', CollectionType::class, array(
-				'entry_type' => Attachment::class,
-				'by_reference' => false
+			->add('my_files', FileType::class, array(
+				'mapped' => false,
+				'label' => 'Please upload file',
+				'multiple' => true,
+				'required' => false
 			))
-
 			->add('save', SubmitType::class)
 		;
     }
@@ -38,8 +41,7 @@ class HobbyType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Hobby::class
-
+            'data_class' => Hobby::class,
         ]);
     }
 }
