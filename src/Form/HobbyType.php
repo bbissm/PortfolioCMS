@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\File;
 use App\Entity\Attachment;
 use App\Entity\Hobby;
 use Doctrine\ORM\EntityRepository;
