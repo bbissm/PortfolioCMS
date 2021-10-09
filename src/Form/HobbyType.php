@@ -27,7 +27,9 @@ class HobbyType extends AbstractType
     {
 		$builder
 			->add('title', TextType::class)
-			->add('description',TextType::class)
+			->add('description',TextType::class, [
+				'attr' => ['class' => 'tinymce'],
+			])
 			->add('my_files', FileType::class, array(
 				'mapped' => false,
 				'label' => 'Please upload file',

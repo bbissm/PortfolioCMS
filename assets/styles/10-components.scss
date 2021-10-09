@@ -434,3 +434,32 @@ a.button{
         .swiper-button-next, .swiper-button-prev { display: flex; }
     }
 }
+
+.attachmentContainer{
+    position: relative;
+    &:hover{
+        .attachment{
+
+        }
+        .overlay{
+            display: flex !important;
+        }
+    }
+    .overlay{
+        width: 100%;
+        height: 100%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: linear-gradient(to right, rgb(242, 112, 156), rgb(255, 148, 114));
+        cursor: pointer;
+        i{
+            color: white;
+            font-size: 3rem;
+        }
+    }
+
+}

@@ -36,6 +36,11 @@ class Hobby implements \ArrayAccess
 
 	public $attachments;
 
+	/**
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	private $updatedAt;
+
     public function __construct()
     {
 		$this->updatedAt = new \DateTime();
@@ -71,26 +76,34 @@ class Hobby implements \ArrayAccess
     }
 
 	public function offsetExists($offset)
-	{
-		return property_exists($this, $offset);
-		// TODO: Implement offsetExists() method.
-	}
+      	{
+      		return property_exists($this, $offset);
+      	}
 
 	public function offsetGet($offset)
-	{
-		return $this->$offset;
-		// TODO: Implement offsetGet() method.
-	}
+      	{
+      		return $this->$offset;
+      	}
 
 	public function offsetSet($offset, $value)
-	{
-		$this->$offset = $value;
-		// TODO: Implement offsetSet() method.
-	}
+      	{
+      		$this->$offset = $value;
+      	}
 
 	public function offsetUnset($offset)
-	{
-		unset($this->$offset);
-		// TODO: Implement offsetUnset() method.
-	}
+      	{
+      		unset($this->$offset);
+      	}
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
 }

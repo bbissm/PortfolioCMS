@@ -154,8 +154,9 @@ document.addEventListener('scroll', function (e) {
 })
 
 
-if (document.querySelector('.swiper') !== null) {
-    document.querySelectorAll('.swiper').forEach(container => {
+if (document.querySelector('.has-swiper') !== null) {
+    document.querySelectorAll('.has-swiper').forEach(hasSwiper => {
+        const container = hasSwiper.querySelector('.swiper');
         // initialize swiper
         new Swiper('.swiper', /** @type {SwiperOptions} */  {
             modules: [Pagination, Keyboard, Virtual, Navigation, Autoplay, Manipulation],
@@ -185,3 +186,17 @@ if (document.querySelector('.swiper') !== null) {
         });
     })
 }
+
+// Async attachment
+const attachments = document.querySelectorAll('.attachment');
+attachments.forEach(attachment => {
+    // click on overlay by hover!!!!!
+    attachment.nextElementSibling.addEventListener('click', function (e) {
+        if (confirm('Are you sure?')) {
+            let id = attachment.dataset.id;
+            fetch(`/hobby/delete/${id}`, {
+                method: 'POST'
+            }).then(response => window.location.reload())
+        }
+    })
+})

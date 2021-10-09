@@ -32,11 +32,6 @@ class Attachment
     private $imageFile;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updatedAt;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Member", inversedBy="attachments")
      */
     private $member;
@@ -45,6 +40,13 @@ class Attachment
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	private $hobby_id;
+
+
+	/**
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	private $updatedAt;
+
 
     public function __construct()
     {

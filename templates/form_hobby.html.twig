@@ -32,14 +32,19 @@
                 {{ form_label(form.my_files, null, {
                     'label_attr': {'class': 'label'}
                 }) }}
-                <div class="columns">
-                    {% for attachment in attachments %}
-                        <div class="column is-2">
-                            <figure class="image is-square">
-                                <img src="{{ '/uploads/hobby/'~attachment.imageFile }}" alt="{{ attachment.image }}" style="object-fit: cover">
-                            </figure>
-                        </div>
-                    {% endfor %}
+                <div class="columns is-multiline">
+                    {% if attachments|default  %}
+                        {% for attachment in attachments %}
+                            <div class="column is-2">
+                                <figure class="image is-square attachmentContainer">
+                                    <img src="{{ '/uploads/hobby/'~attachment.imageFile }}" alt="{{ attachment.image }}" style="object-fit: cover" class="attachment" data-id="{{ attachment.id }}">
+                                    <div class="overlay">
+                                        <i class="fas fa-trash"></i>
+                                    </div>
+                                </figure>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
 
                 <div class="control">

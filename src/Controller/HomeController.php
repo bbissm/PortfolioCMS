@@ -27,19 +27,19 @@ class HomeController extends AbstractController
 		$hobbies = $this->getDoctrine()
 			->getRepository(Hobby::class)
 			->findAll();
-		$hobbyArray = [];
 
-		foreach ($hobbies as $key => $hobby) {
+		foreach ($hobbies as $hobby) {
 			$attachments = $this->getDoctrine()
 				->getRepository(Attachment::class)
 				->findBy(['hobby_id' => $hobby->getId()]);
 			$hobby->attachments = $attachments;
 		}
-		if (!$hobbies) {
+
+		/*if (!$hobbies) {
 			throw $this->createNotFoundException(
 				'No Hobby found'
 			);
-		}
+		}*/
 		return $this->render('homepage.html.twig', ['hobbies'=>$hobbies]);
     }
 }
