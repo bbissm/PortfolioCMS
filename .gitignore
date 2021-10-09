@@ -40,4 +40,4 @@ doc
 yarn-error.log
 yarn.lock
 LICENSE.txt
-
+.env
