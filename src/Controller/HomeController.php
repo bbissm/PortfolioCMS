@@ -31,7 +31,7 @@ class HomeController extends AbstractController
 		foreach ($hobbies as $hobby) {
 			$attachments = $this->getDoctrine()
 				->getRepository(Attachment::class)
-				->findBy(['hobby_id' => $hobby->getId()]);
+				->findBy(['hobby_id' => $hobby->getId()],['sorting'=> 'ASC']);
 			$hobby->attachments = $attachments;
 		}
 

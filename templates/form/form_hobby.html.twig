@@ -1,4 +1,4 @@
-{% extends "base.html.twig" %}
+{% extends "./base.html.twig" %}
 
 {% block title %}Hobby{% endblock %}
 {% block body %}
@@ -32,16 +32,18 @@
                 {{ form_label(form.my_files, null, {
                     'label_attr': {'class': 'label'}
                 }) }}
-                <div class="columns is-multiline">
+                <div class="columns is-multiline" id="attachments">
                     {% if attachments|default  %}
                         {% for attachment in attachments %}
-                            <div class="column is-2">
+                            <div class="column is-2 draggable">
                                 <figure class="image is-square attachmentContainer">
                                     <img src="{{ '/uploads/hobby/'~attachment.imageFile }}" alt="{{ attachment.image }}" style="object-fit: cover" class="attachment" data-id="{{ attachment.id }}">
+                                    <i class="fas fa-trash"></i>
                                     <div class="overlay">
                                         <i class="fas fa-trash"></i>
                                     </div>
                                 </figure>
+                                <input type="hidden" value="{{ attachment.sorting }}" data-id="{{ attachment.id }}">
                             </div>
                         {% endfor %}
                     {% endif %}

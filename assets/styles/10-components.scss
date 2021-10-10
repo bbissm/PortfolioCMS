@@ -437,29 +437,68 @@ a.button{
 
 .attachmentContainer{
     position: relative;
-    &:hover{
-        .attachment{
-
-        }
-        .overlay{
-            display: flex !important;
-        }
-    }
-    .overlay{
-        width: 100%;
-        height: 100%;
-        display: none;
-        align-items: center;
-        justify-content: center;
+    cursor: grab;
+    i{
         position: absolute;
-        top: 0;
-        left: 0;
-        background: linear-gradient(to right, rgb(242, 112, 156), rgb(255, 148, 114));
+        right: 0.5rem;
+        top:0.5rem;
+        color: #D64C7FFF;
         cursor: pointer;
-        i{
-            color: white;
-            font-size: 3rem;
+        &:hover ~ .attachmentContainer {
+            transform: scale(2);
+            .overlay{
+                display: flex !important;
+            }
         }
     }
+}
 
+.confirmation{
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+//For delete items
+.overlay{
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, rgb(242, 112, 156), rgb(255, 148, 114));
+    cursor: pointer;
+    i{
+        color: white;
+        font-size: 3rem;
+    }
+}
+
+.notification{
+    color:#fff;
+    font-weight: bold;
+    font-size:1.3rem;
+    padding:0.5rem 1rem !important;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(128,248,174,1) 0%, rgba(223,244,148,1) 90% );
+    &.fade-out{
+        animation: fade 1s steps(90) forwards;
+        -webkit-animation: fade 1s steps(90) forwards;
+        -moz-animation: fade 1s steps(90) forwards;
+    }
+    @keyframes fade {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0.0;
+        }
+    }
 }

@@ -10,19 +10,14 @@ import './styles/app.scss';
 
 import Swiper, { SwiperOptions, Keyboard, Pagination, Virtual, Navigation, Autoplay, Manipulation } from 'swiper';
 
-// start the Stimulus application
-import bulmaAccordion from 'bulma-accordion/dist/js/bulma-accordion';
+import Sortable from 'sortablejs';
+import {hide} from "bulma-extensions/bulma-carousel/src/js/utils/css";
 
-//let accordions = document.querySelectorAll('.accordions');
-var accordions = bulmaAccordion.attach();
-const grid = document.getElementById('skeletonGrid')
-const entries = document.querySelectorAll('.entry');
-const skeletonColumns = document.querySelectorAll('.skeletonColumn')
 const sections = document.querySelectorAll('section.section');
 const links = document.querySelectorAll('a[href^="#"]');
 const html = document.getElementsByTagName('html')[0];
 const progressBars = document.querySelectorAll('.progress');
-
+const attachments = document.querySelectorAll('.attachment');
 // Global functions
 window.openPopup = (el) => {
     const flip = el.closest('.flip');
@@ -188,9 +183,8 @@ if (document.querySelector('.has-swiper') !== null) {
 }
 
 // Async attachment
-const attachments = document.querySelectorAll('.attachment');
 attachments.forEach(attachment => {
-    // click on overlay by hover!!!!!
+    // click on overlay while hovering
     attachment.nextElementSibling.addEventListener('click', function (e) {
         if (confirm('Are you sure?')) {
             let id = attachment.dataset.id;
@@ -199,4 +193,46 @@ attachments.forEach(attachment => {
             }).then(response => window.location.reload())
         }
     })
+})
+
+//Sortable js
+let attachmentContainer = document.getElementById('attachments');
+let sortableAttachments = new Sortable(attachmentContainer, {
+    animation: 150,
+    ghostClass: 'blue-background-class',
+    dataIdAttr: 'data-id',
+    draggable: '.draggable',
+    onStart: function (event) {
+
+    },
+    onEnd: function (event) {
+        //let sortField = event.item.querySelector('input[type="hidden"]');
+        //sortField.value = event.newDraggableIndex;
+        let hiddenAttaches = attachmentContainer.querySelectorAll('input[type="hidden"]');
+        let i = 0;
+        hiddenAttaches.forEach(hiddenAttach => {
+            hiddenAttach.value = i++;
+        })
+        i = 0;
+        hiddenAttaches.forEach(hiddenAttach => {
+            i++;
+            let sorting = hiddenAttach.value;
+            let id = hiddenAttach.dataset.id;
+            fetch(`/attachment/${sorting}/sort/${id}`, {
+                method: 'POST',
+            }).then(response => {})
+            if (hiddenAttaches.length - 1 === i){
+                attachmentContainer.insertAdjacentHTML('beforebegin','<p class="notification mb-5 mt-5">Sortierung gespeichert!</p>');
+
+                setTimeout( function () {
+                    attachmentContainer.previousElementSibling.classList.add('fade-out');
+                },1000)
+                setTimeout( function () {
+                    attachmentContainer.previousElementSibling.remove();
+                },2000)
+            }
+        })
+
+
+    }
 })
