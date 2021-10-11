@@ -6,7 +6,7 @@
  */
 
 // any CSS you import will output into a single css file (app.scss in this case)
-import './styles/app.scss';
+import './scss/app.scss';
 
 import Swiper, { SwiperOptions, Keyboard, Pagination, Virtual, Navigation, Autoplay, Manipulation } from 'swiper';
 
