@@ -181,58 +181,94 @@ if (document.querySelector('.has-swiper') !== null) {
         });
     })
 }
+if (attachments) {
+    const form = document.getElementsByTagName('form')[0]
+    if (form) {
+        const formName = form.getAttribute('name');
+        // Async attachment
+        attachments.forEach(attachment => {
+            // click on overlay while hovering
+            attachment.nextElementSibling.addEventListener('click', function (e) {
+                if (confirm('Are you sure?')) {
+                    let id = attachment.dataset.id;
+                    fetch(`${formName}/attachment/delete/${id}`, {
+                        method: 'POST'
+                    }).then(response => window.location.reload())
+                }
+            })
+        })
+    }
+}
 
-// Async attachment
-attachments.forEach(attachment => {
-    // click on overlay while hovering
-    attachment.nextElementSibling.addEventListener('click', function (e) {
-        if (confirm('Are you sure?')) {
-            let id = attachment.dataset.id;
-            fetch(`/hobby/delete/${id}`, {
-                method: 'POST'
-            }).then(response => window.location.reload())
-        }
-    })
-})
 
 //Sortable js
-let attachmentContainer = document.getElementById('attachments');
-let sortableAttachments = new Sortable(attachmentContainer, {
-    animation: 150,
-    ghostClass: 'blue-background-class',
-    dataIdAttr: 'data-id',
-    draggable: '.draggable',
-    onStart: function (event) {
+let attachmentContainer = document.getElementById('sortableAttachment');
+if (attachmentContainer) {
+    new Sortable(attachmentContainer, {
+        animation: 150,
+        ghostClass: 'blue-background-class',
+        dataIdAttr: 'data-id',
+        draggable: '.draggable',
+        onStart: function (event) {
 
-    },
-    onEnd: function (event) {
-        //let sortField = event.item.querySelector('input[type="hidden"]');
-        //sortField.value = event.newDraggableIndex;
-        let hiddenAttaches = attachmentContainer.querySelectorAll('input[type="hidden"]');
-        let i = 0;
-        hiddenAttaches.forEach(hiddenAttach => {
-            hiddenAttach.value = i++;
-        })
-        i = 0;
-        hiddenAttaches.forEach(hiddenAttach => {
-            i++;
-            let sorting = hiddenAttach.value;
-            let id = hiddenAttach.dataset.id;
-            fetch(`/attachment/${sorting}/sort/${id}`, {
-                method: 'POST',
-            }).then(response => {})
-            if (hiddenAttaches.length - 1 === i){
-                attachmentContainer.insertAdjacentHTML('beforebegin','<p class="notification mb-5 mt-5">Sortierung gespeichert!</p>');
+        },
+        onEnd: function (event) {
 
-                setTimeout( function () {
-                    attachmentContainer.previousElementSibling.classList.add('fade-out');
-                },1000)
-                setTimeout( function () {
-                    attachmentContainer.previousElementSibling.remove();
-                },2000)
-            }
-        })
+            let draggableItem = event.target.querySelectorAll('.draggable');
+            let i = 0;
+            draggableItem.forEach(item => {
+                item.dataset.sorting = i++;
+            })
+            i = 0;
+            draggableItem.forEach(item => {
+                i++;
+                let sorting = item.dataset.sorting;
+                let id = item.dataset.id;
+                fetch(`/attachment/${sorting}/sort/${id}`, {
+                    method: 'POST',
+                }).then(response => {})
+                if (draggableItem.length - 1 === i){
+                    attachmentContainer.insertAdjacentHTML('beforebegin','<p class="notification mb-5 mt-5">Sortierung gespeichert!</p>');
+                    setTimeout( function () {
+                        attachmentContainer.previousElementSibling.classList.add('fade-out');
+                    },1000)
+                    setTimeout( function () {
+                        attachmentContainer.previousElementSibling.remove();
+                    },2000)
+                }
+            })
 
 
-    }
-})
+        }
+    })
+}
+
+
+let sectionContainer = document.getElementById('sortableSection');
+if (sectionContainer) {
+    new Sortable(sectionContainer, {
+        animation: 150,
+        ghostClass: 'blue-background-class',
+        draggable: '.sortable',
+        onStart: function (event) {
+
+        },
+        onEnd: function (event) {
+            let draggableItem = event.target.querySelectorAll('.sortable');
+            let i = 0;
+            draggableItem.forEach(item => {
+                item.dataset.sorting = i++;
+            })
+            i = 0;
+            draggableItem.forEach(item => {
+                i++;
+                let sorting = item.dataset.sorting;
+                let id = item.dataset.id;
+                fetch(`/section/${id}/sort/${sorting}`, {
+                    method: 'POST',
+                }).then(response => {})
+            })
+        }
+    })
+
+}

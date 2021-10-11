@@ -1,49 +1,57 @@
 <?php
 
 namespace App\Controller;
+
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Entity\Attachment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Hobby;
-use App\Form\HobbyType;
+use App\Entity\Project;
+use App\Form\ProjectType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class HobbyController extends AbstractController
+
+class ProjectController extends AbstractController
 {
 	/**
-	 * @Route("/addHobby", name="create_hobby")
+	 * @Route("/addProject", name="create_project")
 	 *
 	 */
 	public function create(Request $request): Response
 	{
-		$hobby = new Hobby();
-		$form = $this->createForm(HobbyType::class, $hobby);
+		$project = new Project();
+		$form = $this->createForm(ProjectType::class, $project);
+
+
 		$form->handleRequest($request);
 
 		// For attachments
 		if ($form->isSubmitted() && $form->isValid()) {
 
 			// $form->getData() holds the submitted values
-			$hobby = $form->getData();
+			$project = $form->getData();
 
 			// ... perform some action, such as saving the task to the database
 			// for example, if Task is a Doctrine entity, save it!
 			$entityManager = $this->getDoctrine()->getManager();
-			$entityManager->persist($hobby);
+			$entityManager->persist($project);
 			$entityManager->flush();
 
-			// getting highest current id of hobby // TODO: Make it more simple
+			// getting highest current id of project // TODO: Make it more simple
 			$query = $this->getDoctrine()->getManager()->createQuery(
 				'SELECT MAX(h.id)
-				FROM App\Entity\Hobby h'
+				FROM App\Entity\Project h'
 			);
-			$newHobbyId = $query->getResult()[0][1];
+			$newProjectId = $query->getResult()[0][1];
 
 
-			$upload_dir = $this->getParameter('app.path.hobby_attachments');
-			$files = $request->files->get('hobby')['my_files'];
+			$upload_dir = $this->getParameter('app.path.project_attachments');
+
+			$files = $request->files->get('project')['my_files'];
 
 			// loop through uploaded files and set images
 			$entityManager = $this->getDoctrine()->getManager();
@@ -55,7 +63,7 @@ class HobbyController extends AbstractController
 				$attachment = new Attachment();
 				$attachment->setImageFile($filename);
 				$attachment->setImage($file->getClientOriginalName($originFileName));
-				$attachment->setHobbyId($newHobbyId);
+				$attachment->setProjectId($newProjectId);
 				$attachment->setSorting($i++);
 				$entityManager->persist($attachment);
 			}
@@ -63,28 +71,28 @@ class HobbyController extends AbstractController
 			return $this->redirectToRoute('homepage');
 		}
 
-		return $this->render('form/form_hobby.html.twig', [
+		return $this->render('form/form_project.html.twig', [
 			'form' => $form->createView()
 		]);
 
 	}
 
 	/**
-	 * @Route("/editHobby-{id}", name="edit_hobby")
+	 * @Route("/editProject-{id}", name="edit_project")
 	 */
-	public function edit(int $id, Request $request, Hobby $hobby): Response
+	public function edit(int $id, Request $request, Project $project): Response
 	{
-		$form = $this->createForm(HobbyType::class, $hobby);
+		$form = $this->createForm(ProjectType::class, $project);
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
-			$upload_dir = $this->getParameter('app.path.hobby_attachments');
-			$files = $request->files->get('hobby')['my_files'];
+			$upload_dir = $this->getParameter('app.path.project_attachments');
+			$files = $request->files->get('project')['my_files'];
 
-			// getting highest current id of hobby // TODO: Make it more simple
+			// getting highest current id of project // TODO: Make it more simple
 			$query = $this->getDoctrine()->getManager()->createQuery(
 				'SELECT MAX(a.sorting)
 				FROM App\Entity\Attachment a
-				WHERE a.hobby_id ='.$hobby->getId()
+				WHERE a.project_id ='.$project->getId()
 			);
 			$sorting = $query->getResult()[0][1];
 
@@ -100,7 +108,7 @@ class HobbyController extends AbstractController
 				$attachment = new Attachment();
 				$attachment->setImageFile($filename);
 				$attachment->setImage($file->getClientOriginalName($originFileName));
-				$attachment->setHobbyId($id);
+				$attachment->setProjectId($id);
 				$attachment->setSorting($sorting+$i);
 				$entityManager->persist($attachment);
 
@@ -110,12 +118,12 @@ class HobbyController extends AbstractController
 
 			// $form->getData() holds the submitted values
 			// but, the original `$task` variable has also been updated
-			$hobby = $form->getData();
+			$project = $form->getData();
 
 			// ... perform some action, such as saving the task to the database
 			// for example, if Task is a Doctrine entity, save it!
 			$entityManager = $this->getDoctrine()->getManager();
-			$entityManager->persist($hobby);
+			$entityManager->persist($project);
 			$entityManager->flush();
 
 			return $this->redirectToRoute('homepage');
@@ -124,25 +132,25 @@ class HobbyController extends AbstractController
 
 		$attachments = $this->getDoctrine()
 			->getRepository(Attachment::class)
-			->findBy(['hobby_id'=>$id], ['sorting'=>'ASC']);
+			->findBy(['project_id'=>$id], ['sorting'=>'ASC']);
 
-		return $this->render('form/form_hobby.html.twig', [
+		return $this->render('form/form_project.html.twig', [
 			'form' => $form->createView(),
 			'attachments' => $attachments
 		]);
 	}
 
 	/**
-	 * @Route("/deleteHobby-{id}", name="delete_hobby")
+	 * @Route("/deleteProject-{id}", name="delete_project")
 	 */
 	public function delete(int $id): Response
 	{
-		$upload_dir = $this->getParameter('app.path.hobby_attachments');
-		// Remove all attachments linked to Hobby
+		$upload_dir = $this->getParameter('app.path.project_attachments');
+		// Remove all attachments linked to Project
 
 		$attachments = $this->getDoctrine()->getManager()
 			->getRepository(Attachment::class)
-			->findBy(['hobby_id'=>$id]);
+			->findBy(['project_id'=>$id]);
 
 		$entityManager = $this->getDoctrine()->getManager();
 		foreach ($attachments as $attach) {
@@ -152,18 +160,18 @@ class HobbyController extends AbstractController
 		$entityManager->flush();
 
 		$entityManager = $this->getDoctrine()->getManager();
-		$hobby = $entityManager->getRepository(Hobby::class)->find($id);
-		$entityManager->remove($hobby);
+		$project = $entityManager->getRepository(Project::class)->find($id);
+		$entityManager->remove($project);
 		$entityManager->flush();
 
 		return $this->redirectToRoute('homepage');
 	}
 
 	/**
-	 * @Route("hobby/attachment/delete/{id}")
+	 * @Route("project/attachment/delete/{id}")
 	 */
 	public function deleteAttachment(Request $request, $id) {
-		$upload_dir = $this->getParameter('app.path.hobby_attachments');
+		$upload_dir = $this->getParameter('app.path.project_attachments');
 		$attachment = $this->getDoctrine()->getManager()
 			->getRepository(Attachment::class)
 			->find($id);

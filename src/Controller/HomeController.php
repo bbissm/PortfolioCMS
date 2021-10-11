@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Attachment;
 use App\Entity\Hobby;
+use App\Entity\Project;
+use App\Entity\Section;
 use ArrayObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,11 +37,36 @@ class HomeController extends AbstractController
 			$hobby->attachments = $attachments;
 		}
 
-		/*if (!$hobbies) {
-			throw $this->createNotFoundException(
-				'No Hobby found'
-			);
-		}*/
-		return $this->render('homepage.html.twig', ['hobbies'=>$hobbies]);
+		$projects = $this->getDoctrine()
+			->getRepository(Project::class)
+			->findAll();
+
+		foreach ($projects as $project) {
+			$attachments = $this->getDoctrine()
+				->getRepository(Attachment::class)
+				->findBy(['project_id' => $project->getId()],['sorting'=> 'ASC']);
+			$project->attachments = $attachments;
+		}
+
+		$sections = $this->getDoctrine()
+			->getRepository(Section::class)
+			->findBy([],['sorting' => 'ASC']);
+
+		return $this->render('homepage.html.twig', ['hobbies'=>$hobbies, 'sections' =>$sections, 'projects'=>$projects]);
     }
+
+	/**
+	 * @Route("/section/{id}/sort/{sorting}")
+	 */
+    public function sortSections(Request $request, $id, $sorting) {
+		// getting highest current id of hobby // TODO: Make it more simple
+		$entityManager = $this->getDoctrine()->getManager();
+		$sections = $this->getDoctrine()
+			->getRepository(Section::class)
+			->find($id);
+		$sections->setSorting($sorting);
+		$entityManager->persist($sections);
+		$entityManager->flush();
+
+	}
 }

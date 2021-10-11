@@ -7,6 +7,7 @@ parameters:
     app.path.member_attachments: /uploads/team
     app.path.event_attachments: /uploads/events
     app.path.hobby_attachments: '%kernel.project_dir%/public/uploads/hobby'
+    app.path.project_attachments: '%kernel.project_dir%/public/uploads/project'
 services:
     # default configuration for services in *this* file
     _defaults:

@@ -17,13 +17,13 @@
 
     </div>
 </section>
-<div class="container">
-    {%  include 'chunks/divider.html.twig' %}
-    {%  include 'sections/about.html.twig' %}
-    {%  include 'chunks/divider.html.twig' %}
-    {%  include 'sections/hobbies.html.twig' %}
-    {%  include 'chunks/divider.html.twig' %}
-    {%  include 'sections/work.html.twig' %}
-    {%  include 'chunks/divider.html.twig' %}
+<div class="container" {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}id="sortableSection"{% endif %}>
+    {% for section in sections %}
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {%  include 'sections/'~section.template  with {'sortable':'sortable','id':section.id,'sorting':section.sorting} %}
+        {% else %}
+            {%  include 'sections/'~section.template %}
+        {% endif %}
+    {% endfor %}
 </div>
 {% endblock %}

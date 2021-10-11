@@ -41,6 +41,11 @@ class Attachment
 	 */
 	private $hobby_id;
 
+	/**
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	private $project_id;
+
 
 	/**
 	 * @ORM\Column(type="integer", nullable=true)
@@ -143,6 +148,18 @@ class Attachment
     public function setSorting(int $sorting): self
     {
         $this->sorting = $sorting;
+
+        return $this;
+    }
+
+    public function getProjectId(): ?int
+    {
+        return $this->project_id;
+    }
+
+    public function setProjectId(?int $project_id): self
+    {
+        $this->project_id = $project_id;
 
         return $this;
     }

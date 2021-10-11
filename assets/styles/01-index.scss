@@ -88,8 +88,84 @@ section#work{
 }
 
 footer{
-    background-image: radial-gradient( circle farthest-corner at -4% -12.9%,  rgba(74,98,110,1) 0.3%, rgba(30,33,48,1) 90.2% );
+    background-color: #3586ff !important;
+    //background-image: radial-gradient( circle farthest-corner at -4% -12.9%,  rgba(74,98,110,1) 0.3%, rgba(30,33,48,1) 90.2% );
 }
 
+.waveContainer{
+    height: 6rem;
+    position: relative;
+    .wave {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background: url('../img/wave.png');
+        background-size: 1000px 100px;
+        &#wave{
+            &1{
+                z-index: 1000;
+                opacity: 1;
+                bottom: 0;
+                animation: animateWave1 4s linear infinite;
+            }
+            &2{
+                z-index: 999;
+                opacity: 0.5;
+                bottom: 10px;
+                animation: animateWave2 4s linear infinite;
+            }
+            &3{
+                z-index: 1000;
+                opacity: 0.2;
+                bottom: 15px;
+                animation: animateWave1 3s linear infinite;
+            }
+            &4{
+                z-index: 999;
+                opacity: 0.7;
+                bottom: 20px;
+                animation: animateWave2 3s linear infinite;
+            }
+        }
+
+        @keyframes animateWave1 {
+            0%
+            {
+                background-position-x: 1000px;
+            }
+            100%
+            {
+                background-position-x: 0px;
+            }
+        }
+
+        @keyframes animateWave2 {
+            0%
+            {
+                background-position-x: 0px;
+            }
+            100%
+            {
+                background-position-x: 1000px;
+            }
+        }
+    }
+}
+
+section.sortable{
+    cursor:grab;
+    &:hover{
+        background-image: radial-gradient( circle 592px at 48.2% 50%,  rgba(255,255,249,0.6) 0%, rgba(160,199,254,1) 74.6% );
+        h2{
+            color: #fff;
+        }
+        .divider:after{
+            border-color: #fff;
+        }
+    }
+
+}
 
 

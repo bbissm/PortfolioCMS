@@ -1,64 +1,87 @@
-<section class="section" id="work">
-    <h2>Work</h2>
-    <div class="columns is-multiline">
-        <? for ($i = 1; $i < 4; $i++){ ?>
-        <div class="column project is-half">
-            <div class="flip">
-                <div class="flip-inner">
-                    <div class="flip-front">
-                        <img src="../../assets/img/me.png" alt="Porject" style="width:100%;height:100%;object-fit: cover">
-                    </div>
-                    <div class="flip-back box">
-                        <h1>Project <?echo $i?></h1>
-                        <p>Architect & Engineer</p>
-                        <p>We love that guy</p>
-                        <a onclick="window.openPopup(this)"><i class="fas fa-book-open"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="modal">
-                <div class="modal-background"></div>
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <a onclick="switchProject(this,'prev')">
-                            <div class="arrow-next prev">
-                                <div class="arrow-next-top"></div>
-                                <div class="arrow-next-bottom"></div>
-                            </div>
-                        </a>
-                        <p class="modal-card-title has-text-centered">Projekt <?echo $i ?></p>
-                        <a onclick="switchProject(this,'next')">
-                            <div class="arrow-next">
-                                <div class="arrow-next-top"></div>
-                                <div class="arrow-next-bottom"></div>
-                            </div>
-                        </a>
+<section id="work" class="section {% if sortable is defined %} {{ sortable }} " data-id="{{ id }}" data-sorting="{{ sorting }}"{% else %}"{% endif %}>
+    {%  include 'chunks/divider.html.twig' %}
+    <div class="content">
+        <h2>Work {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}<a class="ml-5 button is-success mb-5" href="{{ path('create_project') }}">Add Work</a>    {% endif %}
+        </h2>
 
-                        <button onclick="closePopup(this)" class="delete" aria-label="close"></button>
-                    </header>
-                    <section class="modal-card-body">
-                        <div class="columns">
-                            <div class="column">
-                                <img src="../../assets/img/me.png" alt="Projekt">
-                            </div>
-                            <div class="column">
-                                <h3>Titel</h3>
-                                <progress class="progress is-primary" value="0" max="100" data-value="<?echo $i?>5">15%</progress>
-                                <progress class="progress is-warning" value="0" max="100" data-value="<?echo $i?>0">75%</progress>
-                                <progress class="progress is-danger" value="0" max="100" data-value="<?echo $i?>5">90%</progress>
-                                <div class="content">
-                                    <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+        <div class="columns is-multiline">
+            {% for project in projects %}
+
+                    <div class="column project is-half">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <a class="is-size-3" href="{{ path('edit_project', {'id':project.id}) }}"><i class="fas fa-edit"></i></a>
+                            <a class="is-size-3" href="{{ path('delete_project', {'id':project.id}) }}#project"><i class="fas fa-trash"></i></a>
+                        {% endif %}
+                        <div class="flip">
+                            <div class="flip-inner">
+                                <div class="flip-front">
+                                    {% if project.attachments %}
+                                        <img src="{{ asset('/uploads/project/')~project.attachments[0].imageFile  }}" alt="{{ project.attachments[0].imageFile }}" style="width:100%;height:100%;object-fit: cover">
+                                    {% endif %}
+                                </div>
+                                <div class="flip-back box">
+                                    <h1>Project <?echo $i?></h1>
+                                    <p>Architect & Engineer</p>
+                                    <p>We love that guy</p>
+                                    <a onclick="window.openPopup(this)"><i class="fas fa-book-open"></i></a>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <a href=""><i class="fab fa-github"></i></a>
-                        <a href="https://www.google.ch" target="_blank">www.google.ch<i class="fas fa-external-link-alt"></i></a>
-                    </footer>
-                </div>
-            </div>
+                        <div class="modal">
+                            <div class="modal-background"></div>
+                            <div class="modal-card">
+                                <header class="modal-card-head">
+                                    <a onclick="switchProject(this,'prev')">
+                                        <div class="arrow-next prev">
+                                            <div class="arrow-next-top"></div>
+                                            <div class="arrow-next-bottom"></div>
+                                        </div>
+                                    </a>
+                                    <p class="modal-card-title has-text-centered">Projekt <?echo $i ?></p>
+                                    <a onclick="switchProject(this,'next')">
+                                        <div class="arrow-next">
+                                            <div class="arrow-next-top"></div>
+                                            <div class="arrow-next-bottom"></div>
+                                        </div>
+                                    </a>
+
+                                    <button onclick="closePopup(this)" class="delete" aria-label="close"></button>
+                                </header>
+                                <section class="modal-card-body">
+                                    <div class="columns">
+                                        <div class="column is-half {% if project.attachments|length > 1 %}has-swiper{% endif %}">
+                                            <div class="swiper">
+                                                <div class="swiper-wrapper">
+                                                    {% for attachment in project.attachments %}
+                                                        <div class="swiper-slide">
+                                                            <img src="{{ asset('/uploads/project/')~attachment.imageFile  }}" alt="{{ attachment.imageFile }}" style="object-fit: contain">
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                                <div class="swiper-pagination"></div>
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <h3>Titel</h3>
+                                            <progress class="progress is-primary" value="0" max="100" data-value="15">15%</progress>
+                                            <progress class="progress is-warning" value="0" max="100" data-value="20">75%</progress>
+                                            <progress class="progress is-danger" value="0" max="100" data-value="35">90%</progress>
+                                            <div class="content">
+                                                <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <footer class="modal-card-foot">
+                                    <a href=""><i class="fab fa-github"></i></a>
+                                    <a href="https://www.google.ch" target="_blank">www.google.ch<i class="fas fa-external-link-alt"></i></a>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+
+            {% endfor %}
+
         </div>
-        <? } ?>
     </div>
 </section>
