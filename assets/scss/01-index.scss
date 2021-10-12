@@ -2,7 +2,7 @@ html{
     background: #fff;
 }
 section.hero{
-    min-height: calc(40vh - 3.25rem);
+    min-height: calc(60vh - 3.25rem) !important;
     @include tablet() {
         min-height: calc(100vh) !important;
     }
@@ -24,6 +24,11 @@ section.hero{
         }
     }
 }
+h1{
+    font-size:$size-1 !important;
+    margin-bottom: $size-1 !important;
+    font-weight: 800 !important;
+}
 
 h2{
     font-size:$size-2 !important;
@@ -41,7 +46,8 @@ h3{
 }
 
 p{
-    font-size: $size-4 !important;
+    font-size: $size-5 !important;
+    line-height: 1.25em;
 }
 .fa-trash,.fa-edit{
     color: #000;
