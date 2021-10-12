@@ -31,6 +31,10 @@ export default function() {
 
 //scroll to container after page reload
     window.addEventListener('load',function (e) {
+
+        if (window.matchMedia('(max-width:768px').matches) {
+            document.getElementById('sortableSection').id = '';
+        }
         if (location.hash) scrollToEl(location.hash);
     })
     const sections = document.querySelectorAll('section.animation');

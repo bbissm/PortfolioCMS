@@ -12,10 +12,6 @@ export default function() {
                 observeParents: true,
                 grabCursor: true,
                 loop: true,
-                autoplay: {
-                    delay: 6000,
-                    pauseOnMouseEnter: true,
-                },
                 keyboard: {
                     enabled: true,
                 },
