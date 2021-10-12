@@ -40,6 +40,9 @@ export default function () {
     }
 
     window.switchProject = (el, modalId, nodeId, to) => {
+        const swiper = document.querySelector('.swiper').swiper;
+
+
         const projects = document.querySelectorAll('.project');
         const modals = document.querySelectorAll('.modal');
         let project = document.querySelector('.project_'+modalId);
@@ -56,12 +59,14 @@ export default function () {
         initProgressBar();
 
         if (to == 'next') {
+            swiper.slideNext();
             modal.classList.remove('is-active');
             flip.classList.remove('is-active');
             nextModal.classList.add('is-active');
             nextProject.querySelector('.flip').classList.add('is-active');
 
         }else if(to == 'prev'){
+            swiper.slidePrev();
             modal.classList.remove('is-active');
             flip.classList.remove('is-active');
             prevModal.classList.add('is-active');

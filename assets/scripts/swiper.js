@@ -30,17 +30,13 @@ export default function() {
                 },
             });
         })
-
     }
 
     new Swiper('.project-swiper', {
         modules: [Pagination, Keyboard, Virtual, Navigation, Autoplay, Manipulation],
-        initialSlide: 0,
-        slidesPerView: 3,
-        centeredSlides: true,
-        observer: true,
-        observeParents: true,
+
         allowTouchMove: false,
+
         autoplay: {
             delay: 6000,
             pauseOnMouseEnter: true,
@@ -51,6 +47,22 @@ export default function() {
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+            // when window width is >= 320px
+            320: {
+                slidesPerView: 1,
+            },
+            // when window width is >= 480px
+            768: {
+                slidesPerView: 2,
+            },
+            // when window width is >= 640px
+            1804: {
+                initialSlide: 0,
+                loop:true,
+                slidesPerView: 3,
+            }
         }
     });
 }
