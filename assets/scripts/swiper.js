@@ -34,9 +34,8 @@ export default function() {
 
     new Swiper('.project-swiper', {
         modules: [Pagination, Keyboard, Virtual, Navigation, Autoplay, Manipulation],
-
+        spaceBetween: 10,
         allowTouchMove: false,
-
         autoplay: {
             delay: 6000,
             pauseOnMouseEnter: true,
@@ -59,8 +58,8 @@ export default function() {
             },
             // when window width is >= 640px
             1804: {
+                centeredSlides: true,
                 initialSlide: 0,
-                loop:true,
                 slidesPerView: 3,
             }
         }
