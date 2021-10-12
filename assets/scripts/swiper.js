@@ -28,6 +28,14 @@ export default function() {
                     type: 'bullets',
                     clickable: true,
                 },
+                breakpoints: {
+                    768: {
+                        autoplay: {
+                            delay: 6000,
+                            pauseOnMouseEnter: true,
+                        },
+                    }
+                }
             });
         })
     }
@@ -36,10 +44,7 @@ export default function() {
         modules: [Pagination, Keyboard, Virtual, Navigation, Autoplay, Manipulation],
         spaceBetween: 10,
         allowTouchMove: false,
-        autoplay: {
-            delay: 6000,
-            pauseOnMouseEnter: true,
-        },
+
         /*keyboard: {
             enabled: true,
         },*/
@@ -55,12 +60,16 @@ export default function() {
             // when window width is >= 480px
             768: {
                 slidesPerView: 2,
+                autoplay: {
+                    delay: 6000,
+                    pauseOnMouseEnter: true,
+                }
             },
             // when window width is >= 640px
             1804: {
                 centeredSlides: true,
                 initialSlide: 0,
-                slidesPerView: 3,
+                slidesPerView: 3
             }
         }
     });

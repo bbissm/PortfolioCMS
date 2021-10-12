@@ -2,7 +2,7 @@
 import Sortable from "sortablejs";
 export default function () {
     let attachmentContainer = document.getElementById('sortableAttachment');
-    if (attachmentContainer) {
+    if (attachmentContainer !== null) {
         new Sortable(attachmentContainer, {
             animation: 150,
             ghostClass: 'blue-background-class',
@@ -42,9 +42,9 @@ export default function () {
         })
     }
 
-
-    let sectionContainer = document.getElementById('sortableSection');
-    if (sectionContainer) {
+    const sectionContainer = document.getElementById('sortableSection');
+    console.log(sectionContainer)
+    if (sectionContainer !== null && !window.matchMedia('(max-width:768px').matches) {
         new Sortable(sectionContainer, {
             animation: 150,
             ghostClass: 'blue-background-class',
@@ -55,10 +55,13 @@ export default function () {
             onEnd: function (event) {
                 let draggableItem = event.target.querySelectorAll('.sortable');
                 let i = 0;
+
+                // First set correct sorting
                 draggableItem.forEach(item => {
                     item.dataset.sorting = i++;
                 })
                 i = 0;
+                // then send sorting to server
                 draggableItem.forEach(item => {
                     i++;
                     let sorting = item.dataset.sorting;

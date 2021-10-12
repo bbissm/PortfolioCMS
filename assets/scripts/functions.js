@@ -32,11 +32,12 @@ export default function() {
 //scroll to container after page reload
     window.addEventListener('load',function (e) {
         if (location.hash) scrollToEl(location.hash);
-
     })
     const sections = document.querySelectorAll('section.animation');
     const navigation = document.getElementById('nav');
+
     document.addEventListener('scroll', function (e) {
+
         // display toTopButton after scroll
         const toTopButton = document.querySelector('.toTopContainer');
         if (window.scrollY > 0) {
