@@ -2,10 +2,10 @@
 
 {% block title %}Project{% endblock %}
 {% block body %}
-    <section class="section">
-        <div class="inner-container">
-            <h1 class="title">Projekteintrag</h1>
+    <div class="container">
+        <section class="section" id="form">
             <div class="inner-container">
+                <h1 class="title">Projekteintrag</h1>
                 {{ form_start(form) }}
                 <div class="my-custom-class-for-errors is-danger">
                     {{ form_errors(form) }}
@@ -23,7 +23,7 @@
                         'label_attr': {'class': 'label'}
                     }) }}
                     <div class="control">
-                        {{ form_widget(form.description, { 'attr': {'class': 'input'} }) }}
+                        {{ form_widget(form.description, { 'attr': {'class': 'textarea'} }) }}
                     </div>
                 </div>
 
@@ -57,8 +57,7 @@
                     {{ form_widget(form.save, { 'label': 'Submit','attr': {'class': 'button','onclick':'window.location.hash = "project"'} }) }}
                 </div>
                 {{ form_end(form) }}
-                <a href="{{ path('homepage') }}">zur Homepage</a>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 {% endblock %}

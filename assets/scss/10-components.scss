@@ -30,11 +30,12 @@
 
 
 .dividerContainer{
+    background-color:#fff;
     position: relative;
+    padding-top: 4.25rem;
+    padding-bottom: 4.25rem;
     .divider{
-        height: 10rem;
-        margin-top: 4.25rem;
-        margin-bottom: 4.25rem;
+        height: 8rem;
         &:after{
             content: "";
             position: absolute;
@@ -44,7 +45,6 @@
             left: 50%;
             border-left: 2px solid $grey-lighter;
             transform: translate(-50%,-50%);
-            height: 8rem;
         }
     }
 }

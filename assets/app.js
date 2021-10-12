@@ -21,7 +21,6 @@ SwiperSlide();
 Modal();
 Functions();
 Attachment();
-Functions();
 initSortable();
 
 

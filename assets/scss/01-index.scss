@@ -2,7 +2,10 @@ html{
     background: #fff;
 }
 section.hero{
-    min-height: calc(100vh) !important;
+    min-height: calc(40vh - 3.25rem);
+    @include tablet() {
+        min-height: calc(100vh) !important;
+    }
     background-image: radial-gradient( circle farthest-corner at 12.3% 19.3%,  rgba(85,88,218,1) 0%, rgba(95,209,249,1) 100.2% );
     position: relative;
     h1.title{
@@ -16,6 +19,7 @@ section.hero{
     margin:0 auto;
     .content{
         &.inner{
+            margin: 0 auto;
             max-width: 32em;
         }
     }
@@ -45,7 +49,9 @@ p{
 
 section.animation{
     &.current{
-        animation: slide-up 1s ease-in-out;
+        .content{
+            animation: slide-up 1s ease-in-out;
+        }
     }
 }
 @keyframes slide-up {
@@ -70,13 +76,24 @@ section.animation{
         }
     }
 }
+.main-content{
+    min-height: calc(100vh - 144px);
+    background-image: radial-gradient(circle farthest-corner at 12.3% 19.3%,#5558da 0,#5fd1f9 100.2%);
 
+    @include mobile() {
+        .hero.is-fullheight-with-navbar {
+            min-height: calc(40vh - 3.25rem);
+        }
+    }
+}
 footer{
+    margin-top: -6rem;
     background-color: #3586ff !important;
     //background-image: radial-gradient( circle farthest-corner at -4% -12.9%,  rgba(74,98,110,1) 0.3%, rgba(30,33,48,1) 90.2% );
 }
 
 .waveContainer{
+    top:-6rem;
     height: 6rem;
     position: relative;
     .wave {

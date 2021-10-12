@@ -16,7 +16,7 @@
         </a>
     </div>
 </section>
-<div {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}id="sortableSection"{% endif %}>
+<div style="margin-bottom:6rem;" {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}id="sortableSection"{% endif %}>
     {%  include 'chunks/divider.html.twig' %}
     {% for section in sections %}
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}

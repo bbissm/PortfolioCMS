@@ -7,7 +7,7 @@ $family-serif: "Quicksand", serif;
 $family-primary: $family-serif;
 $grey-dark:#5d5a5a;
 $body-background-color: #efefef;
-
+$navbar-breakpoint: 0px;
 @import "../../node_modules/bulma/bulma";
 
 // import bulma-extension scss
@@ -28,5 +28,7 @@ $body-background-color: #efefef;
 @import "05-hobby";
 @import "06-project";
 @import "07-about";
+@import "08-login";
+@import "09-form";
 @import "10-components";
 

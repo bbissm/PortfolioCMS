@@ -20,5 +20,19 @@ nav{
     &.is-scrolled {
         background-color: #000 !important;
     }
-
+    .navbar-menu{
+        @include mobile() {
+            margin:0;
+            padding:.5rem 1.5rem;
+            flex-direction: column !important;
+            .navbar-start{
+                justify-content: space-between;
+                margin-right: 0;
+            }
+            .navbar-end{
+                justify-content: flex-start;
+                margin-left:0;
+            }
+        }
+    }
 }
