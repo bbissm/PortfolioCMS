@@ -185,6 +185,9 @@
             width: 100%;
             z-index: 1002;
             max-width: inherit;
+            .modal-card-title{
+                margin: auto;
+            }
         }
         .modal-card-body{
             position: absolute;
@@ -219,6 +222,18 @@
                     box-shadow: 0 12px 10px -10px rgba(0, 0, 0, 0.15);
                     transform: translate3d(0px, -10px, 0px);
                 }
+            }
+        }
+    }
+    @include mobile() {
+        .modal-card{
+            max-height: 100%;
+            .modal-card-body{
+                height: calc(100vh - 4rem);
+            }
+            .modal-card-foot{
+                width: 100%;
+                top:unset;
             }
         }
     }
