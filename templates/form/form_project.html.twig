@@ -32,10 +32,10 @@
                     {{ form_label(form.my_files, null, {
                         'label_attr': {'class': 'label'}
                     }) }}
-                    <div class="columns is-multiline" id="sortableAttachment">
+                    <div class="columns is-mobile is-multiline" id="sortableAttachment">
                         {% if attachments|default  %}
                             {% for attachment in attachments %}
-                                <div class="column is-2 draggable" data-sorting="{{ attachment.sorting }}" data-id="{{ attachment.id }}">
+                                <div class="column is-3 draggable" data-sorting="{{ attachment.sorting }}" data-id="{{ attachment.id }}">
                                     <figure class="image is-square attachmentContainer">
                                         <img src="{{ '/uploads/project/'~attachment.imageFile }}" alt="{{ attachment.image }}" style="object-fit: cover" class="attachment" data-id="{{ attachment.id }}" loading="lazy">
                                         <i class="fas fa-trash"></i>

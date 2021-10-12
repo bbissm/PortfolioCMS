@@ -43,8 +43,7 @@ export default function () {
     }
 
     const sectionContainer = document.getElementById('sortableSection');
-    console.log(sectionContainer)
-    if (sectionContainer !== null && !window.matchMedia('(max-width:768px').matches) {
+    if (sectionContainer !== null && window.matchMedia('(min-width:768px').matches === true) {
         new Sortable(sectionContainer, {
             animation: 150,
             ghostClass: 'blue-background-class',

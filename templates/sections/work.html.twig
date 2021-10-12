@@ -2,7 +2,7 @@
     {%  include 'chunks/divider.html.twig' %}
     <div class="inner-container">
         <div class="content">
-            <h2 class="p-5">Work {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}<a class="ml-5 button mb-5" href="{{ path('create_project') }}">Add Work</a>    {% endif %}
+            <h2 class="p-5">Work {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}<a class="ml-5 button mb-5 has-background-black has-text-white" href="{{ path('create_project') }}">Add Work</a>    {% endif %}
             </h2>
             <div class="has-swiper pb-6" style="overflow: hidden;">
                 <div class="project-swiper">
@@ -10,10 +10,12 @@
                         {% for project in projects %}
                             <div class="swiper-slide">
                                 <div class="project project_{{ project.id }}">
-                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                        <a class="is-size-3" href="{{ path('edit_project', {'id':project.id}) }}"><i class="fas fa-edit"></i></a>
-                                        <a class="is-size-3" href="{{ path('delete_project', {'id':project.id}) }}#project"><i class="fas fa-trash"></i></a>
-                                    {% endif %}
+                                    <div class="controls">
+                                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                            <a class="is-size-3" href="{{ path('edit_project', {'id':project.id}) }}"><i class="fas fa-edit"></i></a>
+                                            <a class="is-size-3" href="{{ path('delete_project', {'id':project.id}) }}#project"><i class="fas fa-trash"></i></a>
+                                        {% endif %}
+                                    </div>
                                     <div class="flip">
                                         <div class="flip-inner">
                                             <div class="flip-front">
