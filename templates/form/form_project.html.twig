@@ -2,8 +2,8 @@
 
 {% block title %}Project{% endblock %}
 {% block body %}
-    <div class="container">
-        <section class="section">
+    <section class="section">
+        <div class="inner-container">
             <h1 class="title">Projekteintrag</h1>
             <div class="inner-container">
                 {{ form_start(form) }}
@@ -59,6 +59,6 @@
                 {{ form_end(form) }}
                 <a href="{{ path('homepage') }}">zur Homepage</a>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 {% endblock %}

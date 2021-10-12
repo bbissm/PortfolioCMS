@@ -23,6 +23,7 @@
     "bulma": "^0.9.3",
     "bulma-accordion": "^2.0.1",
     "bulma-extensions": "^6.2.7",
+    "copy-webpack-plugin": "^9.0.1",
     "node-sass": "^6.0.1",
     "sortablejs": "^1.14.0",
     "swiper": "^7.0.8"

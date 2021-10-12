@@ -2,62 +2,63 @@
 
 {% block title %}Hobby{% endblock %}
 {% block body %}
-<div class="container">
     <section class="section">
-        <h1 class="title">Hobbyeintrag</h1>
         <div class="inner-container">
-            {{ form_start(form) }}
-            <div class="my-custom-class-for-errors is-danger">
-                {{ form_errors(form) }}
-            </div>
-            <div class="field">
-                {{ form_label(form.title, null, {
-                    'label_attr': {'class': 'label'}
-                }) }}
-                <div class="control">
-                    {{ form_widget(form.title, { 'attr': {'class': 'input'} }) }}
+            <h1 class="title">Hobbyeintrag</h1>
+            <div class="inner-container">
+                {{ form_start(form) }}
+                <div class="my-custom-class-for-errors is-danger">
+                    {{ form_errors(form) }}
                 </div>
-            </div>
-            <div class="field">
-                {{ form_label(form.description, null, {
-                    'label_attr': {'class': 'label'}
-                }) }}
-                <div class="control">
-                    {{ form_widget(form.description, { 'attr': {'class': 'input'} }) }}
+                <div class="field">
+                    {{ form_label(form.title, null, {
+                        'label_attr': {'class': 'label'}
+                    }) }}
+                    <div class="control">
+                        {{ form_widget(form.title, { 'attr': {'class': 'input'} }) }}
+                    </div>
                 </div>
-            </div>
+                <div class="field">
+                    {{ form_label(form.description, null, {
+                        'label_attr': {'class': 'label'}
+                    }) }}
+                    <div class="control">
+                        {{ form_widget(form.description, { 'attr': {'class': 'input'} }) }}
+                    </div>
+                </div>
 
 
-            <div class="field">
-                {{ form_label(form.my_files, null, {
-                    'label_attr': {'class': 'label'}
-                }) }}
-                <div class="columns is-multiline" id="sortableAttachment">
-                    {% if attachments|default  %}
-                        {% for attachment in attachments %}
-                            <div class="column is-2 draggable" data-sorting="{{ attachment.sorting }}" data-id="{{ attachment.id }}">
-                                <figure class="image is-square attachmentContainer">
-                                    <img src="{{ '/uploads/hobby/'~attachment.imageFile }}" alt="{{ attachment.image }}" style="object-fit: cover" class="attachment" data-id="{{ attachment.id }}">
-                                    <i class="fas fa-trash"></i>
-                                    <div class="overlay">
+                <div class="field">
+                    {{ form_label(form.my_files, null, {
+                        'label_attr': {'class': 'label'}
+                    }) }}
+                    <div class="columns is-multiline" id="sortableAttachment">
+                        {% if attachments|default  %}
+                            {% for attachment in attachments %}
+                                <div class="column is-2 draggable" data-sorting="{{ attachment.sorting }}" data-id="{{ attachment.id }}">
+                                    <figure class="image is-square attachmentContainer">
+                                        <img src="{{ '/uploads/hobby/'~attachment.imageFile }}" alt="{{ attachment.image }}" style="object-fit: cover" class="attachment" data-id="{{ attachment.id }}">
                                         <i class="fas fa-trash"></i>
-                                    </div>
-                                </figure>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+                                        <div class="overlay">
+                                            <i class="fas fa-trash"></i>
+                                        </div>
+                                    </figure>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="control">
+                        {{ form_widget(form.my_files, { 'attr': {'class': 'input'} }) }}
+                    </div>
                 </div>
 
-                <div class="control">
-                    {{ form_widget(form.my_files, { 'attr': {'class': 'input'} }) }}
+                <div class="field">
+                    {{ form_widget(form.save, { 'label': 'Submit','attr': {'class': 'button','onclick':'window.location.hash = "hobby"'} }) }}
                 </div>
+                {{ form_end(form) }}
+                <a href="{{ path('homepage') }}">zur Homepage</a>
             </div>
-
-            <div class="field">
-                {{ form_widget(form.save, { 'label': 'Submit','attr': {'class': 'button','onclick':'window.location.hash = "hobby"'} }) }}
-            </div>
-            {{ form_end(form) }}
-            <a href="{{ path('homepage') }}">zur Homepage</a>
         </div>
     </section>
 </div>

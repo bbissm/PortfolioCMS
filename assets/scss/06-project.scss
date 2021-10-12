@@ -1,5 +1,34 @@
 section#work{
+    background-color:#fff;
+    .project-swiper{
+        position: relative;
+        .navigation{
+            position: absolute;
+            right:0;
+            .swiper-button-prev{
+                left: -8rem;
+                &:after{
+                    content: '➔';
+                    transform: rotate(180deg);
+                }
+            }
+            .swiper-button-next{
+                &:after{
+                    content: '➔';
+
+                }
+            }
+        }
+    }
     .project{
         text-align: end;
+        .flip{
+            height: 30rem;
+        }
+        figure.image{
+            img{
+                object-fit: cover;
+            }
+        }
     }
 }

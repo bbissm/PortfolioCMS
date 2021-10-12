@@ -13,65 +13,74 @@ import Swiper, { SwiperOptions, Keyboard, Pagination, Virtual, Navigation, Autop
 import Sortable from 'sortablejs';
 import {hide} from "bulma-extensions/bulma-carousel/src/js/utils/css";
 
-const sections = document.querySelectorAll('section.section');
+const sections = document.querySelectorAll('section.animation');
 const links = document.querySelectorAll('a[href^="#"]');
 const html = document.getElementsByTagName('html')[0];
 const progressBars = document.querySelectorAll('.progress');
 const attachments = document.querySelectorAll('.attachment');
+const navigation = document.getElementById('nav');
 // Global functions
-window.openPopup = (el) => {
+window.openPopup = (el,id) => {
     const flip = el.closest('.flip');
-    const modal = el.closest('.flip').nextElementSibling;
+    const modal = document.querySelector('.modal_'+id);
+    modal.classList.add('is-active'); // Opens modal
 
     //Quickhack only show arrows if theres a container next or prev
     document.querySelectorAll('.arrow-next:not(.prev)').forEach(next => {
-        if (next.closest('.project').nextElementSibling === null) {
+        if (next.closest('.modal').nextElementSibling === null) {
             next.classList.add('is-hidden');
         }
     })
-    document.querySelectorAll('.arrow-next.prev').forEach(next => {
-        if (next.closest('.project').previousElementSibling === null) {
-            next.classList.add('is-hidden');
+    document.querySelectorAll('.arrow-next.prev').forEach(prev => {
+        if (prev.closest('.modal').previousElementSibling.classList.contains('modal') === false) {
+            prev.classList.add('is-hidden');
         }
     })
     //Quickhack end
 
     initProgressBar(); //Progressbar animation
 
-    modal.classList.add('is-active'); // Opens modal
+
     modal.querySelector('.modal-card').style.animation = 'expand 0.3s ease'; //add animation to first open
     flip.classList.add('is-active'); // the project flip container in background should be still open
     html.classList.add('is-clipped'); // no background interaction while modal open
 }
 
-window.closePopup = (el) => {
-    const flip = el.closest('.modal').previousElementSibling;
-    const modal = el.closest('.modal');
+window.closePopup = (id) => {
+    const modal = document.querySelector('.modal_'+id);
+    const flip = document.querySelector('.project_'+id+' .flip');
     modal.classList.remove('is-active');
     flip.classList.remove('is-active');
     html.classList.remove('is-clipped');
 }
 
-window.switchProject = (el, to) => {
-    let project = el.closest('.project');
-    let nextProject = project.nextElementSibling;
-    let prevProject = project.previousElementSibling;
-    let modal = el.closest('.modal');
-    let modalcard = el.closest('.modal-card');
-    let flip = modal.previousElementSibling;
+window.switchProject = (el, modalId, nodeId, to) => {
+    const projects = document.querySelectorAll('.project');
+    const modals = document.querySelectorAll('.modal');
+    let project = document.querySelector('.project_'+modalId);
+    let flip = project.querySelector('.flip');
+
+    let nextProject = projects.item(nodeId+1);
+    let prevProject = projects.item(nodeId-1);
+    let modal = document.querySelector('.modal_'+modalId);
+    let nextModal = modals.item(nodeId+1);
+    let prevModal = modals.item(nodeId-1);
+    let modalcard = modal.querySelector('.modal-card');
     modalcard.style.animation = 'unset';
+
     initProgressBar();
 
     if (to == 'next') {
         modal.classList.remove('is-active');
         flip.classList.remove('is-active');
-        nextProject.querySelector('.modal').classList.add('is-active');
-        nextProject.querySelector('.modal').previousElementSibling.classList.add('is-active');
+        nextModal.classList.add('is-active');
+        nextProject.querySelector('.flip').classList.add('is-active');
+
     }else if(to == 'prev'){
         modal.classList.remove('is-active');
         flip.classList.remove('is-active');
-        prevProject.querySelector('.modal').classList.add('is-active');
-        prevProject.querySelector('.modal').previousElementSibling.classList.add('is-active');
+        prevModal.classList.add('is-active');
+        prevProject.querySelector('.flip').classList.add('is-active');
     }
 }
 
@@ -126,17 +135,22 @@ window.addEventListener('load',function (e) {
 })
 
 document.addEventListener('scroll', function (e) {
+
     // display toTopButton after scroll
     const toTopButton = document.querySelector('.toTopContainer');
     if (window.scrollY > 0) {
         toTopButton.classList.remove('is-hidden');
+        navigation.classList.add('is-scrolled');
     }else{
+        navigation.classList.remove('is-scrolled');
         toTopButton.classList.add('is-hidden');
     }
 
     let observer = new IntersectionObserver (function (entries, observer) {
         entries.forEach(function(entry) {
             let container = entry.target;
+
+            container.classList.remove('current');
             if (entry.isIntersecting) {
                 container.classList.add('current');
                 observer.unobserve(container);
@@ -149,14 +163,14 @@ document.addEventListener('scroll', function (e) {
 })
 
 
-if (document.querySelector('.has-swiper') !== null) {
-    document.querySelectorAll('.has-swiper').forEach(hasSwiper => {
-        const container = hasSwiper.querySelector('.swiper');
+if (document.querySelector('.swiper') !== null) {
+    document.querySelectorAll('.swiper').forEach(container => {
+        let slidesPerView = container.dataset.loop !== undefined ? 4 : 1;
         // initialize swiper
         new Swiper('.swiper', /** @type {SwiperOptions} */  {
             modules: [Pagination, Keyboard, Virtual, Navigation, Autoplay, Manipulation],
             initialSlide: 0,
-            slidesPerView: 1,
+            slidesPerView: slidesPerView,
             centeredSlides: true,
             observer: true,
             observeParents: true,
@@ -181,6 +195,27 @@ if (document.querySelector('.has-swiper') !== null) {
         });
     })
 }
+new Swiper('.project-swiper', /** @type {SwiperOptions} */  {
+    modules: [Pagination, Keyboard, Virtual, Navigation, Autoplay, Manipulation],
+    initialSlide: 0,
+    slidesPerView: 3,
+    centeredSlides: true,
+    observer: true,
+    observeParents: true,
+    allowTouchMove: false,
+    //grabCursor: true,
+    autoplay: {
+        delay: 6000,
+        pauseOnMouseEnter: true,
+    },
+    /*keyboard: {
+        enabled: true,
+    },*/
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    }
+});
 if (attachments) {
     const form = document.getElementsByTagName('form')[0]
     if (form) {

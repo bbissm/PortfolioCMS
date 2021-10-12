@@ -28,7 +28,7 @@
                 <div class="navbar-item">
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <p class="control">
-                            <a class="button is-success" href="/logout">
+                            <a class="button" href="/logout">
                               <span class="icon">
                                 <i class="fas fa-sign-in-alt"></i>
                               </span>
@@ -37,7 +37,7 @@
                         </p>
                     {% else %}
                         <p class="control">
-                            <a class="button is-success" href="/login">
+                            <a class="button is-transparent" href="/login">
                               <span class="icon">
                                 <i class="fas fa-sign-in-alt"></i>
                               </span>

@@ -30,15 +30,14 @@
 
 
 .dividerContainer{
-    margin-top:3rem;
     position: relative;
     .divider{
         height: 10rem;
-
+        margin-top: 4.25rem;
         &:after{
             content: "";
             position: absolute;
-            z-index: -1;
+            //z-index: -1;
             top: 50%;
             bottom: 0;
             left: 50%;
@@ -150,6 +149,7 @@
         color: black;
     }
     .flip-back {
+        padding:0 !important;
         transform: rotateY(180deg);
         .fa-book-open{
             font-size: 3rem;
@@ -169,11 +169,32 @@
     }
 }
 .modal{
+    z-index: 1001;
     .modal-card{
         width: fit-content;
         max-width: 1000px;
         margin: 0 20px;
+    }
+    .modal-card-foot{
+        a{
+            color: white;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            transition: all .3s ease-in-out;
 
+            &:not(:last-of-type) {
+                margin-right: 2rem;
+            }
+            i{
+                margin-left:.5rem;
+                font-size: 2rem;
+            }
+            &:hover{
+                box-shadow: 0 12px 10px -10px rgba(0, 0, 0, 0.15);
+                transform: translate3d(0px, -10px, 0px);
+            }
+        }
     }
 }
 
@@ -336,7 +357,7 @@
 
 
 a.button{
-    border: 1px solid #000;
+    border: unset;
     box-shadow: 4px 4px 0 0 #3e3e3e;
     font-size: 1.333rem;
     font-stretch: normal;
@@ -347,6 +368,7 @@ a.button{
     padding: .5rem .7rem;
     text-align: center;
     width: fit-content;
+
     &:hover{
         box-shadow: 8px 8px 0 0 #3e3e3e;
     }
@@ -357,6 +379,7 @@ a.button{
         background-color: #e63462;
         color: #fff;
     }
+
 }
 
 
@@ -388,6 +411,7 @@ a.button{
 }
 
 .has-swiper {
+    width: 100%;
     $themeColor: #ffffff;
     $colors: ("white": #ffffff, "black": #000000);
     --swiper-theme-color: #333;

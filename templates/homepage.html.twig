@@ -2,9 +2,9 @@
 
 {% block title %}Homepage{% endblock %}
 {% block body %}
-<section class="hero is-link is-fullheight-with-navbar ">
+<section class="hero is-fullheight-with-navbar is-flex-direction-row">
     <div class="hero-body">
-        <h1 class="title has-text-grey-dark is-size-1">
+        <h1 class="title has-text-white is-size-1 has-text-weight-bold">
             Me. A developer and PC Intusiast.
         </h1>
         <a href="#about">
@@ -14,10 +14,10 @@
                 <span></span>
             </div>
         </a>
-
     </div>
 </section>
-<div class="container" {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}id="sortableSection"{% endif %}>
+<div {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}id="sortableSection"{% endif %}>
+    {%  include 'chunks/divider.html.twig' %}
     {% for section in sections %}
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {%  include 'sections/'~section.template  with {'sortable':'sortable','id':section.id,'sorting':section.sorting} %}

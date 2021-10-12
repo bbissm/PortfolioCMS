@@ -3,4 +3,22 @@ nav{
     position: fixed !important;
     width: 100%;
     top: 0;
+    background-color: transparent !important;
+    transition: background-color .5s cubic-bezier(.165,.84,.44,1)  !important;
+    -webkit-transition: background-color .5s cubic-bezier(.165,.84,.44,1)  !important;
+    a{
+        background-color:transparent !important;
+
+        color:#fff !important;
+        font-weight: bold;
+        border-radius:4px;
+        &:hover{
+            box-shadow: 4px 4px 0 0 #3e3e3e;
+
+        }
+    }
+    &.is-scrolled {
+        background-color: #000 !important;
+    }
+
 }

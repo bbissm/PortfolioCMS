@@ -1,0 +1,11 @@
+section#about {
+    //background-color:#69a5a4;
+    background-color:#fff;
+    .content{
+        img{
+            object-fit: cover;
+            max-height: 29rem;
+            width: 100%;
+        }
+    }
+}

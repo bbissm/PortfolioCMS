@@ -1,77 +1,60 @@
-.main-content{
-    margin-top:69px;
+html{
+    background: #fff;
 }
 section.hero{
-    @include mobile() {
-        min-height: calc(80vh - 3.25rem) !important;
-    }
-    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(215,223,252,1) 0%, rgba(255,255,255,1) 0%, rgba(215,223,252,1) 84% );
-    .hero-body{
-        position: relative;
+    min-height: calc(100vh) !important;
+    background-image: radial-gradient( circle farthest-corner at 12.3% 19.3%,  rgba(85,88,218,1) 0%, rgba(95,209,249,1) 100.2% );
+    position: relative;
+}
+
+.inner-container{
+    margin-top:4.25rem !important;
+    max-width: 1480px;
+    margin:0 auto;
+    .content{
+        &.has-text-centered{
+            max-width: 32em;
+        }
     }
 }
 
 h2{
-    font-size:$size-2;
-    margin-bottom: $size-2;
+    font-size:$size-2 !important;
+    margin-bottom: $size-2 !important;
     @include tablet() {
         text-align:center;
     }
+    font-weight: 700 !important;
 }
-
 
 h3{
-    font-size:$size-3;
-    margin-bottom: $size-3;
+    font-size:$size-3 !important;
+    margin-bottom: $size-3 !important;
+    font-weight: 700 !important;
 }
 
-.fa-edit{
-    color: #48c78e;
+p{
+    font-size: $size-4 !important;
+}
+.fa-trash,.fa-edit{
+    color: #000;
+    margin:2rem;
+
 }
 
-section.section{
+section.animation{
     &.current{
-        animation:expand 1s ease-in-out;
+        animation: slide-up 1s ease-in-out;
     }
 }
-
-@keyframes expand {
-    from {
-        transform: scale(0);
-        display: block;
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
     }
-}
-
-section#work{
-    .project {
-        figure.image{
-            img{
-                object-fit: cover;
-            }
-        }
-        .modal{
-            .modal-card-foot{
-                a{
-                    color: white;
-                    display: flex;
-                    align-items: center;
-                    font-size: 1rem;
-                    transition: all .3s ease-in-out;
-
-                    &:not(:last-of-type) {
-                        margin-right: 2rem;
-                    }
-                    i{
-                        margin-left:.5rem;
-                        font-size: 2rem;
-                    }
-                    &:hover{
-                        box-shadow: 0 12px 10px -10px rgba(0, 0, 0, 0.15);
-                        transform: translate3d(0px, -10px, 0px);
-                    }
-                }
-            }
-        }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
