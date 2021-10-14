@@ -27,8 +27,6 @@ class Project
 	 */
 	private $description;
 
-	public $attachments;
-
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */

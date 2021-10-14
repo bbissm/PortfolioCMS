@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 class ProjectController extends AbstractController
 {
 	/**
-	 * @Route("/addProject", name="create_project")
+	 * @Route("/addProject", name="create_work")
 	 *
 	 */
 	public function create(Request $request): Response

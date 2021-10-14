@@ -1,0 +1,79 @@
+{% extends "./base.html.twig" %}
+
+{% block title %}Project{% endblock %}
+{% block body %}
+    <div class="container">
+        <section class="section" id="form">
+            {{ form_start(form) }}
+            <div class="my-custom-class-for-errors is-danger">
+                {{ form_errors(form) }}
+            </div>
+            <div class="field">
+                {{ form_label(form.name, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    {{ form_widget(form.name, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form_label(form.template, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    {{ form_widget(form.template, { 'attr': {'class': 'input'} }) }}
+                </div>
+            </div>
+            {% import _self as formMacros %}
+            {% macro formatCollection(form) %}
+                <div class="contentSection">
+                    <h3 class="has-text-white mb-2 mt-6">Content</h3>
+                    <div class="field">
+                        {{ form_label(form.title, null, {
+                            'label_attr': {'class': 'label'}
+                        }) }}
+                        <div class="control">
+                            {{ form_widget(form.title, { 'attr': {'class': 'input'} }) }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        {{ form_label(form.text, null, {
+                            'label_attr': {'class': 'label'}
+                        }) }}
+                        <div class="control">
+                            {{ form_widget(form.text, { 'attr': {'class': 'textarea'} }) }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        {{ form_label(form.my_files, null, {
+                            'label_attr': {'class': 'label'}
+                        }) }}
+                        <div class="control">
+                            {{ form_widget(form.my_files, { 'attr': {'class': 'input'} }) }}
+                        </div>
+                    </div>
+                </div>
+
+            {% endmacro %}
+
+
+            {% for item in form.content %}
+                {{ formMacros.formatCollection(item) }}
+            {% endfor %}
+
+            {# formMacros.formatCollection(form.content.vars.prototype)|e('html_attr') #}
+            <div class="content-add" data-index="{{ form.content|length > 0 ? form.content|last.vars.name + 1 : 0 }}" data-prototype="{{ formMacros.formatCollection(form.content.vars.prototype)|e('html_attr') }}"></div>
+
+            <button type="button" class="add_item_link button is-success" data-collection-holder-class="content-add">Add a Section</button>
+
+            <div class="field mt-6">
+                {{ form_widget(form.save, { 'label': 'Submit','attr': {'class': 'button','onclick':'window.location.hash = "hobby"'} }) }}
+            </div>
+
+            {{ form_end(form) }}
+        </section>
+    </div>
+    <script>
+
+    </script>
+{% endblock %}

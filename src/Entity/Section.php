@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SectionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,7 +22,7 @@ class Section
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $title;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -30,21 +32,31 @@ class Section
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $sorting;
+    public $sorting;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\Content", mappedBy="section", cascade={"persist"})
+	 */
+	private $content;
+
+	public function __construct()
+               	{
+               		$this->content = new ArrayCollection();
+               	}
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getName(): ?string
     {
-        return $this->title;
+        return $this->name;
     }
 
-    public function setTitle(?string $title): self
+    public function setname(?string $name): self
     {
-        $this->title = $title;
+        $this->name = $name;
 
         return $this;
     }
@@ -72,4 +84,35 @@ class Section
 
         return $this;
     }
+
+    /**
+     * @return Collection|Content[]
+     */
+    public function getContent(): Collection
+    {
+        return $this->content;
+    }
+
+    public function addContent(Content $content): self
+    {
+        if (!$this->content->contains($content)) {
+            $this->content[] = $content;
+            $content->setSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContent(Content $content): self
+    {
+        if ($this->content->removeElement($content)) {
+            // set the owning side to null (unless already changed)
+            if ($content->getSection() === $this) {
+                $content->setSection(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

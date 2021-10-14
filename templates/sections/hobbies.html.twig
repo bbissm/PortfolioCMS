@@ -1,37 +1,31 @@
-<section id="hobby" class="animation {% if sortable is defined %} {{ sortable }} " data-id="{{ id }}" data-sorting="{{ sorting }}"{% else %}"{% endif %}>
-{%  include 'chunks/divider.html.twig' %}
-    <div class="content">
-        <h2 class="p-5">What i'm doing {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}<a class="ml-5 button has-text-white has-background-black mb-5" href="{{ path('create_hobby') }}">Add Hobby</a>    {% endif %}
-        </h2>
-        {% for hobby in hobbies %}
-        <div class="columns is-tablet {% if loop.index % 2 == 0 %}is-flex-direction-row-reverse	{% endif %}">
-                <div class="column is-half p-0">
-                    <div class="{% if hobby.attachments|length > 1 %}has-swiper{% endif %}">
-                        <div class="swiper">
-                            <div class="swiper-wrapper">
-                                {% for attachment in hobby.attachments %}
-                                    <div class="swiper-slide">
-                                        <img src="{{ asset('/uploads/hobby/')~attachment.imageFile  }}" alt="{{ attachment.imageFile }}" style="object-fit: contain" loading="lazy">
-                                    </div>
-                                {% endfor %}
-                            </div>
+{% for hobby in hobbies %}
+    <div class="columns is-tablet {% if loop.index % 2 == 0 %}is-flex-direction-row-reverse	{% endif %}">
+            <div class="column is-half p-0">
+                <div class="{% if hobby.attachments|length > 1 %}has-swiper{% endif %}">
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+                            {% for attachment in hobby.attachments %}
+                                <div class="swiper-slide">
+                                    <img src="{{ asset('/uploads/hobby/')~attachment.imageFile  }}" alt="{{ attachment.imageFile }}" style="object-fit: contain" loading="lazy">
+                                </div>
+                            {% endfor %}
                         </div>
-                        <div class="swiper-pagination"></div>
                     </div>
+                    <div class="swiper-pagination"></div>
                 </div>
+            </div>
 
-                <div class="column p-5 is-half textContainer">
-                    <h2>{{ hobby.title }}</h2>
-                        <div class="controls">
-                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                <a class="ml-3" href="{{ path('edit_hobby', {'id':hobby.id}) }}"><i class="fas fa-edit"></i></a>
-                                <a class="ml-3" href="{{ path('delete_hobby', {'id':hobby.id}) }}#hobby"><i class="fas fa-trash"></i></a>
-                            {% endif %}
-                        </div>
+            <div class="column p-5 is-half textContainer">
+                <h2>{{ hobby.title }}</h2>
+                    <div class="controls">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <a class="ml-3" href="{{ path('edit_hobby', {'id':hobby.id}) }}"><i class="fas fa-edit"></i></a>
+                            <a class="ml-3" href="{{ path('delete_hobby', {'id':hobby.id}) }}#hobby"><i class="fas fa-trash"></i></a>
+                        {% endif %}
+                    </div>
 
-                    <p class="has-text-black">{{ hobby.description }}</p>
-                </div>
-        </div>
-        {% endfor %}
+                <p class="has-text-black">{{ hobby.description }}</p>
+            </div>
     </div>
-</section>
+{% endfor %}
+

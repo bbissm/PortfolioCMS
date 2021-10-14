@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\AttachmentRepository;
-use App\Entity\Member;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -31,11 +30,6 @@ class Attachment
      */
     private $imageFile;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Member", inversedBy="attachments")
-     */
-    private $member;
-
 	/**
 	 * @ORM\Column(type="integer", nullable=true)
 	 */
@@ -46,6 +40,10 @@ class Attachment
 	 */
 	private $project_id;
 
+	/**
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	private $content_id;
 
 	/**
 	 * @ORM\Column(type="integer", nullable=true)
@@ -116,18 +114,6 @@ class Attachment
         return $this;
     }
 
-    public function getMember(): ?Member
-    {
-        return $this->member;
-    }
-
-    public function setMember(?Member $member): self
-    {
-        $this->member = $member;
-
-        return $this;
-    }
-
     public function getImageFile(): ?string
     {
         return $this->imageFile;
@@ -160,6 +146,18 @@ class Attachment
     public function setProjectId(?int $project_id): self
     {
         $this->project_id = $project_id;
+
+        return $this;
+    }
+
+    public function getContentId(): ?int
+    {
+        return $this->content_id;
+    }
+
+    public function setContentId(?int $content_id): self
+    {
+        $this->content_id = $content_id;
 
         return $this;
     }

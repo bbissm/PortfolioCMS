@@ -31,6 +31,13 @@
                 <a href="/" class="navbar-item">
                     Home
                 </a>
+                {# prototyp
+                    {% for section in sections %}
+                        <a href="#{{ section.name|lower }}" class="navbar-item">
+                            {{ section.name }}
+                        </a>
+                    {% endfor %}
+                #}
                 <a href="#about" class="navbar-item">
                     About
                 </a>
@@ -40,7 +47,7 @@
                 <a href="#work" class="navbar-item">
                     Work
                 </a>
-                <a href="#work" class="navbar-item">
+                <a href="#contact" class="navbar-item">
                     Contact
                 </a>
                 <div class="navbar-item is-hidden-mobile">

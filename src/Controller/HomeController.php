@@ -7,6 +7,7 @@ use App\Entity\Hobby;
 use App\Entity\Project;
 use App\Entity\Section;
 use ArrayObject;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,6 +48,7 @@ class HomeController extends AbstractController
 				->findBy(['project_id' => $project->getId()],['sorting'=> 'ASC']);
 			$project->attachments = $attachments;
 		}
+
 
 		$sections = $this->getDoctrine()
 			->getRepository(Section::class)

@@ -176,9 +176,13 @@ footer{
                 h2,.has-text-black{
                     color: #fff !important;
                 }
-                .divider:after{
-                    border-color: #fff;
+                .dividerContainer{
+                    background-color: transparent !important;
+                    .divider:after{
+                        border-color: #fff;
+                    }
                 }
+
             }
         }
     }
