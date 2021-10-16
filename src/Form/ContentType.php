@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Attachment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,11 +16,10 @@ class ContentType extends AbstractType
         $builder
             ->add('title')
             ->add('text')
-			->add('my_files', FileType::class, array(
-				'mapped' => false,
-				'label' => 'Please upload file',
-				'multiple' => true,
-				'required' => false
+			->add('my_files', CollectionType::class, array(
+				'entry_type' => AttachmentType::class,
+				'entry_options' => ['label' => false],
+				'by_reference' => false
 			))
         ;
     }

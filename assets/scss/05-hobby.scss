@@ -11,14 +11,6 @@ section#hobby{
             }
         }
     }
-
-    a.button{
-        @include mobile() {
-            margin-left:0 !important;
-            margin-bottom: 0 !important;
-            margin-top: 2rem;
-        }
-    }
     .columns{
         margin-left:0;
         margin-right: 0;

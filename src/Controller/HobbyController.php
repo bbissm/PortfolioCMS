@@ -60,7 +60,7 @@ class HobbyController extends AbstractController
 				$entityManager->persist($attachment);
 			}
 			$entityManager->flush();
-			return $this->redirectToRoute('homepage');
+			//return $this->redirectToRoute('homepage');
 		}
 
 		return $this->render('form/form_hobby.html.twig', [
@@ -118,7 +118,7 @@ class HobbyController extends AbstractController
 			$entityManager->persist($hobby);
 			$entityManager->flush();
 
-			return $this->redirectToRoute('homepage');
+			//return $this->redirectToRoute('homepage');
 		}
 
 

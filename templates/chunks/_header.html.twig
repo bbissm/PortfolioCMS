@@ -3,7 +3,12 @@
         <div id="navMenu" class="navbar-menu">
             <div class="navbar-start ">
                 <div class="has-text-white has-text-weight-bold navbar-item">
-                    Martin Bissiger
+                    {% if is_granted('ROLE_DEV') %}
+                        Martin Bissiger
+                    {% elseif is_granted('ROLE_USER') %}
+                            Hi {{ app.user.username }}
+                    {% endif %}
+
                 </div>
                 <div class="navbar-item is-hidden-tablet">
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}

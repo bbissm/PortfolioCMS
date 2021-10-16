@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Service\FileUploader;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Entity\Attachment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -80,13 +82,12 @@ class ProjectController extends AbstractController
 	/**
 	 * @Route("/editProject-{id}", name="edit_project")
 	 */
-	public function edit(int $id, Request $request, Project $project): Response
+	public function edit(int $id, Request $request, Project $project, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
 	{
 		$form = $this->createForm(ProjectType::class, $project);
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
 			$upload_dir = $this->getParameter('app.path.project_attachments');
-			$files = $request->files->get('project')['my_files'];
 
 			// getting highest current id of project // TODO: Make it more simple
 			$query = $this->getDoctrine()->getManager()->createQuery(
@@ -97,17 +98,16 @@ class ProjectController extends AbstractController
 			$sorting = $query->getResult()[0][1];
 
 			// loop through uploaded files and set images
-			$entityManager = $this->getDoctrine()->getManager();
 			$i = 0;
+			$files = $request->files->get('project')['my_files'];
 			foreach ($files as $file) {
 				$i++;
-				$originFileName = $file->getClientOriginalName().'.'.$file->guessExtension();
-				$filename = md5(uniqid());
-				$file->move($upload_dir,$filename);
+				if ($file) {
+					$filename = $fileUploader->upload($file, $this->getParameter('app.path.project_attachments'));
+				}
 
 				$attachment = new Attachment();
 				$attachment->setImageFile($filename);
-				$attachment->setImage($file->getClientOriginalName($originFileName));
 				$attachment->setProjectId($id);
 				$attachment->setSorting($sorting+$i);
 				$entityManager->persist($attachment);
@@ -122,11 +122,10 @@ class ProjectController extends AbstractController
 
 			// ... perform some action, such as saving the task to the database
 			// for example, if Task is a Doctrine entity, save it!
-			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($project);
 			$entityManager->flush();
 
-			return $this->redirectToRoute('homepage');
+			//return $this->redirectToRoute('homepage');
 		}
 
 
@@ -164,7 +163,7 @@ class ProjectController extends AbstractController
 		$entityManager->remove($project);
 		$entityManager->flush();
 
-		return $this->redirectToRoute('homepage');
+		//return $this->redirectToRoute('homepage');
 	}
 
 	/**

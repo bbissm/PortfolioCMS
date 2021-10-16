@@ -41,9 +41,10 @@ class Attachment
 	private $project_id;
 
 	/**
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Content", inversedBy="my_files")
+	 * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
 	 */
-	private $content_id;
+	private $content;
 
 	/**
 	 * @ORM\Column(type="integer", nullable=true)
@@ -158,6 +159,18 @@ class Attachment
     public function setContentId(?int $content_id): self
     {
         $this->content_id = $content_id;
+
+        return $this;
+    }
+
+    public function getContent(): ?Content
+    {
+        return $this->content;
+    }
+
+    public function setContent(?Content $content): self
+    {
+        $this->content = $content;
 
         return $this;
     }

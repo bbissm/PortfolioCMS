@@ -19,11 +19,12 @@
 <div class="has-background-white" style="margin-bottom:6rem;" {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}id="sortableSection"{% endif %}>
 
     {% for section in sections %}
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            {% include 'section.html.twig' with {'section':section} %}
-        {% endif %}
+
+        {% include 'section.html.twig' with {'section':section} %}
     {% endfor %}
-    <a href="addSection" class="button centered mt-6 mb-6 is-info">Section hinzufügen</a>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a href="addSection" class="button centered mt-6 mb-6 is-info">Section hinzufügen</a>
+    {% endif %}
     {%  include 'chunks/divider.html.twig' %}
 </div>
 

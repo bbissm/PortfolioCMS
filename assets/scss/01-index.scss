@@ -34,13 +34,22 @@ h1{
     font-size:$size-1 !important;
     margin-bottom: $size-1 !important;
     font-weight: 800 !important;
+    @include mobile() {
+        font-size:$size-2 !important;
+        margin-bottom: $size-2 !important;
+    }
 }
 
 h2{
+    color:#000;
     font-size:$size-2 !important;
     margin-bottom: $size-2 !important;
     @include tablet() {
         text-align:center;
+    }
+    @include mobile() {
+        font-size:$size-3 !important;
+        margin-bottom: $size-3!important;
     }
     font-weight: 700 !important;
 }
@@ -49,6 +58,10 @@ h3{
     font-size:$size-3 !important;
     margin-bottom: $size-3 !important;
     font-weight: 700 !important;
+    @include mobile() {
+        font-size:$size-4 !important;
+        margin-bottom: $size-4 !important;
+    }
 }
 
 p{
@@ -64,6 +77,12 @@ section.animation{
         .content{
             animation: slide-up 1s ease-in-out;
         }
+    }
+}
+.content{
+    @include mobile() {
+        padding-left:1.5rem;
+        padding-right:1.5rem;
     }
 }
 @keyframes slide-up {

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Attachment;
 use App\Entity\Content;
 use App\Entity\Section;
 use App\Form\SectionType;
@@ -9,9 +10,11 @@ use App\Repository\SectionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\FileUploader;
 
 class SectionController extends AbstractController
 {
@@ -68,7 +71,7 @@ class SectionController extends AbstractController
 	/**
 	 * @Route("/editSection-{id}", name="edit_section")
 	 */
-	public function editSection($id, Request $request, Section $section, EntityManagerInterface $entityManager) : Response
+	public function editSection($id, Request $request, Section $section, EntityManagerInterface $entityManager,FileUploader $fileUploader) : Response
 	{
 		if (null === $section = $entityManager->getRepository(Section::class)->find($id)) {
 			throw $this->createNotFoundException('No task found for id '.$id);
@@ -80,29 +83,34 @@ class SectionController extends AbstractController
 		foreach ($section->getContent() as $content) {
 			$originalContent->add($content);
 		}
+		//$files = $request->files->get('project')['my_files'];
 
 		$form = $this->createForm(SectionType::class, $section);
 		$form->handleRequest($request);
+
 		// For attachments
 		if ($form->isSubmitted() && $form->isValid()) {
-			// remove the relationship between the Content and the Section
-			foreach ($originalContent as $content) {
-				if (false === $section->getContent()->contains($content)) {
-
-					// If the entry should stay in the database
-					$content->setSection(null);
-
-
-					// if you wanted to delete the Tag entirely, you can also do that
-					//$entityManager->remove($content);
-
-					$entityManager->persist($content);
+			foreach($request->files->get('section')['content'] as $contentFiles) {
+				foreach($contentFiles['my_files'] as $file){
+					if ($file) {
+						$fileUploader->upload($file, $this->getParameter('app.path.section_attachments'));
+					}
 				}
 			}
 
+			// remove the relationship between the Content and the Section
+			foreach ($originalContent as $content) {
+				if (false === $section->getContent()->contains($content)) {
+					// If the entry should stay in the database
+					$content->setSection(null);
+					// if you wanted to delete the Tag entirely, you can also do that
+					//$entityManager->remove($content);
+					$entityManager->persist($content);
+				}
+			}
 			$entityManager->persist($section);
 			$entityManager->flush();
-			return $this->redirectToRoute('edit_section', ['id' => $id]);
+			//return $this->redirectToRoute('edit_section', ['id' => $id]);
 		}
 
 		return $this->render('form/form_section.html.twig', [

@@ -1,5 +1,8 @@
 section#form{
-    padding: 10rem 1.5rem 10rem;
+    @include tablet() {
+        padding: 15rem 1.5rem;
+    }
+    padding: 13rem 1.5rem 10rem;
     h1,label{
         color:white;
         font-weight: 700;

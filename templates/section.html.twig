@@ -1,7 +1,9 @@
 {% set loggedIn = is_granted('IS_AUTHENTICATED_REMEMBERED') == true ? 'sortable' : 'animation' %}
 <section id="{{ section.name|lower }}"  class="has-background-white {{ loggedIn }}" data-id="{{ section.id }}" data-sorting="{{ section.sorting }}">
     {%  include 'chunks/divider.html.twig' %}
-    <a href="{{ path('edit_section', {'id':section.id}) }}" class="button centered mb-6 is-success">Section bearbeiten</a>
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        <a href="{{ path('edit_section', {'id':section.id}) }}" class="button centered mb-6 is-success">Section bearbeiten</a>
+    {% endif %}
     {% for content in section.content %}
         <div class="inner-container">
             <div class="content inner m-auto">
@@ -20,8 +22,13 @@
         </div>
     {% endfor %}
     {% if section.template %}
-        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}<a class="button centered has-text-white has-background-black mb-5 mt-6" href="{{ path('create_'~section.name|lower) }}">Add
-    {{ section.name }}</a>    {% endif %}
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {% if section.template != 'contact.html.twig' %}
+                <a class="button centered has-text-white has-background-black mb-5 mt-6" href="{{ path('create_'~section.name|lower) }}">
+                    Add{{ section.name }}
+                </a>
+            {% endif %}
+        {% endif %}
         {%  include 'sections/'~section.template %}
     {% endif %}
 </section>
