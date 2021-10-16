@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Attachment;
 use App\Entity\Project;
+use App\Entity\Skill;
 use Doctrine\ORM\EntityRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -38,11 +39,11 @@ class ProjectType extends AbstractType
 				'required' => false
 			))
 			->add('skills', CollectionType::class, array(
-				'entry_type' => FormType::class,
-				'mapped' => false,
+				'entry_type' => SkillFormType::class,
 				'label' => 'Please add project skills',
 				'allow_add' => true,
-				'allow_delete'
+				'allow_delete' => true,
+				'by_reference' => false
 			))
 			->add('save', SubmitType::class)
 		;

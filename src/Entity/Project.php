@@ -28,7 +28,7 @@ class Project
 	private $description;
 
 	/**
-	 * ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="project")
+	 * ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="project", cascade="persist")
 	 * @ORM\Column(type="array", nullable=true)
 	 */
 	private $skills;

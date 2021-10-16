@@ -43,3 +43,4 @@ LICENSE.txt
 .env
 composer.phar
 /public
+/htdocs
