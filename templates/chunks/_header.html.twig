@@ -7,6 +7,8 @@
                         Martin Bissiger
                     {% elseif is_granted('ROLE_USER') %}
                             Hi {{ app.user.username }}
+                        {% else %}
+                        Martin Bissiger
                     {% endif %}
 
                 </div>

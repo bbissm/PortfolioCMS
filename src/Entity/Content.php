@@ -36,7 +36,7 @@ class Content
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="App\Entity\Section", inversedBy="content")
-	 * @ORM\JoinColumn(nullable=false)
+	 * @ORM\JoinColumn(nullable=true)
 	 */
 	private $section;
 

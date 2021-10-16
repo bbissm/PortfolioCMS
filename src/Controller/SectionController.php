@@ -18,15 +18,6 @@ use App\Service\FileUploader;
 
 class SectionController extends AbstractController
 {
-    /**
-     * @Route("/section", name="section")
-     */
-    public function index(): Response
-    {
-        return $this->render('section/index.html.twig', [
-            'controller_name' => 'SectionController',
-        ]);
-    }
 
 	/**
 	 * @Route("/addSection", name="add_section")

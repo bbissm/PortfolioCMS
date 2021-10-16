@@ -42,3 +42,4 @@ yarn.lock
 LICENSE.txt
 .env
 composer.phar
+/public

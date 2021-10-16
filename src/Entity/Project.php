@@ -28,14 +28,20 @@ class Project
 	private $description;
 
 	/**
+	 * ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="project")
+	 * @ORM\Column(type="array", nullable=true)
+	 */
+	private $skills;
+
+	/**
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	private $updatedAt;
 
 	public function __construct()
-	{
-		$this->updatedAt = new \DateTime();
-	}
+      	{
+      		$this->updatedAt = new \DateTime();
+      	}
 
     public function getId(): ?int
     {
@@ -74,6 +80,18 @@ class Project
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getSkills(): ?array
+    {
+        return $this->skills;
+    }
+
+    public function setSkills(?array $skills): self
+    {
+        $this->skills = $skills;
 
         return $this;
     }

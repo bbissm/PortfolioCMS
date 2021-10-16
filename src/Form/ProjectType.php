@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,6 +36,13 @@ class ProjectType extends AbstractType
 				'label' => 'Please upload file',
 				'multiple' => true,
 				'required' => false
+			))
+			->add('skills', CollectionType::class, array(
+				'entry_type' => FormType::class,
+				'mapped' => false,
+				'label' => 'Please add project skills',
+				'allow_add' => true,
+				'allow_delete'
 			))
 			->add('save', SubmitType::class)
 		;
