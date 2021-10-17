@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\Hobby;
+use App\Service\FileUploader;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Entity\Attachment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Hobby;
 use App\Form\HobbyType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -72,60 +75,26 @@ class HobbyController extends AbstractController
 	/**
 	 * @Route("/editHobby-{id}", name="edit_hobby")
 	 */
-	public function edit(int $id, Request $request, Hobby $hobby): Response
+	public function edit(int $id, Request $request, Hobby $hobby, EntityManagerInterface $entityManager, FileUploader $fileUploader, SluggerInterface $slugger): Response
 	{
 		$form = $this->createForm(HobbyType::class, $hobby);
 		$form->handleRequest($request);
+
 		if ($form->isSubmitted() && $form->isValid()) {
-			$upload_dir = $this->getParameter('app.path.hobby_attachments');
-			$files = $request->files->get('hobby')['my_files'];
-
-			// getting highest current id of hobby // TODO: Make it more simple
-			$query = $this->getDoctrine()->getManager()->createQuery(
-				'SELECT MAX(a.sorting)
-				FROM App\Entity\Attachment a
-				WHERE a.hobby_id ='.$hobby->getId()
-			);
-			$sorting = $query->getResult()[0][1];
-
 			// loop through uploaded files and set images
-			$entityManager = $this->getDoctrine()->getManager();
 			$i = 0;
+			$files = $request->files->get('hobby')['my_files'];
 			foreach ($files as $file) {
 				$i++;
-				$originFileName = $file->getClientOriginalName().'.'.$file->guessExtension();
-				$filename = md5(uniqid());
-				$file->move($upload_dir,$filename);
-
-				$attachment = new Attachment();
-				$attachment->setImageFile($filename);
-				$attachment->setImage($file->getClientOriginalName($originFileName));
-				$attachment->setHobbyId($id);
-				$attachment->setSorting($sorting+$i);
+				$attachment = $fileUploader->upload($file, $this->getParameter('app.path.hobby_attachments'),$hobby, 'hobby', $i);
+				$attachment->setHobby($hobby);
 				$entityManager->persist($attachment);
-
 			}
-			$entityManager->flush();
-
-
-			// $form->getData() holds the submitted values
-			// but, the original `$task` variable has also been updated
-			$hobby = $form->getData();
-
-			// ... perform some action, such as saving the task to the database
-			// for example, if Task is a Doctrine entity, save it!
-			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($hobby);
 			$entityManager->flush();
-
-			//return $this->redirectToRoute('homepage');
+			return $this->redirectToRoute('edit_hobby', ['id'=>$id]); // Very important! Without it the form will be submitted by each page reload!
 		}
-
-
-		$attachments = $this->getDoctrine()
-			->getRepository(Attachment::class)
-			->findBy(['hobby_id'=>$id], ['sorting'=>'ASC']);
-
+		$attachments = $hobby->getMyFiles();
 		return $this->render('form/form_hobby.html.twig', [
 			'form' => $form->createView(),
 			'attachments' => $attachments

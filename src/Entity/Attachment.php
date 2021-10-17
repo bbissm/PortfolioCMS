@@ -23,26 +23,23 @@ class Attachment
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $image;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $imageFile;
 
 	/**
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Hobby", inversedBy="my_files")
+	 * @ORM\JoinColumn(name="hobby_id", referencedColumnName="id")
 	 */
-	private $hobby_id;
+	private $hobby;
 
 	/**
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="my_files")
+	 * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
 	 */
-	private $project_id;
+	private $project;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="App\Entity\Content", inversedBy="my_files")
-	 * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(nullable=true)
 	 */
 	private $content;
 
@@ -75,18 +72,6 @@ class Attachment
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
 
         return $this;
     }
@@ -171,6 +156,30 @@ class Attachment
     public function setContent(?Content $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): self
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    public function getHobby(): ?Hobby
+    {
+        return $this->hobby;
+    }
+
+    public function setHobby(?Hobby $hobby): self
+    {
+        $this->hobby = $hobby;
 
         return $this;
     }

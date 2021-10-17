@@ -15,7 +15,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass=HobbyRepository::class)
  */
-class Hobby implements \ArrayAccess
+class Hobby
 {
     /**
      * @ORM\Id
@@ -29,12 +29,15 @@ class Hobby implements \ArrayAccess
      */
     private $title;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\Attachment", mappedBy="hobby", cascade={"persist"})
+	 */
+	private $my_files;
+
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-
-	public $attachments;
 
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
@@ -44,6 +47,7 @@ class Hobby implements \ArrayAccess
     public function __construct()
     {
 		$this->updatedAt = new \DateTime();
+  $this->my_files = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,26 +79,6 @@ class Hobby implements \ArrayAccess
         return $this;
     }
 
-	public function offsetExists($offset)
-            	{
-            		return property_exists($this, $offset);
-            	}
-
-	public function offsetGet($offset)
-            	{
-            		return $this->$offset;
-            	}
-
-	public function offsetSet($offset, $value)
-            	{
-            		$this->$offset = $value;
-            	}
-
-	public function offsetUnset($offset)
-            	{
-            		unset($this->$offset);
-            	}
-
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -103,6 +87,36 @@ class Hobby implements \ArrayAccess
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Attachment[]
+     */
+    public function getMyFiles(): Collection
+    {
+        return $this->my_files;
+    }
+
+    public function addMyFile(Attachment $myFile): self
+    {
+        if (!$this->my_files->contains($myFile)) {
+            $this->my_files[] = $myFile;
+            $myFile->setHobby($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMyFile(Attachment $myFile): self
+    {
+        if ($this->my_files->removeElement($myFile)) {
+            // set the owning side to null (unless already changed)
+            if ($myFile->getHobby() === $this) {
+                $myFile->setHobby(null);
+            }
+        }
 
         return $this;
     }

@@ -42,8 +42,9 @@ class ProjectType extends AbstractType
 				'entry_type' => SkillFormType::class,
 				'label' => 'Please add project skills',
 				'allow_add' => true,
+				'allow_extra_fields' => true,
 				'allow_delete' => true,
-				'by_reference' => false
+				//'by_reference' => false
 			))
 			->add('save', SubmitType::class)
 		;

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProjectRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,10 +30,14 @@ class Project
 	private $description;
 
 	/**
-	 * ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="project", cascade="persist")
 	 * @ORM\Column(type="array", nullable=true)
 	 */
 	private $skills;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\Attachment", mappedBy="project", cascade={"persist"})
+	 */
+	private $my_files;
 
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
@@ -39,9 +45,10 @@ class Project
 	private $updatedAt;
 
 	public function __construct()
-      	{
-      		$this->updatedAt = new \DateTime();
-      	}
+                                       	{
+                                       		$this->updatedAt = new \DateTime();
+                                         $this->my_files = new ArrayCollection();
+                                       	}
 
     public function getId(): ?int
     {
@@ -92,6 +99,36 @@ class Project
     public function setSkills(?array $skills): self
     {
         $this->skills = $skills;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Attachment[]
+     */
+    public function getMyFiles(): Collection
+    {
+        return $this->my_files;
+    }
+
+    public function addMyFile(Attachment $myFile): self
+    {
+        if (!$this->my_files->contains($myFile)) {
+            $this->my_files[] = $myFile;
+            $myFile->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMyFile(Attachment $myFile): self
+    {
+        if ($this->my_files->removeElement($myFile)) {
+            // set the owning side to null (unless already changed)
+            if ($myFile->getProject() === $this) {
+                $myFile->setProject(null);
+            }
+        }
 
         return $this;
     }

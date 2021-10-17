@@ -36,10 +36,8 @@ class HomeController extends AbstractController
 			->findAll();
 
 		foreach ($hobbies as $hobby) {
-			$attachments = $this->getDoctrine()
-				->getRepository(Attachment::class)
-				->findBy(['hobby_id' => $hobby->getId()],['sorting'=> 'ASC']);
-			$hobby->attachments = $attachments;
+
+			$hobby->attachments = $hobby->getMyFiles();
 		}
 
 		$projects = $this->getDoctrine()
@@ -47,11 +45,10 @@ class HomeController extends AbstractController
 			->findAll();
 
 		foreach ($projects as $project) {
-			$attachments = $this->getDoctrine()
-				->getRepository(Attachment::class)
-				->findBy(['project_id' => $project->getId()],['sorting'=> 'ASC']);
-			$project->attachments = $attachments;
+
+			$project->attachments = $project->getMyFiles();
 		}
+
 		$form = $this->contactForm($request, $mailer);
 
 		$sections = $this->getDoctrine()

@@ -27,6 +27,39 @@
                     </div>
                 </div>
 
+                {% import _self as formMacros %}
+
+                {% macro formatCollection(form) %}
+                    <div class="contentSection">
+                        <h3 class="has-text-white mb-2 mt-5">Skill</h3>
+                        <div class="field">
+                            {{ form_label(form.title, null, {
+                                'label_attr': {'class': 'label'}
+                            }) }}
+                            <div class="control">
+                                {{ form_widget(form.title, { 'attr': {'class': 'input'} }) }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            {{ form_label(form.value, null, {
+                                'label_attr': {'class': 'label'}
+                            }) }}
+                            <div class="control">
+                                {{ form_widget(form.value) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endmacro %}
+
+
+                <div class="collectionsContainer">
+                    <div class="collections columns is-multiline mt-6 mb-6" data-index="{{ form.skills|length > 0 ? form.skills|last.vars.name + 1 : 0 }}" data-prototype="{{ formMacros.formatCollection(form.skills.vars.prototype)|e('html_attr') }}">
+                        {% for item in form.skills %}
+                                {{ formMacros.formatCollection(item) }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <button type="button" class="add_item_link button is-success" data-collection-holder-class="collections">Add a Skill</button>
 
                 <div class="field">
                     {{ form_label(form.my_files, null, {
@@ -37,7 +70,7 @@
                             {% for attachment in attachments %}
                                 <div class="column is-3 draggable" data-sorting="{{ attachment.sorting }}" data-id="{{ attachment.id }}">
                                     <figure class="image is-square attachmentContainer">
-                                        <img src="{{ '/uploads/project/'~attachment.imageFile }}" alt="{{ attachment.image }}" style="object-fit: cover" class="attachment" data-id="{{ attachment.id }}" loading="lazy">
+                                        <img src="{{ '/uploads/project/'~attachment.imageFile }}" alt="{{ attachment.imageFile }}" style="object-fit: cover" class="attachment" data-id="{{ attachment.id }}" loading="lazy">
                                         <i class="fas fa-trash"></i>
                                         <div class="overlay">
                                             <i class="fas fa-trash"></i>

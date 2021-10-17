@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Service\FileUploader;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Entity\Attachment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -82,57 +84,26 @@ class ProjectController extends AbstractController
 	/**
 	 * @Route("/editProject-{id}", name="edit_project")
 	 */
-	public function edit(int $id, Request $request, Project $project, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
+	public function edit(int $id, Request $request, Project $project, EntityManagerInterface $entityManager, FileUploader $fileUploader, SluggerInterface $slugger): Response
 	{
 		$form = $this->createForm(ProjectType::class, $project);
 		$form->handleRequest($request);
+
 		if ($form->isSubmitted() && $form->isValid()) {
-			$upload_dir = $this->getParameter('app.path.project_attachments');
-
-			// getting highest current id of project // TODO: Make it more simple
-			$query = $this->getDoctrine()->getManager()->createQuery(
-				'SELECT MAX(a.sorting)
-				FROM App\Entity\Attachment a
-				WHERE a.project_id ='.$project->getId()
-			);
-			$sorting = $query->getResult()[0][1];
-
 			// loop through uploaded files and set images
 			$i = 0;
 			$files = $request->files->get('project')['my_files'];
 			foreach ($files as $file) {
 				$i++;
-				if ($file) {
-					$filename = $fileUploader->upload($file, $this->getParameter('app.path.project_attachments'));
-				}
-
-				$attachment = new Attachment();
-				$attachment->setImageFile($filename);
-				$attachment->setProjectId($id);
-				$attachment->setSorting($sorting+$i);
+				$attachment = $fileUploader->upload($file, $this->getParameter('app.path.project_attachments'), $project, 'project', $i);
+				$attachment->setProject($project);
 				$entityManager->persist($attachment);
-
 			}
-			$entityManager->flush();
-
-
-			// $form->getData() holds the submitted values
-			// but, the original `$task` variable has also been updated
-			$project = $form->getData();
-
-			// ... perform some action, such as saving the task to the database
-			// for example, if Task is a Doctrine entity, save it!
 			$entityManager->persist($project);
 			$entityManager->flush();
-
-			//return $this->redirectToRoute('homepage');
+			return $this->redirectToRoute('edit_project', ['id'=>$id]); // Very important! Without it the form will be submitted by each page reload!
 		}
-
-
-		$attachments = $this->getDoctrine()
-			->getRepository(Attachment::class)
-			->findBy(['project_id'=>$id], ['sorting'=>'ASC']);
-
+		$attachments = $project->getMyFiles();
 		return $this->render('form/form_project.html.twig', [
 			'form' => $form->createView(),
 			'attachments' => $attachments
@@ -140,6 +111,7 @@ class ProjectController extends AbstractController
 	}
 
 	/**
+	 * VIA FETCH
 	 * @Route("/deleteProject-{id}", name="delete_project")
 	 */
 	public function delete(int $id): Response
@@ -167,6 +139,7 @@ class ProjectController extends AbstractController
 	}
 
 	/**
+	 * VIA FETCH
 	 * @Route("project/attachment/delete/{id}")
 	 */
 	public function deleteAttachment(Request $request, $id) {
