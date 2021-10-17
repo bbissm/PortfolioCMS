@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Form;
-
+use Symfony\Component\Validator\Constraints\File;
 use App\Entity\Attachment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -16,10 +16,26 @@ class ContentType extends AbstractType
         $builder
             ->add('title')
             ->add('text')
-			->add('my_files', CollectionType::class, array(
-				'entry_type' => AttachmentType::class,
-				'entry_options' => ['label' => false],
-				'by_reference' => false
+			/*->add('my_files', FileType::class, array(
+				'mapped' => false,
+				'label' => false,
+				'multiple' => true,
+				'required' => false,
+				'constraints' => [
+					new File([
+						'maxSize' => '1024k',
+						'mimeTypes' => [
+							'application/pdf',
+							'application/x-pdf',
+						],
+						'mimeTypesMessage' => 'Please upload a valid PDF document',
+					])
+				],
+			))*/
+			->add('imageFile', FileType::class, array(
+				'mapped'=> false,
+				'label' => false,
+				'required' => false,
 			))
         ;
     }

@@ -45,10 +45,10 @@ class Project
 	private $updatedAt;
 
 	public function __construct()
-                                       	{
-                                       		$this->updatedAt = new \DateTime();
-                                         $this->my_files = new ArrayCollection();
-                                       	}
+	{
+		$this->updatedAt = new \DateTime();
+	 	$this->my_files = new ArrayCollection();
+	}
 
     public function getId(): ?int
     {

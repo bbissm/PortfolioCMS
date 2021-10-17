@@ -47,7 +47,7 @@ class Hobby
     public function __construct()
     {
 		$this->updatedAt = new \DateTime();
-  $this->my_files = new ArrayCollection();
+  		$this->my_files = new ArrayCollection();
     }
 
     public function getId(): ?int

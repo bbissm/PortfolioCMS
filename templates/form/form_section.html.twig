@@ -45,6 +45,16 @@
                             {{ form_widget(form.text, { 'attr': {'class': 'textarea'} }) }}
                         </div>
                     </div>
+
+                    <div class="field">
+                        {{ form_label(form.imageFile, null, {
+                            'label_attr': {'class': 'label'}
+                        }) }}
+                        <div class="control">
+                            {{ form_widget(form.imageFile, { 'attr': {'class': 'input'} }) }}
+                        </div>
+                    </div>
+                    {#
                     <div class="field">
                         {{ form_label(form.my_files, null, {
                             'label_attr': {'class': 'label'}
@@ -53,6 +63,7 @@
                             {{ form_widget(form.my_files, { 'attr': {'class': 'input'} }) }}
                         </div>
                     </div>
+                    #}
                 </div>
 
             {% endmacro %}

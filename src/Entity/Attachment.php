@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AttachmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Entity\Hobby;
 /**
@@ -39,7 +40,7 @@ class Attachment
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="App\Entity\Content", inversedBy="my_files")
-	 * @ORM\JoinColumn(nullable=true)
+	 * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
 	 */
 	private $content;
 

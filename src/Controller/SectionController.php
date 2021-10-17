@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\FileUploader;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SectionController extends AbstractController
 {
@@ -62,43 +63,58 @@ class SectionController extends AbstractController
 	/**
 	 * @Route("/editSection-{id}", name="edit_section")
 	 */
-	public function editSection($id, Request $request, Section $section, EntityManagerInterface $entityManager,FileUploader $fileUploader) : Response
+	public function editSection($id, Request $request, Section $section, EntityManagerInterface $entityManager,FileUploader $fileUploader, SluggerInterface $slugger) : Response
 	{
-		if (null === $section = $entityManager->getRepository(Section::class)->find($id)) {
-			throw $this->createNotFoundException('No task found for id '.$id);
-		}
 
-		$originalContent = new ArrayCollection();
+		$oldContent = new ArrayCollection();
 
-		// Create an ArrayCollection of the current Content objects in the database
+		// Create content before submit
 		foreach ($section->getContent() as $content) {
-			$originalContent->add($content);
+			$oldContent->add($content);
 		}
-		//$files = $request->files->get('project')['my_files'];
-
 		$form = $this->createForm(SectionType::class, $section);
 		$form->handleRequest($request);
-
+		$files = $request->files->get('section')['content'];
 		// For attachments
 		if ($form->isSubmitted() && $form->isValid()) {
-			foreach($request->files->get('section')['content'] as $contentFiles) {
-				foreach($contentFiles['my_files'] as $file){
-					if ($file) {
-						$fileUploader->upload($file, $this->getParameter('app.path.section_attachments'));
-					}
-				}
-			}
-
-			// remove the relationship between the Content and the Section
-			foreach ($originalContent as $content) {
-				if (false === $section->getContent()->contains($content)) {
+			$newContent = $section->getContent();
+			// Create content before submit and remove the relationship between the Content and the Section
+			dump($request);
+			foreach ($oldContent as $content) {
+				if (false === $newContent->contains($content)) {
 					// If the entry should stay in the database
 					$content->setSection(null);
 					// if you wanted to delete the Tag entirely, you can also do that
 					//$entityManager->remove($content);
 					$entityManager->persist($content);
 				}
+
 			}
+			/*for ($i = 0; $i < count($newContent); $i++) {
+				dump($files);
+				$file = $files[$i]['imageFile'] ?? '';
+				if ($file) {
+					$originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+					$safeFilename = $slugger->slug($originalFilename);
+					$fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+
+					$newContent[$i]->setImageFile($fileName);
+				}
+			}*/
+
+			foreach($files as $key => $file) {
+				$file = $file['imageFile'];
+				$fileName = '';
+				if ($file) {
+					$originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+					$safeFilename = $slugger->slug($originalFilename);
+					$fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+				}
+				foreach ($newContent as $content) {
+					$content->setImageFile($fileName);
+				}
+			}
+
 			$entityManager->persist($section);
 			$entityManager->flush();
 			//return $this->redirectToRoute('edit_section', ['id' => $id]);

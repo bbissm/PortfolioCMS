@@ -30,6 +30,12 @@ class Content
     private $text;
 
 	/**
+	 * Provisorischer Bildeintrag
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+    private $imageFile;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Attachment", mappedBy="content", cascade={"persist"})
 	 */
 	private $my_files;
@@ -42,10 +48,10 @@ class Content
 
 
 	public function __construct(Section $section = null)
-            	{
-            		$this->section = $section;
-              $this->my_files = new ArrayCollection();
-            	}
+                           	{
+                           		$this->section = $section;
+                             $this->my_files = new ArrayCollection();
+                           	}
 
     public function getId(): ?int
     {
@@ -103,36 +109,6 @@ class Content
     /**
      * @return \Doctrine\Common\Collections\Collection|Attachment[]
      */
-    public function getFiles(): \Doctrine\Common\Collections\Collection
-    {
-        return $this->files;
-    }
-
-    public function addFile(Attachment $file): self
-    {
-        if (!$this->files->contains($file)) {
-            $this->files[] = $file;
-            $file->setContent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFile(Attachment $file): self
-    {
-        if ($this->files->removeElement($file)) {
-            // set the owning side to null (unless already changed)
-            if ($file->getContent() === $this) {
-                $file->setContent(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return \Doctrine\Common\Collections\Collection|Attachment[]
-     */
     public function getMyFiles(): \Doctrine\Common\Collections\Collection
     {
         return $this->my_files;
@@ -142,7 +118,7 @@ class Content
     {
         if (!$this->my_files->contains($myFile)) {
             $this->my_files[] = $myFile;
-            $myFile->setContentId($this);
+            $myFile->setContent($this);
         }
 
         return $this;
@@ -152,10 +128,22 @@ class Content
     {
         if ($this->my_files->removeElement($myFile)) {
             // set the owning side to null (unless already changed)
-            if ($myFile->getContentId() === $this) {
-                $myFile->setContentId(null);
+            if ($myFile->getContent() === $this) {
+                $myFile->setContent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImageFile(): ?string
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?string $imageFile): self
+    {
+        $this->imageFile = $imageFile;
 
         return $this;
     }
