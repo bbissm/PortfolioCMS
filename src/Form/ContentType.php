@@ -16,25 +16,10 @@ class ContentType extends AbstractType
         $builder
             ->add('title')
             ->add('text')
-			/*->add('my_files', FileType::class, array(
+			->add('my_files', FileType::class, array(
 				'mapped' => false,
 				'label' => false,
 				'multiple' => true,
-				'required' => false,
-				'constraints' => [
-					new File([
-						'maxSize' => '1024k',
-						'mimeTypes' => [
-							'application/pdf',
-							'application/x-pdf',
-						],
-						'mimeTypesMessage' => 'Please upload a valid PDF document',
-					])
-				],
-			))*/
-			->add('imageFile', FileType::class, array(
-				'mapped'=> false,
-				'label' => false,
 				'required' => false,
 			))
         ;

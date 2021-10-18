@@ -40,7 +40,6 @@ class FileUploader
 		$attachment = new Attachment();
 		$attachment->setSorting($sorting+$iterator);
 		$attachment->setImageFile($fileName);
-
 		return $attachment;
 	}
 }

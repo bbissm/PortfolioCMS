@@ -21,7 +21,6 @@ class SectionType extends AbstractType
 				'entry_options' => ['label' => false],
 				'allow_add' => true,
 				'allow_delete' => true,
-				'allow_extra_fields' => true,
 				'by_reference' => false
 			])
 			->add('save', SubmitType::class)

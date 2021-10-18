@@ -30,12 +30,6 @@ class Content
     private $text;
 
 	/**
-	 * Provisorischer Bildeintrag
-	 * @ORM\Column(type="text", nullable=true)
-	 */
-    private $imageFile;
-
-	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Attachment", mappedBy="content", cascade={"persist"})
 	 */
 	private $my_files;
@@ -48,10 +42,10 @@ class Content
 
 
 	public function __construct(Section $section = null)
-                           	{
-                           		$this->section = $section;
-                             $this->my_files = new ArrayCollection();
-                           	}
+	{
+		$this->section = $section;
+	 	$this->my_files = new ArrayCollection();
+	}
 
     public function getId(): ?int
     {
@@ -135,17 +129,4 @@ class Content
 
         return $this;
     }
-
-    public function getImageFile(): ?string
-    {
-        return $this->imageFile;
-    }
-
-    public function setImageFile(?string $imageFile): self
-    {
-        $this->imageFile = $imageFile;
-
-        return $this;
-    }
-
 }

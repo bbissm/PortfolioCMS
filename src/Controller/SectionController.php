@@ -65,6 +65,9 @@ class SectionController extends AbstractController
 	 */
 	public function editSection($id, Request $request, Section $section, EntityManagerInterface $entityManager,FileUploader $fileUploader, SluggerInterface $slugger) : Response
 	{
+		if (null === $section = $entityManager->getRepository(Section::class)->find($id)) {
+			throw $this->createNotFoundException('No Section found for id '.$id);
+		}
 
 		$oldContent = new ArrayCollection();
 
@@ -72,56 +75,78 @@ class SectionController extends AbstractController
 		foreach ($section->getContent() as $content) {
 			$oldContent->add($content);
 		}
+
 		$form = $this->createForm(SectionType::class, $section);
 		$form->handleRequest($request);
-		$files = $request->files->get('section')['content'];
+
+
+
 		// For attachments
 		if ($form->isSubmitted() && $form->isValid()) {
+
+
 			$newContent = $section->getContent();
-			// Create content before submit and remove the relationship between the Content and the Section
-			dump($request);
+			// Create content after submit and remove the relationship between the Content and the Section
 			foreach ($oldContent as $content) {
 				if (false === $newContent->contains($content)) {
 					// If the entry should stay in the database
-					$content->setSection(null);
-					// if you wanted to delete the Tag entirely, you can also do that
-					//$entityManager->remove($content);
+					//$content->setSection(null);
+					// if you wanted to delete the Content entirely, you can also do that
+
+
+					//Remove attachments linked to removed content ! remove first attachment, then content
+					$attachments = $entityManager
+						->getRepository(Attachment::class)
+						->findBy(['content'=>$content]);
+					foreach ($attachments as $attachment) {
+						$content->removeMyFile($attachment);
+					}
+					$entityManager->remove($content);
 					$entityManager->persist($content);
-				}
-
-			}
-			/*for ($i = 0; $i < count($newContent); $i++) {
-				dump($files);
-				$file = $files[$i]['imageFile'] ?? '';
-				if ($file) {
-					$originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-					$safeFilename = $slugger->slug($originalFilename);
-					$fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-
-					$newContent[$i]->setImageFile($fileName);
-				}
-			}*/
-
-			foreach($files as $key => $file) {
-				$file = $file['imageFile'];
-				$fileName = '';
-				if ($file) {
-					$originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-					$safeFilename = $slugger->slug($originalFilename);
-					$fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-				}
-				foreach ($newContent as $content) {
-					$content->setImageFile($fileName);
 				}
 			}
 
 			$entityManager->persist($section);
 			$entityManager->flush();
-			//return $this->redirectToRoute('edit_section', ['id' => $id]);
+
+			$filesArray = [];
+			$contents = $request->files->get('section')['content'];
+
+			// FILEUPLOAD START ////////////////////////////////// ! add first content, then attachments
+			//prepare files array
+			foreach ($contents as $key => $value) {
+				$filesArray[$key] = array_filter($value);
+			}
+
+			// Insert files separately to db
+			$filesArray = array_filter($filesArray);
+			foreach ($filesArray as $key => $value) {
+				$content = $section->getContent()[$key];
+				$i = 0;
+				foreach ($value['my_files'] as $file) {
+					$i++;
+					$attachment = $fileUploader->upload($file, $this->getParameter('app.path.section_attachments'), $content, 'content', $i);
+					$attachment->setContent($content);
+					$entityManager->persist($attachment);
+				}
+			}
+			$entityManager->flush();
+			// FILEUPLOAD END //////////////////////////////////
+
+			return $this->redirectToRoute('edit_section', ['id' => $id]);
+		}
+
+		$contents = $section->getContent();
+		$attachments = [];
+		foreach ($contents as $content) {
+			$attachments = $entityManager
+				->getRepository(Attachment::class)
+				->findBy(['content'=>$content]);
 		}
 
 		return $this->render('form/form_section.html.twig', [
-			'form' => $form->createView()
+			'form' => $form->createView(),
+			'attachments' => $attachments
 		]);
 
 	}
