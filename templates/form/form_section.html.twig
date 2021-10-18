@@ -3,7 +3,6 @@
 {% block title %}Project{% endblock %}
 {% block body %}
     <div class="container">
-
         <section class="section" id="form">
             <h1 class="title">Formular</h1>
             {{ form_start(form) }}
@@ -28,7 +27,8 @@
             </div>
 
             {% import _self as formMacros %}
-            {% macro formatCollection(form) %}
+
+            {% macro formatCollection(form, attachments) %}
                 <div class="contentSection">
                     <h3 class="has-text-white mb-2 mt-6">Content</h3>
                     <div class="field">
@@ -51,23 +51,7 @@
                         {{ form_label(form.my_files, null, {
                             'label_attr': {'class': 'label'}
                         }) }}
-                        <div class="columns is-mobile is-multiline" id="sortableAttachment">
-
-
-                            {% if attachments|default  %}
-                                {% for attachment in attachments %}
-                                    <div class="column is-3 draggable" data-sorting="{{ attachment.sorting }}" data-id="{{ attachment.id }}">
-                                        <figure class="image is-square attachmentContainer">
-                                            <img src="{{ '/uploads/project/'~attachment.imageFile }}" alt="{{ attachment.imageFile }}" style="object-fit: cover" class="attachment" data-id="{{ attachment.id }}" loading="lazy">
-                                            <i class="fas fa-trash"></i>
-                                            <div class="overlay">
-                                                <i class="fas fa-trash"></i>
-                                            </div>
-                                        </figure>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
+                        {%  include 'chunks/attachments.html.twig' with {'attachments':attachments,'module':'section'}  %}
                         <div class="control">
                             {{ form_widget(form.my_files, { 'attr': {'class': 'input'} }) }}
                         </div>
@@ -76,13 +60,11 @@
 
             {% endmacro %}
 
-
             {% for item in form.content %}
-                {{ formMacros.formatCollection(item) }}
-                {% for attachment in attachments %}
-                    {{ dump(attachment.imageFile) }}
-                {% endfor %}
+                {{ formMacros.formatCollection(item, contents[loop.index0].getMyFiles()) }}
             {% endfor %}
+
+
 
             {# formMacros.formatCollection(form.content.vars.prototype)|e('html_attr') #}
             <div class="content-add" data-index="{{ form.content|length > 0 ? form.content|last.vars.name + 1 : 0 }}" data-prototype="{{ formMacros.formatCollection(form.content.vars.prototype)|e('html_attr') }}"></div>

@@ -94,7 +94,7 @@ class HobbyController extends AbstractController
 			$entityManager->flush();
 			return $this->redirectToRoute('edit_hobby', ['id'=>$id]); // Very important! Without it the form will be submitted by each page reload!
 		}
-		$attachments = $hobby->getMyFiles();
+		$attachments = $entityManager->getRepository(Attachment::class)->findBy(['hobby'=>$hobby],['sorting'=>'ASC']);
 		return $this->render('form/form_hobby.html.twig', [
 			'form' => $form->createView(),
 			'attachments' => $attachments

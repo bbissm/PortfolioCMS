@@ -103,7 +103,7 @@ class ProjectController extends AbstractController
 			$entityManager->flush();
 			return $this->redirectToRoute('edit_project', ['id'=>$id]); // Very important! Without it the form will be submitted by each page reload!
 		}
-		$attachments = $project->getMyFiles();
+		$attachments = $entityManager->getRepository(Attachment::class)->findBy(['project'=>$project],['sorting'=>'ASC']);
 		return $this->render('form/form_project.html.twig', [
 			'form' => $form->createView(),
 			'attachments' => $attachments

@@ -1,0 +1,15 @@
+<div class="columns is-mobile is-multiline sortableAttachment">
+    {% if attachments|default  %}
+        {% for attachment in attachments|sort((a, b) => a.sorting <=> b.sorting) %}
+            <div class="column is-3 draggable" data-sorting="{{ attachment.sorting }}" data-id="{{ attachment.id }}">
+                <figure class="image is-square attachmentContainer">
+                    <img src="{{ '/uploads/'~module~'/'~attachment.imageFile }}" alt="{{ attachment.imageFile }}" style="object-fit: cover" class="attachment" data-id="{{ attachment.id }}" loading="lazy">
+                    <i class="fas fa-trash"></i>
+                    <div class="overlay">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </figure>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>

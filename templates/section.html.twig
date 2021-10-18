@@ -21,9 +21,10 @@
             </div>
         </div>
     {% endfor %}
+
     {% if section.template %}
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            {% if section.template != 'contact.html.twig' %}
+            {% if section.template != 'contact.html.twig' and section.template is not null %}
                 <a class="button centered has-text-white has-background-black mb-5 mt-6" href="{{ path('create_'~section.name|lower) }}">
                     Add{{ section.name }}
                 </a>

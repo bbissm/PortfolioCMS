@@ -54,7 +54,7 @@ class HomeController extends AbstractController
 		$sections = $this->getDoctrine()
 			->getRepository(Section::class)
 			->findBy([],['sorting' => 'ASC']);
-
+		dump($sections);
 		return $this->render('homepage.html.twig', ['hobbies'=>$hobbies, 'sections' =>$sections, 'projects'=>$projects, 'form'=>$form]);
     }
 

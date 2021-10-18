@@ -23,7 +23,7 @@ class SectionController extends AbstractController
 	/**
 	 * @Route("/addSection", name="add_section")
 	 */
-	public function addSection(Request $request) : Response
+	public function addSection(Request $request, EntityManagerInterface $entityManager) : Response
 	{
 		$section = new Section();
 		$form = $this->createForm(SectionType::class, $section);
@@ -41,6 +41,8 @@ class SectionController extends AbstractController
 			);
 			$sorting = $query->getResult()[0][1];
 
+
+
 			// $form->getData() holds the submitted values
 			$section = $form->getData();
 
@@ -53,7 +55,12 @@ class SectionController extends AbstractController
 
 			return $this->redirectToRoute('homepage');
 		}
-
+		// getting highest current id of project // TODO: Make it more simple
+		$query = $this->getDoctrine()->getManager()->createQuery(
+			'SELECT MAX(s.id)
+				FROM App\Entity\Section s'
+		);
+		dump($section);
 		return $this->render('form/form_section.html.twig', [
 			'form' => $form->createView()
 		]);
@@ -68,7 +75,7 @@ class SectionController extends AbstractController
 		if (null === $section = $entityManager->getRepository(Section::class)->find($id)) {
 			throw $this->createNotFoundException('No Section found for id '.$id);
 		}
-
+		$upload_dir = $this->getParameter('app.path.section_attachments');
 		$oldContent = new ArrayCollection();
 
 		// Create content before submit
@@ -100,6 +107,7 @@ class SectionController extends AbstractController
 						->findBy(['content'=>$content]);
 					foreach ($attachments as $attachment) {
 						$content->removeMyFile($attachment);
+						unlink($upload_dir.'/'.$attachment->getImageFile());
 					}
 					$entityManager->remove($content);
 					$entityManager->persist($content);
@@ -125,7 +133,7 @@ class SectionController extends AbstractController
 				$i = 0;
 				foreach ($value['my_files'] as $file) {
 					$i++;
-					$attachment = $fileUploader->upload($file, $this->getParameter('app.path.section_attachments'), $content, 'content', $i);
+					$attachment = $fileUploader->upload($file, $upload_dir, $content, 'content', $i);
 					$attachment->setContent($content);
 					$entityManager->persist($attachment);
 				}
@@ -137,18 +145,42 @@ class SectionController extends AbstractController
 		}
 
 		$contents = $section->getContent();
-		$attachments = [];
-		foreach ($contents as $content) {
-			$attachments = $entityManager
-				->getRepository(Attachment::class)
-				->findBy(['content'=>$content]);
-		}
 
 		return $this->render('form/form_section.html.twig', [
 			'form' => $form->createView(),
-			'attachments' => $attachments
+			'contents' => $contents
 		]);
+	}
 
+	/**
+	 * VIA FETCH
+	 * @Route("section/attachment/delete/{id}")
+	 */
+	public function deleteAttachment(Request $request, $id) {
+		$upload_dir = $this->getParameter('app.path.section_attachments');
+		$attachment = $this->getDoctrine()->getManager()
+			->getRepository(Attachment::class)
+			->find($id);
+		$entityManager = $this->getDoctrine()->getManager();
+		$entityManager->remove($attachment);
+		$entityManager->flush();
+		unlink($upload_dir.'/'.$attachment->getImageFile());
+		$response = new Response();
+		return $response->send();
+	}
+
+	/**
+	 * @Route("/attachment/{sorting}/sort/{id}")
+	 * Method({"POST"})
+	 */
+	public function sortAttachments(Request $request,$sorting, $id) {
+		$entityManager = $this->getDoctrine()->getManager();
+		$attachment = $this->getDoctrine()->getManager()
+			->getRepository(Attachment::class)
+			->find($id);
+		$attachment->setSorting($sorting);
+		$entityManager->persist($attachment);
+		$entityManager->flush();
 	}
 
 }

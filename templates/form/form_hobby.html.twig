@@ -32,22 +32,7 @@
                     {{ form_label(form.my_files, null, {
                         'label_attr': {'class': 'label'}
                     }) }}
-                    <div class="columns is-mobile is-multiline" id="sortableAttachment">
-                        {% if attachments|default  %}
-                            {% for attachment in attachments %}
-                                <div class="column is-3 draggable" data-sorting="{{ attachment.sorting }}" data-id="{{ attachment.id }}">
-                                    <figure class="image is-square attachmentContainer">
-                                        <img src="{{ '/uploads/hobby/'~attachment.imageFile }}" alt="{{ attachment.imageFile }}" style="object-fit: cover" class="attachment" data-id="{{ attachment.id }}" loading="lazy">
-                                        <i class="fas fa-trash"></i>
-                                        <div class="overlay">
-                                            <i class="fas fa-trash"></i>
-                                        </div>
-                                    </figure>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-
+                    {%  include 'chunks/attachments.html.twig' with {'attachments':attachments,'module':'hobby'}  %}
                     <div class="control">
                         {{ form_widget(form.my_files, { 'attr': {'class': 'input'} }) }}
                     </div>
