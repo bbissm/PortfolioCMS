@@ -1,10 +1,10 @@
 {% for hobby in hobbies %}
     <div class="columns is-tablet {% if loop.index % 2 == 0 %}is-flex-direction-row-reverse	{% endif %}">
             <div class="column is-half p-0">
-                <div class="{% if hobby.attachments|length > 1 %}has-swiper{% endif %}">
-                    <div class="swiper">
+                <div class="{% if hobby.getMyFiles()|length > 1 %}has-swiper{% endif %}">
+                    <div class="{% if hobby.getMyFiles()|length > 1 %}swiper{% endif %}">
                         <div class="swiper-wrapper">
-                            {% for attachment in hobby.attachments %}
+                            {% for attachment in hobby.getMyFiles()|sort((a, b) => a.sorting <=> b.sorting) %}
                                 <div class="swiper-slide">
                                     <img src="{{ asset('/uploads/hobby/')~attachment.imageFile  }}" alt="{{ attachment.imageFile }}" style="object-fit: contain" loading="lazy">
                                 </div>

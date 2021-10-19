@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Service\FileUploader;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Entity\Attachment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,158 +13,126 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Project;
 use App\Form\ProjectType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-
 
 class ProjectController extends AbstractController
 {
+	private $entityManager;
+	private $uploadDir;
+	private $fileUploader;
+
+	public function __construct(EntityManagerInterface $entityManager,FileUploader $fileUploader,ParameterBagInterface $params)
+	{
+		$this->entityManager = $entityManager;
+		$this->uploadDir = $params->get('app.path.project_attachments');
+		$this->fileUploader = $fileUploader;
+	}
+
 	/**
-	 * @Route("/addProject", name="create_work")
+	 * @Route("/addProject", name="create_project")
 	 *
 	 */
 	public function create(Request $request): Response
 	{
 		$project = new Project();
 		$form = $this->createForm(ProjectType::class, $project);
-
-
 		$form->handleRequest($request);
-
-		// For attachments
 		if ($form->isSubmitted() && $form->isValid()) {
-
-			// $form->getData() holds the submitted values
 			$project = $form->getData();
-
-			// ... perform some action, such as saving the task to the database
-			// for example, if Task is a Doctrine entity, save it!
-			$entityManager = $this->getDoctrine()->getManager();
-			$entityManager->persist($project);
-			$entityManager->flush();
-
-			// getting highest current id of project // TODO: Make it more simple
-			$query = $this->getDoctrine()->getManager()->createQuery(
-				'SELECT MAX(h.id)
-				FROM App\Entity\Project h'
-			);
-			$newProjectId = $query->getResult()[0][1];
-
-
-			$upload_dir = $this->getParameter('app.path.project_attachments');
-
 			$files = $request->files->get('project')['my_files'];
-
 			// loop through uploaded files and set images
-			$entityManager = $this->getDoctrine()->getManager();
-			$i = 0;
-			foreach ($files as $file) {
-				$originFileName = $file->getClientOriginalName().'.'.$file->guessExtension();
-				$filename = md5(uniqid());
-				$file->move($upload_dir,$filename);
-				$attachment = new Attachment();
-				$attachment->setImageFile($filename);
-				$attachment->setImage($file->getClientOriginalName($originFileName));
-				$attachment->setProjectId($newProjectId);
-				$attachment->setSorting($i++);
-				$entityManager->persist($attachment);
+			foreach ($files as $key => $file) {
+				$attachment = $this->fileUploader->upload($file, $this->uploadDir, $project, 'project', $key);
+				$attachment->setProject($project);
+				$this->entityManager->persist($attachment);
 			}
-			$entityManager->flush();
-			return $this->redirectToRoute('homepage');
+			$this->entityManager->persist($project);
+			$this->entityManager->flush();
+			return $this->redirectToRoute('edit_project', ['id'=>$project->getId()]);
 		}
-
 		return $this->render('form/form_project.html.twig', [
-			'form' => $form->createView()
+			'form' => $form->createView(),
+			'attachments' => $project->getMyFiles()
 		]);
-
 	}
 
 	/**
 	 * @Route("/editProject-{id}", name="edit_project")
 	 */
-	public function edit(int $id, Request $request, Project $project, EntityManagerInterface $entityManager, FileUploader $fileUploader, SluggerInterface $slugger): Response
+	public function edit(int $id, Request $request, Project $project): Response
 	{
+		$oldSkills = $project->getSkills();
 		$form = $this->createForm(ProjectType::class, $project);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			// loop through uploaded files and set images
-			$i = 0;
 			$files = $request->files->get('project')['my_files'];
-			foreach ($files as $file) {
-				$i++;
-				$attachment = $fileUploader->upload($file, $this->getParameter('app.path.project_attachments'), $project, 'project', $i);
+			foreach ($files as $key => $file) {
+				$attachment = $this->fileUploader->upload($file, $this->getParameter('app.path.project_attachments'), $project, 'project', $key);
 				$attachment->setProject($project);
-				$entityManager->persist($attachment);
+				$this->entityManager->persist($attachment);
 			}
-			$entityManager->persist($project);
-			$entityManager->flush();
+			$newSkills = $project->getSkills();
+			foreach($oldSkills as $skill) {
+				//if (false === $newSkills->contains($skill)) {
+
+				//}
+			}
+			$project->setSkills($newSkills);
+			$this->entityManager->persist($project);
+			$this->entityManager->flush();
 			return $this->redirectToRoute('edit_project', ['id'=>$id]); // Very important! Without it the form will be submitted by each page reload!
 		}
-		$attachments = $entityManager->getRepository(Attachment::class)->findBy(['project'=>$project],['sorting'=>'ASC']);
 		return $this->render('form/form_project.html.twig', [
 			'form' => $form->createView(),
-			'attachments' => $attachments
+			'attachments' => $project->getMyFiles()
 		]);
 	}
 
 	/**
-	 * VIA FETCH
 	 * @Route("/deleteProject-{id}", name="delete_project")
 	 */
-	public function delete(int $id): Response
+	public function delete(int $id)
 	{
-		$upload_dir = $this->getParameter('app.path.project_attachments');
-		// Remove all attachments linked to Project
-
-		$attachments = $this->getDoctrine()->getManager()
-			->getRepository(Attachment::class)
-			->findBy(['project_id'=>$id]);
-
-		$entityManager = $this->getDoctrine()->getManager();
-		foreach ($attachments as $attach) {
-			$entityManager->remove($attach);
-			unlink($upload_dir.'/'.$attach->getImageFile());
+		$project = $this->entityManager->getRepository(Project::class)->find($id);
+		$attachments = $project->getMyFiles();
+		foreach ($attachments as $attachment) {
+			$this->entityManager->remove($attachment);
+			unlink($this->uploadDir.'/'.$attachment->getImageFile());
 		}
-		$entityManager->flush();
+		$this->entityManager->remove($project);
+		$this->entityManager->flush();
 
-		$entityManager = $this->getDoctrine()->getManager();
-		$project = $entityManager->getRepository(Project::class)->find($id);
-		$entityManager->remove($project);
-		$entityManager->flush();
-
-		//return $this->redirectToRoute('homepage');
+		return $this->redirectToRoute('homepage');
 	}
 
 	/**
 	 * VIA FETCH
 	 * @Route("project/attachment/delete/{id}")
 	 */
-	public function deleteAttachment(Request $request, $id) {
-		$upload_dir = $this->getParameter('app.path.project_attachments');
-		$attachment = $this->getDoctrine()->getManager()
+	public function deleteAttachment(int $id) {
+		$this->uploadDir = $this->getParameter('app.path.project_attachments');
+		$attachment = $this->entityManager
 			->getRepository(Attachment::class)
 			->find($id);
-		$entityManager = $this->getDoctrine()->getManager();
-		$entityManager->remove($attachment);
-		$entityManager->flush();
-		unlink($upload_dir.'/'.$attachment->getImageFile());
+		$this->entityManager->remove($attachment);
+		$this->entityManager->flush();
+		unlink($this->uploadDir.'/'.$attachment->getImageFile());
 		$response = new Response();
 		return $response->send();
 	}
 
 	/**
+	 * VIA FETCH
 	 * @Route("/attachment/{sorting}/sort/{id}")
 	 * Method({"POST"})
 	 */
-	public function sortAttachments(Request $request,$sorting, $id) {
-		$entityManager = $this->getDoctrine()->getManager();
-		$attachment = $this->getDoctrine()->getManager()
+	public function sortAttachments(int $sorting, int $id) {
+		$attachment = $this->entityManager
 			->getRepository(Attachment::class)
 			->find($id);
 		$attachment->setSorting($sorting);
-		$entityManager->persist($attachment);
-		$entityManager->flush();
+		$this->entityManager->persist($attachment);
+		$this->entityManager->flush();
 	}
 }

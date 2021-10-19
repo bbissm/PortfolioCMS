@@ -152,6 +152,11 @@
     .flip-back {
         padding:0 !important;
         transform: rotateY(180deg);
+        h2{
+            @include mobile() {
+                margin-top: 3rem !important;
+            }
+        }
         .fa-book-open{
             font-size: 3rem;
             right: 1rem;

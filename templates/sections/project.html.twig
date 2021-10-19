@@ -14,16 +14,15 @@
                             <div class="flip">
                                 <div class="flip-inner">
                                     <div class="flip-front">
-                                        {% for attachment in project.attachments %}
+                                        {% for attachment in project.getMyFiles()|sort((a, b) => a.sorting <=> b.sorting) %}
                                             {% if loop.first %}
                                                 <img src="{{ asset('/uploads/project/')~attachment.getImageFile()  }}" alt="{{ attachment.getImageFile() }}" style="width:100%;height:100%;object-fit: cover" loading="lazy">
                                             {% endif %}
                                         {% endfor %}
                                     </div>
                                     <div class="flip-back box">
-                                        <h1 class="mt-4">Project <?echo $i?></h1>
-                                        <p>Architect & Engineer</p>
-                                        <p>We love that guy</p>
+                                        <h2 class="projectTitle mt-6 is-narrow">{{ project.title }}</h2>
+                                        <p class="projectText pl-5 pr-5 has-text-left">{{ project.description }}</p>
                                         <a onclick="window.openPopup(this,{{ project.id }})"><i class="fas fa-book-open"></i></a>
                                     </div>
                                 </div>
@@ -50,22 +49,21 @@
                             <div class="arrow-next-bottom"></div>
                         </div>
                     </a>
-                    <p class="modal-card-title has-text-centered">Projekt <?echo $i ?></p>
+                    <p class="modal-card-title has-text-centered">{{ project.title }}</p>
                     <a onclick="switchProject(this,{{ project.id }},{{ loop.index-1 }},'next')">
                         <div class="arrow-next">
                             <div class="arrow-next-top"></div>
                             <div class="arrow-next-bottom"></div>
                         </div>
                     </a>
-
                     <button onclick="closePopup({{ project.id }})" class="delete" aria-label="close"></button>
                 </header>
                 <section class="modal-card-body">
                     <div class="columns is-multiline is-tablet">
-                        <div class="column is-half {% if project.attachments|length > 1 %}has-swiper{% endif %}">
-                            <div class="swiper">
+                        <div class="column is-half {% if project.getMyFiles()|length > 1 %}has-swiper{% endif %}">
+                            <div class="{% if project.getMyFiles()|length > 1 %}swiper{% endif %}">
                                 <div class="swiper-wrapper">
-                                    {% for attachment in project.attachments %}
+                                    {% for attachment in project.getMyFiles()|sort((a, b) => a.sorting <=> b.sorting) %}
                                         <div class="swiper-slide">
                                             <img src="{{ asset('/uploads/project/')~attachment.imageFile  }}" alt="{{ attachment.imageFile }}" style="object-fit: contain" loading="lazy">
                                         </div>
@@ -75,12 +73,15 @@
                             <div class="swiper-pagination"></div>
                         </div>
                         <div class="column is-half">
-                            <h3>Titel</h3>
-                            <progress class="progress is-primary" value="0" max="100" data-value="15">15%</progress>
-                            <progress class="progress is-warning" value="0" max="100" data-value="20">75%</progress>
-                            <progress class="progress is-danger" value="0" max="100" data-value="35">90%</progress>
+                            {% if project.getSkills() %}
+                                <h3>Skills</h3>
+                                {% set color = {0:'is-primary',1:'is-warning',2:'is-info',3:'is-danger',4:'is-success', 5:'is-link',6:'is-dark'} %}
+                                {% for skill in project.getSkills() %}
+                                    {{ skill.title }}<progress class="progress {{ color[loop.index0] }}" value="0" max="100" data-value="{{ skill.value }}">{{ skill.value }}%</progress>
+                                {% endfor %}
+                            {% endif %}
                             <div class="text">
-                                <p>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                                <p>{{ project.description }}</p>
                             </div>
                         </div>
                         <footer class="column is-full modal-card-foot">

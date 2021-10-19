@@ -18,7 +18,10 @@ section.hero{
         hyphens: auto;
     }
 }
-
+.required:after {
+    content:" *";
+    color: red;
+}
 .inner-container{
     max-width: 1480px;
     margin:0 auto;
@@ -192,7 +195,7 @@ footer{
             cursor:grab;
             &:hover{
                 background-image: radial-gradient( circle 592px at 48.2% 50%,  rgba(255,255,249,0.6) 0%, rgba(160,199,254,1) 74.6% );
-                h2,.has-text-black{
+                h2:not(.projectTitle),.has-text-black:not(.projectText){
                     color: #fff !important;
                 }
                 .dividerContainer{

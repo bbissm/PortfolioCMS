@@ -1,35 +1,44 @@
 {% set loggedIn = is_granted('IS_AUTHENTICATED_REMEMBERED') == true ? 'sortable' : 'animation' %}
-<section id="{{ section.name|lower }}"  class="has-background-white {{ loggedIn }}" data-id="{{ section.id }}" data-sorting="{{ section.sorting }}">
+{% set class = section.template is not empty ? section.template : section.name|lower %}
+<section id="{{ section.name|lower }}"  class="{{ class }} has-background-white {{ loggedIn }}" data-id="{{ section.id }}" data-sorting="{{ section.sorting }}">
     {%  include 'chunks/divider.html.twig' %}
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <a href="{{ path('edit_section', {'id':section.id}) }}" class="button centered mb-6 is-success">Section bearbeiten</a>
     {% endif %}
+    <div class="inner-container mb-6">
     {% for content in section.content %}
-        <div class="inner-container">
-            <div class="content inner m-auto">
-                {% if content.title %}
-                    <h2 class="has-text-black">{{ content.title }}</h2>
-                {% endif %}
-                {% if content.text %}
-                    <p class="has-text-black">
-                        {{ content.text }}
-                    </p>
-                {% endif %}
-                {% if section.id == 4 %}
-                    <img src="uploads/hobby/6db17a6c5de7e23c885884f263308843" alt="" style="object-fit: cover" loading="lazy">
-                {% endif %}
+        <div class="content inner mb-6">
+            {% if content.title %}
+                <h2 class="has-text-black">{{ content.title }}</h2>
+            {% endif %}
+            {% if content.text %}
+                <p class="has-text-black">
+                    {{ content.text }}
+                </p>
+            {% endif %}
+            <div class="{% if content.getMyFiles()|length > 1 %}has-swiper{% endif %}">
+                <div class="{% if content.getMyFiles()|length > 1 %}swiper{% endif %}">
+                    <div class="swiper-wrapper">
+                        {% for attachment in content.getMyFiles()|sort((a, b) => a.sorting <=> b.sorting) %}
+                            <div class="swiper-slide">
+                                <img src="{{ asset('/uploads/section/')~attachment.imageFile  }}" alt="{{ attachment.imageFile }}" style="object-fit: contain" loading="lazy">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
             </div>
         </div>
     {% endfor %}
-
+    </div>
     {% if section.template %}
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            {% if section.template != 'contact.html.twig' and section.template is not null %}
-                <a class="button centered has-text-white has-background-black mb-5 mt-6" href="{{ path('create_'~section.name|lower) }}">
+            {% if section.template != 'contact' and section.template is not null %}
+                <a class="button centered has-text-white has-background-black mb-6 mt-6" href="{{ path('create_'~section.template) }}">
                     Add{{ section.name }}
                 </a>
             {% endif %}
         {% endif %}
-        {%  include 'sections/'~section.template %}
+        {%  include 'sections/'~section.template~'.html.twig' %}
     {% endif %}
 </section>

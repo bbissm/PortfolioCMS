@@ -4,7 +4,7 @@
 {% block body %}
     <div class="container">
         <section class="section" id="form">
-            <h1 class="title">Formular</h1>
+            <h1 class="title">Section</h1>
             {{ form_start(form) }}
             <div class="my-custom-class-for-errors is-danger">
                 {{ form_errors(form) }}
@@ -17,7 +17,7 @@
                     {{ form_widget(form.name, { 'attr': {'class': 'input'} }) }}
                 </div>
             </div>
-            <div class="field">
+            <div class="field mb-6">
                 {{ form_label(form.template, null, {
                     'label_attr': {'class': 'label'}
                 }) }}
@@ -25,12 +25,12 @@
                     {{ form_widget(form.template, { 'attr': {'class': 'input'} }) }}
                 </div>
             </div>
-
+            <h3 class="has-text-white has-text-left">Content</h3>
             {% import _self as formMacros %}
 
             {% macro formatCollection(form, attachments) %}
                 <div class="contentSection">
-                    <h3 class="has-text-white mb-2 mt-6">Content</h3>
+                    <h3 class="has-text-white mb-2 mt-6"><span class="index"></span>Block</h3>
                     <div class="field">
                         {{ form_label(form.title, null, {
                             'label_attr': {'class': 'label'}
@@ -64,12 +64,10 @@
                 {{ formMacros.formatCollection(item, contents[loop.index0].getMyFiles()) }}
             {% endfor %}
 
-
-
             {# formMacros.formatCollection(form.content.vars.prototype)|e('html_attr') #}
             <div class="content-add" data-index="{{ form.content|length > 0 ? form.content|last.vars.name + 1 : 0 }}" data-prototype="{{ formMacros.formatCollection(form.content.vars.prototype)|e('html_attr') }}"></div>
 
-            <button type="button" class="add_item_link button is-success" data-collection-holder-class="content-add">Add a Section</button>
+            <button type="button" class="add_item_link button is-success" data-collection-holder-class="content-add">Add Content Block</button>
 
             <div class="field mt-6">
                 {{ form_widget(form.save, { 'label': 'Submit','attr': {'class': 'button','onclick':'window.location.hash = "hobby"'} }) }}

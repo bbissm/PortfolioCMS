@@ -19,26 +19,26 @@ class FileUploader
 		$this->entityManager = $entityManager;
 	}
 
-	public function upload(UploadedFile $file, $destination, $entity, $mapped, $iterator)
+	public function upload(UploadedFile $file, $destination, $entity, $mapped, $sorting)
 	{
 		$originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 		$safeFilename = $this->slugger->slug($originalFilename);
 		$fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-
 		try {
 			$file->move($destination, $fileName);
 		} catch (FileException $e) {
-			// ... handle exception if something happens during file upload
+			dump($e);
 		}
-		$query = $this->entityManager->createQuery(
-			'SELECT MAX(a.sorting)
+		if (count($entity->getMyFiles()) > 0){
+			$query = $this->entityManager->createQuery(
+				'SELECT MAX(a.sorting)
 				FROM App\Entity\Attachment a
 				WHERE a.'.$mapped.' ='.$entity->getId()
-		);
-		$sorting = $query->getResult()[0][1];
-
+			);
+			$sorting = $query->getResult()[0][1] + $sorting;
+		}
 		$attachment = new Attachment();
-		$attachment->setSorting($sorting+$iterator);
+		$attachment->setSorting($sorting);
 		$attachment->setImageFile($fileName);
 		return $attachment;
 	}

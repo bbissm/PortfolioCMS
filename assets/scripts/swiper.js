@@ -1,41 +1,44 @@
 import Swiper, { SwiperOptions, Keyboard, Pagination, Virtual, Navigation, Autoplay, Manipulation } from 'swiper';
 export default function() {
-    if (document.querySelector('.swiper') !== null) {
-        document.querySelectorAll('.swiper').forEach(container => {
-            // initialize swiper
-            let imgSwiper = new Swiper('.swiper', /** @type {SwiperOptions} */  {
-                modules: [Pagination, Keyboard, Virtual, Navigation, Autoplay],
-                initialSlide: 0,
-                slidesPerView: 1,
-                centeredSlides: true,
-                observer: true,
-                observeParents: true,
-                grabCursor: true,
-                loop: true,
-                keyboard: {
-                    enabled: true,
-                },
-                navigation: {
-                    nextEl: container.parentNode.querySelector('.swiper-button-next'),
-                    prevEl: container.parentNode.querySelector('.swiper-button-prev'),
-                },
-                pagination: {
-                    el: container.parentNode.querySelector('.swiper-pagination'),
-                    type: 'bullets',
-                    clickable: true,
-                },
-                breakpoints: {
-                    768: {
-                        autoplay: {
-                            delay: 6000,
-                            pauseOnMouseEnter: true,
-                        },
+    let swiperContainers = document.querySelectorAll('.has-swiper');
+    if (swiperContainers.length > 0) {
+        swiperContainers.forEach(swiperContainer => {
+            let swiper = swiperContainer.querySelector('.swiper');
+            if (swiper !== null) {
+                console.log(swiper);
+                let imgSwiper = new Swiper('.swiper', /** @type {SwiperOptions} */  {
+                    modules: [Pagination, Keyboard, Virtual, Navigation, Autoplay],
+                    initialSlide: 0,
+                    slidesPerView: 1,
+                    centeredSlides: true,
+                    observer: true,
+                    observeParents: true,
+                    grabCursor: true,
+                    loop: true,
+                    keyboard: {
+                        enabled: true,
+                    },
+                    navigation: {
+                        nextEl: swiper.querySelector('.swiper-button-next'),
+                        prevEl: swiper.querySelector('.swiper-button-prev'),
+                    },
+                    pagination: {
+                        el: swiper.querySelector('.swiper-pagination'),
+                        type: 'bullets',
+                        clickable: true,
+                    },
+                    breakpoints: {
+                        768: {
+                            autoplay: {
+                                delay: 6000,
+                                pauseOnMouseEnter: true,
+                            },
+                        }
                     }
-                }
-            });
+                });
+            }
         })
     }
-
     new Swiper('.project-swiper', {
         modules: [Pagination, Keyboard, Virtual, Navigation, Autoplay, Manipulation],
         spaceBetween: 10,

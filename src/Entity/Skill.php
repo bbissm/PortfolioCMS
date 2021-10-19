@@ -22,11 +22,6 @@ class Skill
 	 */
 	private $title;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="skills")
-	 */
-	private $project;
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      */

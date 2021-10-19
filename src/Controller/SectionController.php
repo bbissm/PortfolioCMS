@@ -41,8 +41,6 @@ class SectionController extends AbstractController
 			);
 			$sorting = $query->getResult()[0][1];
 
-
-
 			// $form->getData() holds the submitted values
 			$section = $form->getData();
 
@@ -53,18 +51,13 @@ class SectionController extends AbstractController
 			$entityManager->persist($section);
 			$entityManager->flush();
 
-			return $this->redirectToRoute('homepage');
+			return $this->redirectToRoute('edit_section', ['id' => $section->getId()]);
 		}
-		// getting highest current id of project // TODO: Make it more simple
-		$query = $this->getDoctrine()->getManager()->createQuery(
-			'SELECT MAX(s.id)
-				FROM App\Entity\Section s'
-		);
-		dump($section);
+		$contents = $section->getContent();
 		return $this->render('form/form_section.html.twig', [
-			'form' => $form->createView()
+			'form' => $form->createView(),
+			'contents' => $contents
 		]);
-
 	}
 
 	/**
@@ -86,11 +79,8 @@ class SectionController extends AbstractController
 		$form = $this->createForm(SectionType::class, $section);
 		$form->handleRequest($request);
 
-
-
 		// For attachments
 		if ($form->isSubmitted() && $form->isValid()) {
-
 
 			$newContent = $section->getContent();
 			// Create content after submit and remove the relationship between the Content and the Section
@@ -145,7 +135,6 @@ class SectionController extends AbstractController
 		}
 
 		$contents = $section->getContent();
-
 		return $this->render('form/form_section.html.twig', [
 			'form' => $form->createView(),
 			'contents' => $contents

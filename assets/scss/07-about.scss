@@ -1,10 +1,10 @@
-section#about {
+section.about {
     //background-color:#69a5a4;
     background-color:#fff;
     .content{
         img{
-            object-fit: cover;
-            max-height: 29rem;
+            object-fit: cover !important;
+            max-height: 34rem;
             width: 100%;
         }
     }

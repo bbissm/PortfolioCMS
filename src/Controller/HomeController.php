@@ -30,39 +30,25 @@ class HomeController extends AbstractController
     */
     public function home(Request $request, Swift_Mailer $mailer): Response
     {
-
-		$hobbies = $this->getDoctrine()
-			->getRepository(Hobby::class)
-			->findAll();
-
-		foreach ($hobbies as $hobby) {
-
-			$hobby->attachments = $hobby->getMyFiles();
-		}
-
-		$projects = $this->getDoctrine()
-			->getRepository(Project::class)
-			->findAll();
-
-		foreach ($projects as $project) {
-
-			$project->attachments = $project->getMyFiles();
-		}
-
-		$form = $this->contactForm($request, $mailer);
-
 		$sections = $this->getDoctrine()
 			->getRepository(Section::class)
 			->findBy([],['sorting' => 'ASC']);
-		dump($sections);
-		return $this->render('homepage.html.twig', ['hobbies'=>$hobbies, 'sections' =>$sections, 'projects'=>$projects, 'form'=>$form]);
+		$hobbies = $this->getDoctrine()
+			->getRepository(Hobby::class)
+			->findAll();
+		$projects = $this->getDoctrine()
+			->getRepository(Project::class)
+			->findAll();
+		$form = $this->contactForm($request, $mailer);
+
+		return $this->render('homepage.html.twig', ['sections' =>$sections,'projects'=>$projects,'hobbies'=>$hobbies,'form'=>$form]);
     }
 
 	/**
+	 * FETCH
 	 * @Route("/section/{id}/sort/{sorting}")
 	 */
     public function sortSections(Request $request, $id, $sorting) {
-		// getting highest current id of hobby // TODO: Make it more simple
 		$entityManager = $this->getDoctrine()->getManager();
 		$sections = $this->getDoctrine()
 			->getRepository(Section::class)

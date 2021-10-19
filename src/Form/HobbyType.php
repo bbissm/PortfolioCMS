@@ -29,6 +29,7 @@ class HobbyType extends AbstractType
 			->add('title', TextType::class)
 			->add('description',TextareaType::class, [
 				'attr' => ['class' => 'tinymce'],
+				'required' => false
 			])
 			->add('my_files', FileType::class, array(
 				'mapped' => false,

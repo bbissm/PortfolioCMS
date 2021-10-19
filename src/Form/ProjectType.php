@@ -31,20 +31,21 @@ class ProjectType extends AbstractType
 			->add('title', TextType::class)
 			->add('description',TextareaType::class, [
 				'attr' => ['class' => 'tinymce'],
+				'required' => false
 			])
 			->add('my_files', FileType::class, array(
 				'mapped' => false,
-				'label' => 'Please upload file',
+				'label' => false,
 				'multiple' => true,
 				'required' => false
 			))
 			->add('skills', CollectionType::class, array(
 				'entry_type' => SkillFormType::class,
-				'label' => 'Please add project skills',
+				'label' => false,
 				'allow_add' => true,
-				'allow_extra_fields' => true,
 				'allow_delete' => true,
-				//'by_reference' => false
+				'required' => false,
+				'by_reference' => false
 			))
 			->add('save', SubmitType::class)
 		;
