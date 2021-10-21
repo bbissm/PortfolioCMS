@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Section;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,6 +22,10 @@ class SectionType extends AbstractType
 			$array[$file] = $file;
 		}
         $builder
+			->add('active', CheckboxType::class, array(
+				'label' => 'Wird im Frontend angezeigt',
+				'required' => false,
+			))
             ->add('name', null, array(
             	'required' => true
 			))

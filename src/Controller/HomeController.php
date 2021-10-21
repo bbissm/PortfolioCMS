@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class HomeController
@@ -24,15 +26,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class HomeController extends AbstractController
 {
-    /**
+	private $isAuthenticated;
+
+	public function __construct(Security $security)
+	{
+		$this->isAuthenticated = $security->isGranted('ROLE_DEV') || $security->isGranted('ROLE_USER');
+	}
+
+	/**
      * @Route("/", name="homepage")
      * $routeParams has all needed global variables
     */
     public function home(Request $request, Swift_Mailer $mailer): Response
     {
-		$sections = $this->getDoctrine()
+		$sectionsFindBy = $this->isAuthenticated ? [] : ['active' => 1];
+			$sections = $this->getDoctrine()
 			->getRepository(Section::class)
-			->findBy([],['sorting' => 'ASC']);
+			->findBy($sectionsFindBy,['sorting' => 'ASC']);
 		$hobbies = $this->getDoctrine()
 			->getRepository(Hobby::class)
 			->findAll();
@@ -40,6 +50,8 @@ class HomeController extends AbstractController
 			->getRepository(Project::class)
 			->findAll();
 		$form = $this->contactForm($request, $mailer);
+
+
 
 		return $this->render('homepage.html.twig', ['sections' =>$sections,'projects'=>$projects,'hobbies'=>$hobbies,'form'=>$form]);
     }

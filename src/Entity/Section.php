@@ -19,6 +19,11 @@ class Section
      */
     private $id;
 
+	/**
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+    private $active = true;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -42,6 +47,22 @@ class Section
 	public function __construct()
 	{
 		$this->content = new ArrayCollection();
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getActive()
+	{
+		return $this->active;
+	}
+
+	/**
+	 * @param mixed $active
+	 */
+	public function setActive($active): void
+	{
+		$this->active = $active;
 	}
 
     public function getId(): ?int

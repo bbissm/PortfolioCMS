@@ -27,6 +27,10 @@ export default function() {
                         type: 'bullets',
                         clickable: true,
                     },
+                    autoplay: {
+                        delay: 3000,
+                        pauseOnMouseEnter: true,
+                    },
                     breakpoints: {
                         768: {
                             autoplay: {

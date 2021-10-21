@@ -5,9 +5,6 @@
                 <figure class="image is-square attachmentContainer">
                     <img src="{{ '/uploads/'~module~'/'~attachment.imageFile }}" alt="{{ attachment.imageFile }}" style="object-fit: cover" class="attachment" data-id="{{ attachment.id }}" loading="lazy">
                     <i class="fas fa-trash"></i>
-                    <div class="overlay">
-                        <i class="fas fa-trash"></i>
-                    </div>
                 </figure>
             </div>
         {% endfor %}

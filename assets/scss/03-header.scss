@@ -1,0 +1,46 @@
+section.hero{
+    min-height: calc(65vh - 3.25rem) !important;
+    @include tablet() {
+        min-height: calc(100vh) !important;
+    }
+    //background-image: radial-gradient( circle farthest-corner at 12.3% 19.3%,  rgba(85,88,218,1) 0%, rgba(95,209,249,1) 100.2% );
+    background: #98D5EB;
+    position: relative;
+    .overlay{
+        border: 14px solid #98D5EB;
+        border-radius: 56rem;
+        background-image: radial-gradient(circle farthest-corner at 12.3% 19.3%, #fff 0%, #98D5EB 100.2%);
+        width: calc(100% - 10px);
+        height: fit-content;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        padding: 8rem 0;
+        max-width: 50rem;
+        img{
+            width: 20rem;
+        }
+        h1{
+            text-transform: lowercase;
+            @include mobile() {
+                font-size: $size-1 !important;
+            }
+            font-size: 5rem !important;
+            hyphens: auto;
+        }
+        p{
+            font-size:$size-2 !important;
+            @include mobile() {
+                font-size: $size-3 !important;
+                bottom: 30%;
+            }
+        }
+        .gradient{
+            background: linear-gradient(
+                            45deg, #6c55a4, #00afd1 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+
+}

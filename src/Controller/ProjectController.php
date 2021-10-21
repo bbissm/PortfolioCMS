@@ -111,7 +111,6 @@ class ProjectController extends AbstractController
 	 * @Route("project/attachment/delete/{id}")
 	 */
 	public function deleteAttachment(int $id) {
-		$this->uploadDir = $this->getParameter('app.path.project_attachments');
 		$attachment = $this->entityManager
 			->getRepository(Attachment::class)
 			->find($id);

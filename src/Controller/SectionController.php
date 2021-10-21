@@ -20,6 +20,10 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class SectionController extends AbstractController
 {
 
+	public function __construct()
+	{
+	}
+
 	/**
 	 * @Route("/addSection", name="add_section")
 	 */

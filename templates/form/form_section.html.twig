@@ -10,6 +10,17 @@
                 {{ form_errors(form) }}
             </div>
             <div class="field">
+                {{ form_label(form.active, null, {
+                    'label_attr': {'class': 'label'}
+                }) }}
+                <div class="control">
+                    <div class="field">
+                        {{ form_widget(form.active, { 'attr': {'class': 'switch'} }) }}
+                        <label for="section_active"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
                 {{ form_label(form.name, null, {
                     'label_attr': {'class': 'label'}
                 }) }}

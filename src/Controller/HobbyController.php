@@ -99,9 +99,10 @@ class HobbyController extends AbstractController
 	}
 
 	/**
+	 * VIA FETCH
 	 * @Route("hobby/attachment/delete/{id}")
 	 */
-	public function deleteAttachment(Request $request, $id) {
+	public function deleteAttachment(int $id) {
 		$attachment = $this->entityManager
 			->getRepository(Attachment::class)
 			->find($id);
@@ -113,10 +114,11 @@ class HobbyController extends AbstractController
 	}
 
 	/**
+	 * VIA FETCH
 	 * @Route("/attachment/{sorting}/sort/{id}")
 	 * Method({"POST"})
 	 */
-	public function sortAttachments(Request $request,$sorting, $id) {
+	public function sortAttachments(int $sorting, int $id) {
 		$attachment = $this->entityManager
 			->getRepository(Attachment::class)
 			->find($id);

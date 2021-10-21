@@ -1,23 +1,7 @@
 html{
     background: #fff;
 }
-section.hero{
-    min-height: calc(65vh - 3.25rem) !important;
-    @include tablet() {
-        min-height: calc(100vh) !important;
-    }
-    background-image: radial-gradient( circle farthest-corner at 12.3% 19.3%,  rgba(85,88,218,1) 0%, rgba(95,209,249,1) 100.2% );
-    position: relative;
-    h1.title{
-        @include mobile() {
-            font-size: $size-3 !important;
-            bottom: 30%;
-        }
-        font-size: $size-1;
-        position: absolute;
-        hyphens: auto;
-    }
-}
+
 .required:after {
     content:" *";
     color: red;

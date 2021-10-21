@@ -2,24 +2,9 @@
 
 {% block title %}Homepage{% endblock %}
 {% block body %}
-<section class="hero is-fullheight-with-navbar is-flex-direction-row">
-    <div class="hero-body">
-        <h1 class="title has-text-white has-text-weight-bold">
-            Me. A developer and PC Intusiast.
-        </h1>
-        <a href="#about">
-            <div class="arrow-down">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </a>
-    </div>
-</section>
+    {% include 'chunks/_header.html.twig' %}
 <div class="has-background-white" style="margin-bottom:6rem;" {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}id="sortableSection"{% endif %}>
-
     {% for section in sections %}
-
         {% include 'section.html.twig' with {'section':section} %}
     {% endfor %}
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
