@@ -3,7 +3,7 @@ export default function() {
     //Helper functions
     const scrollToEl = (hash) => {
         const element = document.querySelector(hash);
-        const to = element.getBoundingClientRect().top + window.scrollY - 69
+        const to = element.getBoundingClientRect().top + window.scrollY + 180
         const start = window.scrollY || window.pageYOffset
         const time = Date.now()
         let speed = to > 0 ? 1 : 5; // if scroll to top

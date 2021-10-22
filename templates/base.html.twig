@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="{{ asset('build/images/it-department.png') }}">
         <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;800&display=swap" rel="stylesheet">
         {# Run `composer require symfony/webpack-encore-bundle`
@@ -20,7 +21,6 @@
     <body>
         {% include "chunks/_navigation.html.twig" %}
         <div class="main-content">
-            {% include 'chunks/flash_messages.html.twig' %}
             {% block body %}{% endblock %}
         </div>
         {% include "chunks/_footer.html.twig" %}

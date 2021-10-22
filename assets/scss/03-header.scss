@@ -7,16 +7,23 @@ section.hero{
     background: #98D5EB;
     position: relative;
     .overlay{
-        border: 14px solid #98D5EB;
         border-radius: 56rem;
+        box-shadow: 0 0 78px 42px rgb(217 239 247);
         background-image: radial-gradient(circle farthest-corner at 12.3% 19.3%, #fff 0%, #98D5EB 100.2%);
         width: calc(100% - 10px);
         height: fit-content;
         right: 0;
         bottom: 0;
         margin: auto;
-        padding: 8rem 0;
+        padding: 9rem 0;
         max-width: 50rem;
+        animation: blink 1.5s infinite alternate;
+        @keyframes blink {
+            100% {
+                box-shadow: 0 0 3px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0ba9ca, 0 0 70px #0ba9ca, 0 0 80px #0ba9ca;
+                //box-shadow: 0 0 78px 42px rgb(217 239 247);
+            }
+        }
         img{
             width: 20rem;
         }

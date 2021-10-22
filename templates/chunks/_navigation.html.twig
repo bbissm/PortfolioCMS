@@ -3,13 +3,15 @@
         <div id="navMenu" class="navbar-menu">
             <div class="navbar-start ">
                 <div class="has-text-white has-text-weight-bold navbar-item">
+                    <a href="/">
                     {% if is_granted('ROLE_DEV') %}
                         Martin Bissiger
                     {% elseif is_granted('ROLE_USER') %}
                             Hi {{ app.user.username }}
                         {% else %}
-                        Martin Bissiger
+                           Martin Bissiger
                     {% endif %}
+                    </a>
                 </div>
                 <div class="navbar-item is-hidden-tablet">
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
@@ -34,9 +36,6 @@
                 </div>
             </div>
             <div class="navbar-end">
-                <a href="/" class="navbar-item">
-                    Home
-                </a>
                 {# prototype
                 {% for section in sections %}
                     <a href="#{{ section.name|lower }}" class="navbar-item">
@@ -44,17 +43,17 @@
                     </a>
                 {% endfor %}
                 #}
-
-                <a href="#about" class="navbar-item">
+                {% set route = app.request.attributes.get('_route') != 'homepage' ? path('homepage') : '' %}
+                <a href="{{ route }}#about" class="navbar-item">
                     About
                 </a>
-                <a href="#hobby" class="navbar-item">
+                <a href="{{ route }}#hobby" class="navbar-item">
                     Hobbies
                 </a>
-                <a href="#work" class="navbar-item">
+                <a href="{{ route }}#project" class="navbar-item">
                     Work
                 </a>
-                <a href="#contact" class="navbar-item">
+                <a href="{{ route }}#contact" class="navbar-item">
                     Contact
                 </a>
                 <div class="navbar-item is-hidden-mobile">

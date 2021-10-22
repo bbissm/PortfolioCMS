@@ -1,0 +1,10 @@
+.notification{
+    width: fit-content;
+    margin: 0 auto;
+    min-width: 50%;
+    &.fade-out{
+        animation: fade 3s steps(90) forwards;
+        -webkit-animation: fade 3s steps(90) forwards;
+        -moz-animation: fade 3s steps(90) forwards;
+    }
+}

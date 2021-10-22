@@ -61,6 +61,9 @@ p{
 
 section.animation{
     &.current{
+        &.contact{
+            animation: slide-up 1s ease-in-out;
+        }
         .content{
             animation: slide-up 1s ease-in-out;
         }
@@ -103,11 +106,6 @@ section.animation{
             min-height: calc(40vh - 3.25rem);
         }
     }
-}
-footer{
-    margin-top: -6rem;
-    background-color: #3586ff !important;
-    //background-image: radial-gradient( circle farthest-corner at -4% -12.9%,  rgba(74,98,110,1) 0.3%, rgba(30,33,48,1) 90.2% );
 }
 
 .waveContainer{

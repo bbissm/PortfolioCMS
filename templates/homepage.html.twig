@@ -4,6 +4,7 @@
 {% block body %}
     {% include 'chunks/_header.html.twig' %}
 <div class="has-background-white" style="margin-bottom:6rem;" {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}id="sortableSection"{% endif %}>
+    {# Load sections #}
     {% for section in sections %}
         {% include 'section.html.twig' with {'section':section} %}
     {% endfor %}

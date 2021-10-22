@@ -2,6 +2,9 @@ section.project{
     background-color:#fff;
     .project-swiper{
         position: relative;
+        .swiper-wrapper{
+            height: auto;
+        }
         .navigation{
             position: absolute;
             right:0;
@@ -15,7 +18,6 @@ section.project{
             .swiper-button-next{
                 &:after{
                     content: '➔';
-
                 }
             }
         }
