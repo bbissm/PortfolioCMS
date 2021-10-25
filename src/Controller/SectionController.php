@@ -19,11 +19,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SectionController extends AbstractController
 {
-
-	public function __construct()
-	{
-	}
-
 	/**
 	 * @Route("/addSection", name="add_section")
 	 */
@@ -54,7 +49,7 @@ class SectionController extends AbstractController
 			$section->setSorting($sorting+1);
 			$entityManager->persist($section);
 			$entityManager->flush();
-
+			$this->addFlash('success', 'Successfully created new section');
 			return $this->redirectToRoute('edit_section', ['id' => $section->getId()]);
 		}
 		$contents = $section->getContent();
@@ -134,7 +129,7 @@ class SectionController extends AbstractController
 			}
 			$entityManager->flush();
 			// FILEUPLOAD END //////////////////////////////////
-
+			$this->addFlash('success', 'Successfully updated '.$section->getName().' section');
 			return $this->redirectToRoute('edit_section', ['id' => $id]);
 		}
 

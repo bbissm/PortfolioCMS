@@ -3,23 +3,25 @@ export default function() {
     //Helper functions
     const scrollToEl = (hash) => {
         const element = document.querySelector(hash);
-        const to = element.getBoundingClientRect().top + window.scrollY + 180
-        const start = window.scrollY || window.pageYOffset
-        const time = Date.now()
-        let speed = to > 0 ? 1 : 5; // if scroll to top
-        let duration = Math.abs(start - to) / speed;
-        const easeOutQuart = t => t*(2-t);
+        if (element) {
+            const to = element.getBoundingClientRect().top + window.scrollY + 180
+            const start = window.scrollY || window.pageYOffset
+            const time = Date.now()
+            let speed = to > 0 ? 1 : 5; // if scroll to top
+            let duration = Math.abs(start - to) / speed;
+            const easeOutQuart = t => t*(2-t);
 
-        (function step() {
-            let dx = Math.min(1, (Date.now() - time) / duration)
-            let pos = start + (to - start) * easeOutQuart(dx)
+            (function step() {
+                let dx = Math.min(1, (Date.now() - time) / duration)
+                let pos = start + (to - start) * easeOutQuart(dx)
 
-            window.scrollTo(0, pos)
+                window.scrollTo(0, pos)
 
-            if (dx < 1) {
-                window.requestAnimationFrame(step)
-            }
-        })()
+                if (dx < 1) {
+                    window.requestAnimationFrame(step)
+                }
+            })()
+        }
     };
     // scroll to container after link click
     links.forEach(link => {
@@ -67,9 +69,10 @@ export default function() {
     })
 
     // scroll to first element after header arrow click
-    document.querySelector('.scrollToFirstEl').addEventListener('click', function (e){
-        let firstSection = document.querySelector('main section');
-        scrollToEl('#'+firstSection.getAttribute('id'));
-    })
-
+    if(document.querySelector('.scrollToFirstEl')) {
+        document.querySelector('.scrollToFirstEl').addEventListener('click', function (e){
+            let firstSection = document.querySelector('main section');
+            scrollToEl('#'+firstSection.getAttribute('id'));
+        })
+    }
 }

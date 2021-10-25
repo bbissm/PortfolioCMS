@@ -3,8 +3,9 @@
     margin: 0 auto;
     min-width: 50%;
     &.fade-out{
-        animation: fade 3s steps(90) forwards;
-        -webkit-animation: fade 3s steps(90) forwards;
-        -moz-animation: fade 3s steps(90) forwards;
+        animation: fade 1s steps(90) forwards;
+        -webkit-animation: fade 1s steps(90) forwards;
+        -moz-animation: fade 1s steps(90) forwards;
+        animation-delay: 2s;
     }
 }

@@ -17,10 +17,9 @@ import Attachment from './scripts/attachments';
 import initSortable from './scripts/sortable';
 import collectionHelper from './scripts/collectionTypeHelper';
 
-
+collectionHelper();
+Attachment();
+initSortable();
 SwiperSlide();
 Modal();
 Functions();
-Attachment();
-initSortable();
-collectionHelper();

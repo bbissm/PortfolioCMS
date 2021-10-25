@@ -75,6 +75,13 @@ section.animation{
         padding-right:1.5rem;
     }
 }
+.no-animation {
+    animation:unset!important;
+    *:not(.notification) {
+        animation:unset!important;
+    }
+}
+
 @keyframes slide-up {
     0% {
         opacity: 0;

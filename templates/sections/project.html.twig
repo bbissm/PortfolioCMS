@@ -4,7 +4,7 @@
             <div class="swiper-wrapper">
                 {% for project in projects %}
                     <div class="swiper-slide">
-                        <div class="project project_{{ project.id }}">
+                        <div class="projectEntry project_{{ project.id }}">
                             <div class="controls">
                                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                     <a class="is-size-3" href="{{ path('edit_project', {'id':project.id}) }}"><i class="fas fa-edit"></i></a>
@@ -43,14 +43,14 @@
             <div class="modal-background"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
-                    <a onclick="switchProject(this,{{ project.id }},{{ loop.index-1 }},'prev')">
+                    <a onclick="switchProject(this,{{ project.id }},{{ loop.index0 }},'prev')">
                         <div class="arrow-next prev">
                             <div class="arrow-next-top"></div>
                             <div class="arrow-next-bottom"></div>
                         </div>
                     </a>
                     <p class="modal-card-title has-text-centered">{{ project.title }}</p>
-                    <a onclick="switchProject(this,{{ project.id }},{{ loop.index-1 }},'next')">
+                    <a onclick="switchProject(this,{{ project.id }},{{ loop.index0 }},'next')">
                         <div class="arrow-next">
                             <div class="arrow-next-top"></div>
                             <div class="arrow-next-bottom"></div>

@@ -1,8 +1,7 @@
-{% set loggedIn = is_granted('IS_AUTHENTICATED_REMEMBERED') == true ? 'sortable' : 'animation' %}
 {% set class = section.template is not empty ? section.template : section.name|lower %}
-<section id="{{ section.name|lower }}"  class="{{ class }} has-background-white {{ loggedIn }}" data-id="{{ section.id }}" data-sorting="{{ section.sorting }}">
+<section id="{{ section.name|lower }}"  class="{{ class }} has-background-white {% if app.user %}no-animation sortable{% endif %}" data-id="{{ section.id }}" data-sorting="{{ section.sorting }}">
     {%  include 'chunks/divider.html.twig' %}
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {# second way to proof if user is logged in #}
         <a href="{{ path('edit_section', {'id':section.id}) }}" class="button centered mb-6 is-success">Section bearbeiten</a>
     {% endif %}
     <div class="inner-container mb-6">

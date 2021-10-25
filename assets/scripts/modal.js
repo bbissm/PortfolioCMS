@@ -41,9 +41,7 @@ export default function () {
 
     window.switchProject = (el, modalId, nodeId, to) => {
         const swiper = document.querySelector('.swiper').swiper;
-
-
-        const projects = document.querySelectorAll('.project');
+        const projects = document.querySelectorAll('.projectEntry');
         const modals = document.querySelectorAll('.modal');
         let project = document.querySelector('.project_'+modalId);
         let flip = project.querySelector('.flip');

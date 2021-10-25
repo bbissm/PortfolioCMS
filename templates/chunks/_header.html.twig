@@ -1,11 +1,11 @@
 <section class="hero is-fullheight-with-navbar is-flex-direction-row">
     <div class="hero-body">
-        <div class="overlay is-flex is-flex-direction-column">
+        <div class="overlay is-flex is-flex-direction-column {% if app.user %}no-animation{% endif %}">
             <img src="{{ asset("build/images/it-department.png") }}" alt="test">
             <h1 class="gradient mb-3 mt-0">Martin Bissiger</h1>
             <p class="gradient">Always keep exploring</p>
         </div>
-        <div class="arrow-down scrollToFirstEl">
+        <div class="arrow-down scrollToFirstEl {% if app.user %}no-animation{% endif %}">
             <span></span>
             <span></span>
             <span></span>

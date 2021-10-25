@@ -47,6 +47,7 @@ class HobbyController extends AbstractController
 			}
 			$this->entityManager->persist($hobby);
 			$this->entityManager->flush();
+			$this->addFlash('success', 'Successfully created new hobby');
 			return $this->redirectToRoute('edit_hobby', ['id'=>$hobby->getId()]);
 		}
 		return $this->render('form/form_hobby.html.twig', [
@@ -73,6 +74,8 @@ class HobbyController extends AbstractController
 			}
 			$this->entityManager->persist($hobby);
 			$this->entityManager->flush();
+			$this->addFlash('success', 'Successfully updated "'.$hobby->getTitle().'"');
+
 			return $this->redirectToRoute('edit_hobby', ['id'=>$id]); // Very important! Without it the form will be submitted by each page reload!
 		}
 		return $this->render('form/form_hobby.html.twig', [

@@ -47,6 +47,7 @@ class ProjectController extends AbstractController
 			}
 			$this->entityManager->persist($project);
 			$this->entityManager->flush();
+			$this->addFlash('success', 'Successfully created new project');
 			return $this->redirectToRoute('edit_project', ['id'=>$project->getId()]);
 		}
 		return $this->render('form/form_project.html.twig', [
@@ -81,6 +82,7 @@ class ProjectController extends AbstractController
 			$project->setSkills($newSkills);
 			$this->entityManager->persist($project);
 			$this->entityManager->flush();
+			$this->addFlash('success', 'Successfully updated "'.$project->getTitle().'"');
 			return $this->redirectToRoute('edit_project', ['id'=>$id]); // Very important! Without it the form will be submitted by each page reload!
 		}
 		return $this->render('form/form_project.html.twig', [

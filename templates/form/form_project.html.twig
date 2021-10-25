@@ -5,6 +5,7 @@
     <div class="container">
         <section class="section" id="form">
             <div class="inner-container">
+                {% include 'chunks/flash_messages.html.twig' %}
                 <h1 class="title">Projekteintrag</h1>
                 {{ form_start(form) }}
                 <div class="my-custom-class-for-errors is-danger">

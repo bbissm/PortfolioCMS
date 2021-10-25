@@ -4,15 +4,14 @@
 {% block body %}
     <div class="container">
         <section class="section" id="form">
+            {% include 'chunks/flash_messages.html.twig' %}
             <h1 class="title">Section</h1>
             {{ form_start(form) }}
             <div class="my-custom-class-for-errors is-danger">
                 {{ form_errors(form) }}
             </div>
             <div class="field">
-                {{ form_label(form.active, null, {
-                    'label_attr': {'class': 'label'}
-                }) }}
+                <label class="label">Wird im Frontend angezeigt</label>
                 <div class="control">
                     <div class="field">
                         {{ form_widget(form.active, { 'attr': {'class': 'switch'} }) }}
