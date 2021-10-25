@@ -3,7 +3,7 @@
 {% block title %}Homepage{% endblock %}
 {% block body %}
     {% include 'chunks/_header.html.twig' %}
-<div class="has-background-white" style="margin-bottom:6rem;" {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}id="sortableSection"{% endif %}>
+<main class="has-background-white" style="margin-bottom:6rem;" {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}id="sortableSection"{% endif %}>
     {# Load sections #}
     {% for section in sections %}
         {% include 'section.html.twig' with {'section':section} %}
@@ -12,7 +12,7 @@
         <a href="addSection" class="button centered mt-6 mb-6 is-info">Section hinzufügen</a>
     {% endif %}
     {%  include 'chunks/divider.html.twig' %}
-</div>
+</main>
 
 
 {% endblock %}

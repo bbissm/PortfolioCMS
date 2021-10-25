@@ -25,7 +25,6 @@
         "symfony/requirements-checker": "^2.0",
         "symfony/runtime": "5.3.*",
         "symfony/security-bundle": "5.3.*",
-        "symfony/swiftmailer-bundle": "^3.5",
         "symfony/twig-bundle": "5.3.*",
         "symfony/ux-dropzone": "^1.3",
         "symfony/validator": "5.3.*",

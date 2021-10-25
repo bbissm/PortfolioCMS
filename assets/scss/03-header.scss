@@ -1,23 +1,21 @@
 section.hero{
     min-height: calc(65vh - 3.25rem) !important;
+    background: #98D5EB;
+    position: relative;
+    @include mobile() {
+        min-height: 100vh !important;
+    }
     @include tablet() {
         min-height: calc(100vh) !important;
     }
-    //background-image: radial-gradient( circle farthest-corner at 12.3% 19.3%,  rgba(85,88,218,1) 0%, rgba(95,209,249,1) 100.2% );
-    background: #98D5EB;
-    position: relative;
     .overlay{
         border-radius: 56rem;
         box-shadow: 0 0 78px 42px rgb(217 239 247);
         background-image: radial-gradient(circle farthest-corner at 12.3% 19.3%, #fff 0%, #98D5EB 100.2%);
-        width: calc(100% - 10px);
+
         height: fit-content;
-        right: 0;
-        bottom: 0;
-        margin: auto;
-        padding: 9rem 0;
-        max-width: 50rem;
         animation: blink 1.5s infinite alternate;
+        text-align:center;
         @keyframes blink {
             100% {
                 box-shadow: 0 0 3px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0ba9ca, 0 0 70px #0ba9ca, 0 0 80px #0ba9ca;
@@ -28,17 +26,17 @@ section.hero{
             width: 20rem;
         }
         h1{
+            font-size: 5rem !important;
             text-transform: lowercase;
             @include mobile() {
-                font-size: $size-1 !important;
+                font-size: $size-2 !important;
             }
-            font-size: 5rem !important;
             hyphens: auto;
         }
         p{
             font-size:$size-2 !important;
             @include mobile() {
-                font-size: $size-3 !important;
+                font-size: $size-4 !important;
                 bottom: 30%;
             }
         }
@@ -47,6 +45,26 @@ section.hero{
                             45deg, #6c55a4, #00afd1 80%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+    }
+    .hero-body{
+        @include mobile() {
+            width: 100%;
+            .overlay{
+                margin-top: 6rem;
+                padding: 5rem 0;
+                position:unset;
+            }
+        }
+        @include tablet() {
+            .overlay{
+                right: 0;
+                bottom: 0;
+                margin: auto;
+                padding: 9rem 0;
+                max-width: 50rem;
+                width: calc(100% - 10px);
+            }
         }
     }
 

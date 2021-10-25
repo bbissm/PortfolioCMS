@@ -21,7 +21,7 @@ export default function() {
             }
         })()
     };
-//scroll to container after link click
+    // scroll to container after link click
     links.forEach(link => {
         link.addEventListener('click', e => {
             e.preventDefault();
@@ -29,7 +29,7 @@ export default function() {
         })
     });
 
-//scroll to container after page reload
+    // scroll to container after page reload
     window.addEventListener('load',function (e) {
 
         if (window.matchMedia('(max-width:768px').matches) {
@@ -54,7 +54,6 @@ export default function() {
         let observer = new IntersectionObserver (function (entries, observer) {
             entries.forEach(function(entry) {
                 let container = entry.target;
-
                 container.classList.remove('current');
                 if (entry.isIntersecting) {
                     container.classList.add('current');
@@ -66,4 +65,11 @@ export default function() {
             observer.observe(el)
         })
     })
+
+    // scroll to first element after header arrow click
+    document.querySelector('.scrollToFirstEl').addEventListener('click', function (e){
+        let firstSection = document.querySelector('main section');
+        scrollToEl('#'+firstSection.getAttribute('id'));
+    })
+
 }
