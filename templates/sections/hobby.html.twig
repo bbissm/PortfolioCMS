@@ -1,4 +1,5 @@
 {% for hobby in hobbies %}
+    {% set disabled = is_granted('ROLE_DEV') is empty and hobby.id in hobbyDevAccess  ? 'disabled' : ''  %}
     <div class="columns is-tablet {% if loop.index % 2 == 0 %}is-flex-direction-row-reverse	{% endif %}">
             <div class="column is-half p-0">
                 <div class="{% if hobby.getMyFiles()|length > 1 %}has-swiper{% endif %}">
@@ -19,8 +20,8 @@
                 <h2>{{ hobby.title }}</h2>
                     <div class="controls">
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                            <a class="ml-3" href="{{ path('edit_hobby', {'id':hobby.id}) }}"><i class="fas fa-edit"></i></a>
-                            <a class="ml-3" href="{{ path('delete_hobby', {'id':hobby.id}) }}#hobby"><i class="fas fa-trash"></i></a>
+                            <a class="ml-3 {{ disabled }}" href="{{ path('edit_hobby', {'id':hobby.id}) }}"><i class="fas fa-edit"></i></a>
+                            <a class="ml-3 {{ disabled }}" href="{{ path('delete_hobby', {'id':hobby.id}) }}#hobby"><i class="fas fa-trash"></i></a>
                         {% endif %}
                     </div>
 

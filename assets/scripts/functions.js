@@ -75,4 +75,9 @@ export default function() {
             scrollToEl('#'+firstSection.getAttribute('id'));
         })
     }
+
+    // prevent disabled links from submit
+    document.querySelectorAll('a.disabled').forEach(link => {
+        link.addEventListener('click', (e) => {e.preventDefault()})
+    });
 }

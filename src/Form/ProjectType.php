@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use Liip\ImagineBundle\Form\Type\ImageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -28,6 +29,12 @@ class ProjectType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options): void
 	{
 		$builder
+			->add('active', CheckboxType::class, array(
+				'label' => 'Wird im Frontend angezeigt',
+				'required' => false,
+				'is_granted_attribute' => 'ROLE_DEV',
+				'is_granted_disabled' => $options['is_granted_disabled'],
+			))
 			->add('title', TextType::class)
 			->add('description',TextareaType::class, [
 				'attr' => ['class' => 'tinymce'],
@@ -55,6 +62,7 @@ class ProjectType extends AbstractType
 	{
 		$resolver->setDefaults([
 			'data_class' => Project::class,
+			'is_granted_disabled' => false
 		]);
 	}
 }

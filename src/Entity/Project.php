@@ -20,6 +20,11 @@ class Project
 	private $id;
 
 	/**
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	private $active;
+
+	/**
 	 * @ORM\Column(type="string", length=255)
 	 */
 	private $title;
@@ -45,10 +50,10 @@ class Project
 	private $updatedAt;
 
 	public function __construct()
-	{
-		$this->updatedAt = new \DateTime();
-	 	$this->my_files = new ArrayCollection();
-	}
+      	{
+      		$this->updatedAt = new \DateTime();
+      	 	$this->my_files = new ArrayCollection();
+      	}
 
     public function getId(): ?int
     {
@@ -129,6 +134,18 @@ class Project
                 $myFile->setProject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

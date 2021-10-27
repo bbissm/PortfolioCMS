@@ -3,12 +3,13 @@
         <div class="project-swiper">
             <div class="swiper-wrapper">
                 {% for project in projects %}
+                    {% set disabled = is_granted('ROLE_DEV') is empty and project.id in projectDevAccess  ? 'disabled' : ''  %}
                     <div class="swiper-slide">
                         <div class="projectEntry project_{{ project.id }}">
                             <div class="controls">
                                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                    <a class="is-size-3" href="{{ path('edit_project', {'id':project.id}) }}"><i class="fas fa-edit"></i></a>
-                                    <a class="is-size-3" href="{{ path('delete_project', {'id':project.id}) }}#project"><i class="fas fa-trash"></i></a>
+                                    <a class="is-size-3 {{ disabled }}" href="{{ path('edit_project', {'id':project.id}) }}"><i class="fas fa-edit"></i></a>
+                                    <a class="is-size-3 {{ disabled }}" href="{{ path('delete_project', {'id':project.id}) }}#project"><i class="fas fa-trash"></i></a>
                                 {% endif %}
                             </div>
                             <div class="flip">

@@ -12,6 +12,15 @@
                     {{ form_errors(form) }}
                 </div>
                 <div class="field">
+                    <label class="label">Wird im Frontend angezeigt</label>
+                    <div class="control">
+                        <div class="field">
+                            {{ form_widget(form.active, { 'attr': {'class': 'switch'} }) }}
+                            <label for="hobby_active"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
                     {{ form_label(form.title, null, {
                         'label_attr': {'class': 'label'}
                     }) }}

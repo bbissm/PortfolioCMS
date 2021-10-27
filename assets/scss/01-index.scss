@@ -187,6 +187,9 @@ section.animation{
                 h2:not(.projectTitle),.has-text-black:not(.projectText){
                     color: #fff !important;
                 }
+                .tooltiptext{
+                    color: #fff;
+                }
                 .dividerContainer{
                     background-color: transparent !important;
                     .divider:after{

@@ -1,0 +1,12 @@
+<div class="modal" id="readme-modal">
+    <div class="modal-background"></div>
+    <div class=" modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Dokumentation</p>
+            <button class="delete" aria-label="close" onclick="window.closeModal(this)"></button>
+        </header>
+        <section class="content modal-card-body">
+            {{ readme|markdown_to_html }}
+        </section>
+    </div>
+</div>

@@ -22,7 +22,7 @@ class Section
 	/**
 	 * @ORM\Column(type="boolean", nullable=true)
 	 */
-    private $active = true;
+    private $active;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

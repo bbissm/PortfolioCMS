@@ -54,4 +54,20 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/admin, roles: [ROLE_DEV, ROLE_USER] }
+        - { path: ^/editSection-1$, roles: [ROLE_DEV] } # About me
+        - { path: ^/editSection-2$, roles: [ROLE_DEV] } # Hobby
+        - { path: ^/editSection-4$, roles: [ROLE_DEV ] } # Project
+        - { path: ^/editSection-10$, roles: [ROLE_DEV] } # Contact
+        - { path: ^/editHobby-35$, roles: [ROLE_DEV] }
+        - { path: ^/editHobby-36$, roles: [ROLE_DEV] }
+        - { path: ^/editHobby-37$, roles: [ROLE_DEV] }
+        - { path: ^/editProject-13$, roles: [ROLE_DEV] }
+        - { path: ^/editProject-14$, roles: [ROLE_DEV] }
+        - { path: ^/editProject-36$, roles: [ROLE_DEV] }
+        - { path: ^/deleteHobby-35$, roles: [ROLE_DEV] }
+        - { path: ^/deleteHobby-36$, roles: [ROLE_DEV] }
+        - { path: ^/deleteHobby-37$, roles: [ROLE_DEV] }
+        - { path: ^/deleteProject-13$, roles: [ROLE_DEV] }
+        - { path: ^/deleteProject-14$, roles: [ROLE_DEV] }
+        - { path: ^/deleteProject-36$, roles: [ROLE_DEV] }
