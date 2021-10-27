@@ -62,7 +62,7 @@ class SectionController extends AbstractController
 
 	/**
 	 * @Route("/editSection-{id}", name="edit_section")
-	 * Require ROLE_ADMIN for only this controller method.
+	 * Require ROLE_DEV for only this controller method.
 	 * @IsGranted("ROLE_DEV")
 	 */
 	public function editSection($id, Request $request, Section $section, EntityManagerInterface $entityManager,FileUploader $fileUploader, SluggerInterface $slugger) : Response
