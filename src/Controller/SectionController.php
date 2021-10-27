@@ -9,6 +9,7 @@ use App\Form\SectionType;
 use App\Repository\SectionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,6 +62,8 @@ class SectionController extends AbstractController
 
 	/**
 	 * @Route("/editSection-{id}", name="edit_section")
+	 * Require ROLE_ADMIN for only this controller method.
+	 * @IsGranted("ROLE_DEV")
 	 */
 	public function editSection($id, Request $request, Section $section, EntityManagerInterface $entityManager,FileUploader $fileUploader, SluggerInterface $slugger) : Response
 	{

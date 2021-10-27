@@ -35,6 +35,11 @@
                     {% endif %}
                 </div>
             </div>
+            <a class="navbar-item readMe" onclick="window.openModal('readme-modal')"> {# modal id in onclick #}
+                {% if app.user %}
+                    <i class="fas fa-book-reader bouncing {% if app.user %}no-animation{% endif %}"></i><span class="ml-3 has-text-weight-bold has-text-white is-size-4">Docs</span>
+                {% endif %}
+            </a>
             <div class="navbar-end">
                 {# prototype
                 {% for section in sections %}

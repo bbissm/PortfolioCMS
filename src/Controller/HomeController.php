@@ -56,7 +56,9 @@ class HomeController extends AbstractController
 		$projects = $this->getDoctrine()
 			->getRepository(Project::class)
 			->findAll();
+		$readMe = file_get_contents($this->getParameter('kernel.project_dir').'/readme.md');
 
+		// Contactform
 		$form = $this->createForm(ContactType::class);
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -84,10 +86,11 @@ class HomeController extends AbstractController
 			$this->mailer->send($emailConfirmation);
 			$this->addFlash('success', 'Your message has been sent');
 			return $this->redirect($this->generateUrl('homepage').'#contact');
-
 		}
+		// Contactform end
 
-		return $this->render('homepage.html.twig', ['sections' =>$sections,'projects'=>$projects,'hobbies'=>$hobbies, 'form' => $form->createView()]);
+
+		return $this->render('homepage.html.twig', ['sections' =>$sections,'projects'=>$projects,'hobbies'=>$hobbies, 'form' => $form->createView(), 'readme' => $readMe]);
     }
 
 	/**

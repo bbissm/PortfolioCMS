@@ -13,7 +13,6 @@ nav{
         border-radius:4px;
         &.navbar-item:hover{
             box-shadow: 4px 4px 0 0 #3e3e3e;
-
         }
     }
 
@@ -34,7 +33,15 @@ nav{
                 justify-content: flex-start;
                 margin-left:0;
                 flex-wrap: wrap;
-
+            }
+        }
+        .readMe{
+            i{
+                color: white;
+                font-size: 2rem;
+                text-align: center;
+                display: flex;
+                align-items: center;
             }
         }
         .navbar-end{

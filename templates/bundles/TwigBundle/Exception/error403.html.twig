@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Access Denied{% endblock %}
+
+{% block body %}
+    <section class="section pt-6 pb-6">
+        <div class="inner-container">
+            <h1>Sie haben kein Zugriff auf den Inhalt.</h1>
+            <h1>Page not found</h1>
+
+            <p>
+                The requested page couldn't be located. Checkout for any URL
+                misspelling or <a href="{{ path('homepage') }}">return to the homepage</a>.
+            </p>
+        </div>
+    </section>
+{% endblock %}
