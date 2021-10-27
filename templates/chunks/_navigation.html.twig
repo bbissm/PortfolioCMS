@@ -35,18 +35,14 @@
                     {% endif %}
                 </div>
             </div>
-            <a class="navbar-item readMe" onclick="window.openModal('readme-modal')"> {# modal id in onclick #}
-            <i class="fas fa-book-reader bouncing {% if app.user %}no-animation{% endif %}"></i><span class="ml-3 has-text-weight-bold has-text-white is-size-4">Docs</span>
-            </a>
+            {% set route = app.request.attributes.get('_route') != 'homepage' ? path('homepage') : '' %}
+            {% if route is empty %}
+                <a class="readMe is-flex is-align-items-center" onclick="window.openModal('readme-modal')"> {# modal id in onclick #}
+                    <i class="fas fa-book-reader bouncing {% if is_granted('ROLE_DEV') %}no-animation{% endif %}"></i><span class="ml-3 has-text-weight-bold has-text-white is-size-4">Docs</span>
+                </a>
+            {% endif %}
             <div class="navbar-end">
-                {# prototype
-                {% for section in sections %}
-                    <a href="#{{ section.name|lower }}" class="navbar-item">
-                        {{ section.name }}
-                    </a>
-                {% endfor %}
-                #}
-                {% set route = app.request.attributes.get('_route') != 'homepage' ? path('homepage') : '' %}
+
                 <a href="{{ route }}#about" class="navbar-item">
                     About
                 </a>
