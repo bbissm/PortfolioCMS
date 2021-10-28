@@ -40,7 +40,7 @@
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {% if section.template != 'contact' and section.template is not null %}
                 <a class="button centered has-text-white has-background-black mb-6 mt-6" href="{{ path('create_'~section.template) }}">
-                    Add {{ section.name }}
+                    {{ section.name }} hinzufügen
                 </a>
             {% endif %}
         {% endif %}

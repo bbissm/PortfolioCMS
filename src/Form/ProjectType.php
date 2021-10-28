@@ -6,8 +6,6 @@ use App\Entity\Attachment;
 use App\Entity\Project;
 use App\Entity\Skill;
 use Doctrine\ORM\EntityRepository;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use Liip\ImagineBundle\Form\Type\ImageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
