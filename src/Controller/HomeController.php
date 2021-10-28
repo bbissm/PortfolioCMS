@@ -56,7 +56,7 @@ class HomeController extends AbstractController
 		$projects = $this->getDoctrine()
 			->getRepository(Project::class)
 			->findBy($findByActive,[]);
-		$readMe = file_get_contents($this->getParameter('kernel.project_dir').'/readme.md');
+		$readMe = file_get_contents($this->getParameter('kernel.project_dir').'/DOCS.md');
 
 		// Contactform
 		$form = $this->createForm(ContactType::class);

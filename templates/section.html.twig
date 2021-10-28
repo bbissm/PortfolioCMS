@@ -1,6 +1,6 @@
 {% set class = section.template is not empty ? section.template : section.name|lower %}
 {% set disabled = is_granted('ROLE_DEV') is empty and section.id in sectionDevAccess  ? 'disabled' : ''  %}
-<section id="{{ section.name|lower }}"  class="{{ class }} has-background-white {% if app.user %}no-animation sortable{% endif %}" data-id="{{ section.id }}" data-sorting="{{ section.sorting }}">
+<section id="{{ section.name|lower }}"  class="{{ class }} has-background-white {% if app.user %}no-animation sortable{% else %}animation{% endif %}" data-id="{{ section.id }}" data-sorting="{{ section.sorting }}">
     {%  include 'chunks/divider.html.twig' %}
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {# second way to proof if user is logged in #}
         <div class="tooltip">
@@ -40,7 +40,7 @@
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {% if section.template != 'contact' and section.template is not null %}
                 <a class="button centered has-text-white has-background-black mb-6 mt-6" href="{{ path('create_'~section.template) }}">
-                    Add {{ section.name }}
+                    {{ section.name }} hinzufügen
                 </a>
             {% endif %}
         {% endif %}
