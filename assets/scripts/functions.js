@@ -7,7 +7,7 @@ export default function() {
             const to = element.getBoundingClientRect().top + window.scrollY + 180
             const start = window.scrollY || window.pageYOffset
             const time = Date.now()
-            let speed = to > 0 ? 1 : 5; // if scroll to top
+            let speed = to > 0 ? 4 : 5; // if scroll to top
             let duration = Math.abs(start - to) / speed;
             const easeOutQuart = t => t*(2-t);
 

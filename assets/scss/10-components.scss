@@ -611,7 +611,9 @@ a.button{
 }
 
 .bouncing {
-    animation: bounce 2s infinite;
+    @include tablet() {
+        animation: bounce 2s infinite;
+    }
 }
 @keyframes bounce {
     0%,
