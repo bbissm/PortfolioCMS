@@ -11,6 +11,11 @@
         * Field length (255,11)
 
 
+
+**Generieren der Getter und Setter nach Entityanpassung**
+
+symfony console make:entity --regenerate
+
 **!! Wichtig nach Model erstellen => Migration machen für die Datenbank.**
 
 #Datenbank
@@ -37,6 +42,16 @@
 # Controller
 
 **Better make controller by your self**
+
+**Entity property mit entityManager anpassen**
+***
+    $entityManager = $this->getDoctrine()->getManager();
+    $entity = $this->getDoctrine()
+    ->getRepository(Entity::class)
+    ->find($id);
+    $entity->setField("text");
+    $entityManager->persist($entity);
+    $entityManager->flush();
 
 # Design
 

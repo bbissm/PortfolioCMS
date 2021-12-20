@@ -4,7 +4,14 @@
     {%  include 'chunks/divider.html.twig' %}
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {# second way to proof if user is logged in #}
         <div class="tooltip">
-            <a class="button centered mb-6 is-success {{ disabled }}" href="{{ path('edit_section', {'id':section.id}) }}">Section bearbeiten</a>
+            <div class="columns has-background-white is-justify-content-center">
+                <div class="column is-narrow">
+                    <a class="button centered mb-6 is-success {{ disabled }}" href="{{ path('edit_section', {'id':section.id}) }}">Section bearbeiten</a>
+                </div>
+                <div class="column is-narrow">
+                    <a class="button centered mb-6 is-danger {{ disabled }}" href="{{ path('delete_section', {'id':section.id}) }}">Section löschen</a>
+                </div>
+            </div>
             {% if disabled %}
                 <span class="tooltiptext has-text-weight-bold is-size-5"><i class="fas fa-exclamation-triangle"></i> ROLE_DEV Rechte erforderlich.</span>
             {% endif %}

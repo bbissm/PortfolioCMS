@@ -47,9 +47,10 @@ class HomeController extends AbstractController
     public function home(Request $request): Response
     {
 		$findByActive = $this->isAuthenticated ? [] : ['active' => 1];
-			$sections = $this->getDoctrine()
+		$findSectionsByActive = $this->isAuthenticated ? ['deleted' => 0] : ['active' => 1, 'deleted' => 0];
+		$sections = $this->getDoctrine()
 			->getRepository(Section::class)
-			->findBy($findByActive,['sorting' => 'ASC']);
+			->findBy($findSectionsByActive,['sorting' => 'ASC']);
 		$hobbies = $this->getDoctrine()
 			->getRepository(Hobby::class)
 			->findBy($findByActive,[]);

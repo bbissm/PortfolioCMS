@@ -40,30 +40,35 @@ class Section
     public $sorting;
 
 	/**
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+    protected $deleted;
+
+	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Content", mappedBy="section", cascade={"persist"})
 	 */
 	private $content;
 
 	public function __construct()
-	{
-		$this->content = new ArrayCollection();
-	}
+      	{
+      		$this->content = new ArrayCollection();
+      	}
 
 	/**
 	 * @return mixed
 	 */
 	public function getActive()
-	{
-		return $this->active;
-	}
+      	{
+      		return $this->active;
+      	}
 
 	/**
 	 * @param mixed $active
 	 */
 	public function setActive($active): void
-	{
-		$this->active = $active;
-	}
+      	{
+      		$this->active = $active;
+      	}
 
     public function getId(): ?int
     {
@@ -132,6 +137,18 @@ class Section
                 $content->setSection(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(?bool $deleted): self
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }

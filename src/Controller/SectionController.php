@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,13 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SectionController extends AbstractController
 {
+	private $entityManager;
+
+	public function __construct(EntityManagerInterface $entityManager)
+	{
+		$this->entityManager = $entityManager;
+	}
+
 	/**
 	 * @Route("/addSection", name="add_section")
 	 */
@@ -139,6 +147,22 @@ class SectionController extends AbstractController
 			'form' => $form->createView(),
 			'contents' => $contents
 		]);
+	}
+
+	/**
+	 * @Route("/deleteSection-{id}", name="delete_section")
+	 * @param Request $request
+	 * @param $id
+	 */
+	public function deleteSection(Request $request, $id){
+		$entityManager = $this->getDoctrine()->getManager();
+		$section = $this->getDoctrine()->getManager()
+			->getRepository(Section::class)
+			->find($id);
+		$section->setDeleted(true);
+		$entityManager->persist($section);
+		$entityManager->flush();
+		return $this->redirectToRoute('homepage');
 	}
 
 	/**
