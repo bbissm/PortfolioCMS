@@ -45,15 +45,25 @@ class Project
 	private $my_files;
 
 	/**
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	private $website;
+
+	/**
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	private $github;
+
+	/**
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	private $updatedAt;
 
 	public function __construct()
-      	{
-      		$this->updatedAt = new \DateTime();
-      	 	$this->my_files = new ArrayCollection();
-      	}
+                  	{
+                  		$this->updatedAt = new \DateTime();
+                  	 	$this->my_files = new ArrayCollection();
+                  	}
 
     public function getId(): ?int
     {
@@ -146,6 +156,30 @@ class Project
     public function setActive(?bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    public function getGithub(): ?string
+    {
+        return $this->github;
+    }
+
+    public function setGithub(?string $github): self
+    {
+        $this->github = $github;
 
         return $this;
     }

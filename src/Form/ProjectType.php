@@ -34,6 +34,12 @@ class ProjectType extends AbstractType
 				'is_granted_disabled' => $options['is_granted_disabled'],
 			))
 			->add('title', TextType::class)
+			->add('website', TextType::class, [
+				'required' => false
+			])
+			->add('github', TextType::class, [
+				'required' => false
+			])
 			->add('description',TextareaType::class, [
 				'attr' => ['class' => 'tinymce'],
 				'required' => false

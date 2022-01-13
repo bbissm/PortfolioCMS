@@ -6,14 +6,14 @@
         <div class="tooltip">
             <div class="columns has-background-white is-justify-content-center">
                 <div class="column is-narrow">
-                    <a class="button centered mb-6 is-success {{ disabled }}" href="{{ path('edit_section', {'id':section.id}) }}">Section bearbeiten</a>
+                    <a class="button centered mb-6 is-success {{ disabled }}" href="{{ path('edit_section', {'id':section.id}) }}">Edit section</a>
                 </div>
                 <div class="column is-narrow">
-                    <a class="button centered mb-6 is-danger {{ disabled }}" href="{{ path('delete_section', {'id':section.id}) }}">Section löschen</a>
+                    <a class="button centered mb-6 is-danger {{ disabled }}" href="{{ path('delete_section', {'id':section.id}) }}">Delete section</a>
                 </div>
             </div>
             {% if disabled %}
-                <span class="tooltiptext has-text-weight-bold is-size-5"><i class="fas fa-exclamation-triangle"></i> ROLE_DEV Rechte erforderlich.</span>
+                <span class="tooltiptext has-text-weight-bold is-size-5"><i class="fas fa-exclamation-triangle"></i> ROLE_DEV rights required.</span>
             {% endif %}
         </div>
     {% endif %}
@@ -47,7 +47,7 @@
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {% if section.template != 'contact' and section.template is not null %}
                 <a class="button centered has-text-white has-background-black mb-6 mt-6" href="{{ path('create_'~section.template) }}">
-                    {{ section.name }} hinzufügen
+                    Add {{ section.name|lower }}
                 </a>
             {% endif %}
         {% endif %}

@@ -1,21 +1,15 @@
-#Portfolio CMS
+##This website is more than just a portfolio. If you log in as a user, you get access to the frontend CMS, with which you can change practically all content.
 
-##Diese Webseite ist mehr als nur Portfolio. Loggt man sich als Benutzer ein, so erhält man Zugriff auf Frontend CMS, mit dem man praktisch alle Inhalte verändern kann.
+**!! Any adjustments made will not affect the preview of Portfolio itself. Only the admin can publish the content created by the user.**
 
-**!! Alle Anpassungen, die gemacht werden, haben keine Auswirkung auf das Preview von Portfolio selbst. Nur der Admin kann die, vom User erstellten, Inhalte publizieren.**
-
-**Die klassischen Funktionen**
+**The Classic Features**
 ***
     1. Sections
-        1.1 Sortieren der Sections per Drag and Drop
-        1.2 Contentblöcke dynamisch zu Sections hinzufügen und diese direkt abfüllen.
-        1.3 Bilder können hochgeladen werden und per Drag and Drop sortiert.
-        1.4 Es können Templates ausgewählt werden. Das dazugehörige Template wird im Frontend angezeigt. (Hobbys,Projekte,Contact usw)
-    2. Projekte, Hobbys
-        2.1 Können auf der Homepage erfasst werden.
-        2.2 Zu einem Projekt können verschiedene Skills hinzugefügt werden.
-        2.3 Bilder können hochgeladen werden und per Drag and Drop sortiert.
- 
-    
-
-
+        1.1 Sorting the sections by drag and drop
+        1.2 Dynamically add content blocks to sections and fill them in directly.
+        1.3 Images can be uploaded and sorted by drag and drop.
+        1.4 Templates can be selected. The associated template is displayed in the frontend. (Hobbies, projects, contact, etc.)
+    2. Projects, hobbies
+        2.1 Can be recorded on the homepage.
+        2.2 Various skills can be added to a project.
+        2.3 Images can be uploaded and sorted by drag and drop.

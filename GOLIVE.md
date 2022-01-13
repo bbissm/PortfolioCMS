@@ -1,7 +1,7 @@
 #GO-LIVE GUIDELINES
-
-+ pull main on production
 + "encore prod" on dev
-+ deploy public folder to production
++ pull main on production
++ deploy public/build folder to production
++ ssh martin-skills
 + "bin/console cache:clear" on production
 + check database migrations

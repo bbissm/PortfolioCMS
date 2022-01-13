@@ -29,6 +29,22 @@
                     </div>
                 </div>
                 <div class="field">
+                    {{ form_label(form.website, null, {
+                        'label_attr': {'class': 'label'}
+                    }) }}
+                    <div class="control">
+                        {{ form_widget(form.website, { 'attr': {'class': 'input','placeholder': 'https://'} }) }}
+                    </div>
+                </div>
+                <div class="field">
+                    {{ form_label(form.github, null, {
+                        'label_attr': {'class': 'label'}
+                    }) }}
+                    <div class="control">
+                        {{ form_widget(form.github, { 'attr': {'class': 'input'} }) }}
+                    </div>
+                </div>
+                <div class="field">
                     {{ form_label(form.description, null, {
                         'label_attr': {'class': 'label'}
                     }) }}
