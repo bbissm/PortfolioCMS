@@ -5,7 +5,6 @@ export default function() {
         swiperContainers.forEach(swiperContainer => {
             let swiper = swiperContainer.querySelector('.swiper');
             if (swiper !== null) {
-                console.log(swiper);
                 let imgSwiper = new Swiper('.swiper', /** @type {SwiperOptions} */  {
                     modules: [Pagination, Keyboard, Virtual, Navigation, Autoplay],
                     initialSlide: 0,

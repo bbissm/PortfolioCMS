@@ -54,16 +54,21 @@ class Project
 	 */
 	private $github;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    public $sorting;
+
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	private $updatedAt;
 
 	public function __construct()
-                  	{
-                  		$this->updatedAt = new \DateTime();
-                  	 	$this->my_files = new ArrayCollection();
-                  	}
+                        	{
+                        		$this->updatedAt = new \DateTime();
+                        	 	$this->my_files = new ArrayCollection();
+                        	}
 
     public function getId(): ?int
     {
@@ -180,6 +185,18 @@ class Project
     public function setGithub(?string $github): self
     {
         $this->github = $github;
+
+        return $this;
+    }
+
+    public function getSorting(): ?int
+    {
+        return $this->sorting;
+    }
+
+    public function setSorting(?int $sorting): self
+    {
+        $this->sorting = $sorting;
 
         return $this;
     }

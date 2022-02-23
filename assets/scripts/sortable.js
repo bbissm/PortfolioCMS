@@ -67,6 +67,38 @@ export default function () {
                 })
             }
         })
+    }
 
+    const moduleContainers = document.querySelectorAll('[data-sortable-module]');
+    if (moduleContainers !== null && window.matchMedia('(min-width:768px').matches === true) {
+        moduleContainers.forEach(moduleContainer => {
+            console.log(moduleContainer);
+            new Sortable(moduleContainer, {
+                animation: 150,
+                ghostClass: 'green-background-class',
+                draggable: '.moduleSortable',
+                onStart: function (event) {
+
+                },
+                onEnd: function (event) {
+                    let draggableItem = event.target.querySelectorAll('.moduleSortable');
+                    let i = 0;
+                    // First set correct sorting
+                    draggableItem.forEach(item => {
+                        item.dataset.sorting = i++;
+                    })
+                    i = 0;
+                    // then send sorting to server
+                    draggableItem.forEach(item => {
+                        i++;
+                        let sorting = item.dataset.sorting;
+                        let id = item.dataset.id;
+                        fetch(`/${moduleContainer.dataset.sortableModule}/${id}/sort/${sorting}`, {
+                            method: 'POST',
+                        }).then(response => {})
+                    })
+                }
+            })
+        })
     }
 }

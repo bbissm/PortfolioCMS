@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Section;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -136,4 +137,18 @@ class ProjectController extends AbstractController
 		$this->entityManager->persist($attachment);
 		$this->entityManager->flush();
 	}
+
+    /**
+     * FETCH
+     * @Route("/project/{id}/sort/{sorting}")
+     */
+    public function sortProject($id, $sorting) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $projects = $this->getDoctrine()
+            ->getRepository(Project::class)
+            ->find($id);
+        $projects->setSorting($sorting);
+        $entityManager->persist($projects);
+        $entityManager->flush();
+    }
 }

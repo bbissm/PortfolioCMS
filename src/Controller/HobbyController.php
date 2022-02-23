@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Hobby;
+use App\Entity\Project;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -129,4 +130,18 @@ class HobbyController extends AbstractController
 		$this->entityManager->persist($attachment);
 		$this->entityManager->flush();
 	}
+
+    /**
+     * FETCH
+     * @Route("/hobby/{id}/sort/{sorting}")
+     */
+    public function sortProject($id, $sorting) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $hobbies = $this->getDoctrine()
+            ->getRepository(Hobby::class)
+            ->find($id);
+        $hobbies->setSorting($sorting);
+        $entityManager->persist($hobbies);
+        $entityManager->flush();
+    }
 }

@@ -1,6 +1,7 @@
+<div data-sortable-module="hobby">
 {% for hobby in hobbies %}
     {% set disabled = is_granted('ROLE_DEV') is empty and hobby.id in hobbyDevAccess  ? 'disabled' : ''  %}
-    <div class="columns is-tablet {% if loop.index % 2 == 0 %}is-flex-direction-row-reverse	{% endif %}">
+    <div class="columns is-tablet {% if loop.index % 2 == 0 %}is-flex-direction-row-reverse	{% endif %} moduleSortable" data-sorting="{{ hobby.sorting }}" data-id="{{ hobby.id }}">
             <div class="column is-half p-0">
                 <div class="{% if hobby.getMyFiles()|length > 1 %}has-swiper{% endif %}">
                     <div class="{% if hobby.getMyFiles()|length > 1 %}swiper{% endif %}">
@@ -29,4 +30,4 @@
             </div>
     </div>
 {% endfor %}
-
+</div>

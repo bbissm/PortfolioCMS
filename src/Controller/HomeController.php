@@ -53,10 +53,10 @@ class HomeController extends AbstractController
 			->findBy($findSectionsByActive,['sorting' => 'ASC']);
 		$hobbies = $this->getDoctrine()
 			->getRepository(Hobby::class)
-			->findBy($findByActive,[]);
+			->findBy($findByActive,['sorting' => 'ASC']);
 		$projects = $this->getDoctrine()
 			->getRepository(Project::class)
-			->findBy($findByActive,[]);
+			->findBy($findByActive,['sorting' => 'ASC']);
 		$readMe = file_get_contents($this->getParameter('kernel.project_dir').'/DOCS.md');
 
 		// Contactform
@@ -114,7 +114,7 @@ class HomeController extends AbstractController
 			->to($form->getData()['email'])
 			->subject('Bestätigung Kontaktformular')
 			->text(
-				"Hallo, \n\n\n Danke für dein Interesse an meiner Webseite und dass du mich kontaktiert hast. 
+				"Hallo, \n\n\n Danke für dein Interesse an meiner Webseite und dass du mich kontaktiert hast.
 			\n\n Ich werde mich bei dir in den nächsten 12 Stunden melden. \n\n\n\n Liebe Grüsse \n\n Martin"
 			)
 		;

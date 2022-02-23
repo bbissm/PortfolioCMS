@@ -5,7 +5,6 @@ export default function() {
     }
 
     window.closeModal = (el) => {
-        console.log(el)
         el.closest('.modal').classList.remove('is-flex');
         window.html.classList.remove('is-clipped');
     }

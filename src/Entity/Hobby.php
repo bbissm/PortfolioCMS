@@ -44,6 +44,11 @@ class Hobby
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    public $sorting;
+
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
@@ -134,6 +139,18 @@ class Hobby
     public function setActive(?bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getSorting(): ?int
+    {
+        return $this->sorting;
+    }
+
+    public function setSorting(?int $sorting): self
+    {
+        $this->sorting = $sorting;
 
         return $this;
     }
