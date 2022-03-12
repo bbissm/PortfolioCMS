@@ -1,7 +1,7 @@
 <div class="inner-container">
     <div class="has-swiper pb-6" style="overflow: hidden;">
         <div class="project-swiper">
-            <div class="swiper-wrapper" data-sortable-module="project">
+            <div class="swiper-wrapper" {% if app.user %}data-sortable-module="project"{% endif %}>
                 {% for project in projects %}
                     {% set disabled = is_granted('ROLE_DEV') is empty and project.id in projectDevAccess  ? 'disabled' : ''  %}
                     <div class="swiper-slide moduleSortable" data-sorting="{{ project.sorting }}" data-id="{{ project.id }}">

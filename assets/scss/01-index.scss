@@ -196,8 +196,10 @@ section.animation{
                         border-color: #fff;
                     }
                 }
-
             }
         }
     }
+}
+[data-sortable-module] .moduleSortable{
+    cursor: pointer;
 }

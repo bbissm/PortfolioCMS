@@ -1,4 +1,4 @@
-<div data-sortable-module="hobby">
+<div {% if app.user %}data-sortable-module="hobby"{% endif %}>
 {% for hobby in hobbies %}
     {% set disabled = is_granted('ROLE_DEV') is empty and hobby.id in hobbyDevAccess  ? 'disabled' : ''  %}
     <div class="columns is-tablet {% if loop.index % 2 == 0 %}is-flex-direction-row-reverse	{% endif %} moduleSortable" data-sorting="{{ hobby.sorting }}" data-id="{{ hobby.id }}">
