@@ -56,6 +56,7 @@ class SectionController extends AbstractController
 			// for example, if Task is a Doctrine entity, save it!
 			$entityManager = $this->getDoctrine()->getManager();
 			$section->setSorting($sorting+1);
+			$section->setDeleted(0);
 			$entityManager->persist($section);
 			$entityManager->flush();
 			$this->addFlash('success', 'Successfully created new section');
