@@ -45,7 +45,7 @@ class HomeController extends AbstractController
     public function home(Request $request): Response
     {
 		$findByActive = $this->isAuthenticated ? [] : ['active' => 1];
-		$findSectionsByActive = $this->isAuthenticated ? ['deleted' => 0] : ['active' => 1, 'deleted' => 0];
+		$findSectionsByActive = $this->isAuthenticated ? ['deleted' => null, 'deleted' => 0] : ['active' => 1, 'deleted' => 0, 'deleted' => null];
 		$sections = $this->getDoctrine()
 			->getRepository(Section::class)
 			->findBy($findSectionsByActive,['sorting' => 'ASC']);
