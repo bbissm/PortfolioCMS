@@ -20,7 +20,7 @@ class SectionType extends AbstractType
 		$files = glob('../templates/sections/*.html.twig');
 		foreach ($files as $file) {
 			$file = str_replace(['../templates/sections/','.html.twig'],'',$file);
-			$array[$file] = $file;
+			$templates[$file] = $file;
 		}
         $builder
 			->add('active', CheckboxType::class, array(
@@ -33,7 +33,7 @@ class SectionType extends AbstractType
             	'required' => true
 			))
 			->add('template', ChoiceType::class, array(
-				'choices' => $array,
+				'choices' => $templates,
 				'required' => false
 			))
 			->add('content', CollectionType::class, [

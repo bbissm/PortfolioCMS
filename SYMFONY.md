@@ -81,10 +81,5 @@ Das Model im Admin anzeigen lassen, indem man den benötigten CrudController ers
 
 (Custom Field) =>
 * Extra Klasse für VichImageField programmiert und in den Controller implementiert.
-* Extra Template für VichImageField erstellt. 
-
-
-
-
-
+* Extra Template für VichImageField erstellt.
 

@@ -28,9 +28,11 @@
                 </div>
             </div>
             <div class="field mb-6">
-                {{ form_label(form.template, null, {
-                    'label_attr': {'class': 'label'}
-                }) }}
+                <div class="is-flex">
+                    {{ form_label(form.template, null, {
+                        'label_attr': {'class': 'label'}
+                    }) }} <strong class="has-text-danger-dark ml-4">! Contact template cant be chosen more than once on a page</strong>
+                </div>
                 <div class="control">
                     {{ form_widget(form.template, { 'attr': {'class': 'input'} }) }}
                 </div>

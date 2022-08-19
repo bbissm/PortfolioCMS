@@ -9,7 +9,7 @@
                 'label_attr': {'class': 'label'}
             }) }}
             <div class="control">
-                {{ form_widget(form.name, { 'attr': {'class': 'input','type': 'email'} }) }}
+                {{ form_widget(form.name, { 'attr': {'class': 'input'} }) }}
             </div>
         </div>
         <div class="field">
@@ -17,7 +17,7 @@
                 'label_attr': {'class': 'label'}
             }) }}
             <div class="control has-icons-left">
-                {{ form_widget(form.email, { 'attr': {'class': 'input'} }) }}
+                {{ form_widget(form.email, { 'attr': {'class': 'input', 'type':'email'} }) }}
                 <span class="icon is-small is-left">
               <i class="fas fa-envelope"></i>
             </span>

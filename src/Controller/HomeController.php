@@ -10,8 +10,6 @@ use App\Form\ContactType;
 use ArrayObject;
 use Doctrine\Common\Collections\ArrayCollection;
 use Psr\Log\LoggerInterface;
-use Swift_Mailer;
-use Swift_Message;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
