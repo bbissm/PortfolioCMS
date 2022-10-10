@@ -44,3 +44,9 @@ LICENSE.txt
 composer.phar
 /public
 /htdocs
+node_modules
+.DS_Store
+.package-lock.json
+composer.lock
+build
+
