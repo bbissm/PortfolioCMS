@@ -1,7 +1,6 @@
 {
   "devDependencies": {
     "@symfony/stimulus-bridge": "^2.0.0",
-    "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/Resources/assets",
     "@symfony/webpack-encore": "^1.0.0",
     "core-js": "^3.0.0",
     "file-loader": "^6.0.0",

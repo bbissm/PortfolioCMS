@@ -49,4 +49,5 @@ node_modules
 .package-lock.json
 composer.lock
 build
-
+node_modules
+vendor
