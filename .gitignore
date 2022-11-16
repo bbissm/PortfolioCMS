@@ -51,3 +51,7 @@ composer.lock
 build
 node_modules
 vendor
+*.lock
+SYMFONY.md
+build
+GOLIVE.md
