@@ -4,16 +4,17 @@ namespace App\Form\DataTransformer;
 
 use App\Entity\Attachment;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class AttachmentToHobbyTransformer implements DataTransformerInterface
 {
-	private $entityManager;
+	private $doctrine;
 
-	public function __construct(EntityManagerInterface $entityManager)
+	public function __construct(ManagerRegistry $doctrine)
 	{
-		$this->entityManager = $entityManager;
+		$this->doctrrine = $doctrine;
 	}
 
 	/**
@@ -43,7 +44,7 @@ class AttachmentToHobbyTransformer implements DataTransformerInterface
 			return null;
 		}
 
-		$issue = $this->entityManager
+		$issue = $this->doctrine
 			->getRepository(Issue::class)
 			// query for the issue with this id
 			->find($issueNumber)

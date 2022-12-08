@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Attachment;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -11,12 +11,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class FileUploader
 {
 	private $slugger;
-	private $entityManager;
+	private $doctrine;
 
-	public function __construct(SluggerInterface $slugger, EntityManagerInterface $entityManager)
+	public function __construct(SluggerInterface $slugger, ManagerRegistry $doctrine)
 	{
 		$this->slugger = $slugger;
-		$this->entityManager = $entityManager;
+		$this->doctrine = $doctrine;
 	}
 
 	public function upload(UploadedFile $file, $destination, $entity, $mapped, $sorting)
@@ -30,7 +30,7 @@ class FileUploader
 			dump($e);
 		}
 		if (count($entity->getMyFiles()) > 0){
-			$query = $this->entityManager->createQuery(
+			$query = $this->doctrine->getManager()->createQuery(
 				'SELECT MAX(a.sorting)
 				FROM App\Entity\Attachment a
 				WHERE a.'.$mapped.' ='.$entity->getId()

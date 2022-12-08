@@ -5,6 +5,7 @@ use App\Entity\Hobby;
 use App\Entity\Project;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -20,12 +21,14 @@ class HobbyController extends AbstractController
 	private $entityManager;
 	private $uploadDir;
 	private $fileUploader;
+	private $doctrine;
 
-	public function __construct(EntityManagerInterface $entityManager,FileUploader $fileUploader,ParameterBagInterface $params)
+	public function __construct(EntityManagerInterface $entityManager,FileUploader $fileUploader,ParameterBagInterface $params, ManagerRegistry $doctrine)
 	{
 		$this->entityManager = $entityManager;
 		$this->uploadDir = $params->get('app.path.hobby_attachments');
 		$this->fileUploader = $fileUploader;
+		$this->doctrine = $doctrine;
 	}
 
 	/**
@@ -136,8 +139,8 @@ class HobbyController extends AbstractController
      * @Route("/hobby/{id}/sort/{sorting}")
      */
     public function sortProject($id, $sorting) {
-        $entityManager = $this->getDoctrine()->getManager();
-        $hobbies = $this->getDoctrine()
+        $entityManager = $this->doctrine->getManager();
+        $hobbies = $this->doctrine
             ->getRepository(Hobby::class)
             ->find($id);
         $hobbies->setSorting($sorting);

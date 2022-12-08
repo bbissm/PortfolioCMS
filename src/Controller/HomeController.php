@@ -9,6 +9,7 @@ use App\Entity\Section;
 use App\Form\ContactType;
 use ArrayObject;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormView;
@@ -31,28 +32,30 @@ class HomeController extends AbstractController
 {
 	private $isAuthenticated;
 	private $mailer;
+	private $doctrine;
 
-	public function __construct(Security $security, MailerInterface $mailer)
+	public function __construct(Security $security, MailerInterface $mailer, ManagerRegistry $doctrine)
 	{
 		$this->isAuthenticated = $security->isGranted('ROLE_DEV') || $security->isGranted('ROLE_USER');
 		$this->mailer = $mailer;
+		$this->doctrine = $doctrine;
 	}
 
 	/**
      * @Route("/", name="homepage")
      * $routeParams has all needed global variables
     */
-    public function home(Request $request): Response
+    public function home(Request $request, ): Response
     {
 		$findSectionsByActive = $this->isAuthenticated ? ['deleted' => null] : ['active' => 1, 'deleted' => null];
-		$sections = $this->getDoctrine()
+		$sections = $this->doctrine
 			->getRepository(Section::class)
 			->findBy($findSectionsByActive,['sorting' => 'ASC']);
         $findByActive = $this->isAuthenticated ? [] : ['active' => 1];
-        $hobbies = $this->getDoctrine()
+        $hobbies = $this->doctrine
 			->getRepository(Hobby::class)
 			->findBy($findByActive,['sorting' => 'ASC']);
-		$projects = $this->getDoctrine()
+		$projects = $this->doctrine
 			->getRepository(Project::class)
 			->findBy($findByActive,['sorting' => 'ASC']);
 		$readMe = file_get_contents($this->getParameter('kernel.project_dir').'/DOCS.md');
@@ -84,8 +87,8 @@ class HomeController extends AbstractController
 	 * @Route("/section/{id}/sort/{sorting}")
 	 */
     public function sortSections($id, $sorting) {
-		$entityManager = $this->getDoctrine()->getManager();
-		$sections = $this->getDoctrine()
+		$entityManager = $this->doctrine->getManager();
+		$sections = $this->doctrine
 			->getRepository(Section::class)
 			->find($id);
 		$sections->setSorting($sorting);

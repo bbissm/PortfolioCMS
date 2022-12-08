@@ -9,6 +9,7 @@ use App\Form\SectionType;
 use App\Repository\SectionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -21,17 +22,17 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SectionController extends AbstractController
 {
-	private $entityManager;
+	private $doctrine;
 
-	public function __construct(EntityManagerInterface $entityManager)
+	public function __construct(ManagerRegistry $doctrine)
 	{
-		$this->entityManager = $entityManager;
+		$this->doctrine = $doctrine;
 	}
 
 	/**
 	 * @Route("/addSection", name="add_section")
 	 */
-	public function addSection(Request $request, EntityManagerInterface $entityManager) : Response
+	public function addSection(Request $request) : Response
 	{
 		$section = new Section();
 		$form = $this->createForm(SectionType::class, $section);
@@ -43,7 +44,7 @@ class SectionController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 
 			// getting highest current id of project // TODO: Make it more simple
-			$query = $this->getDoctrine()->getManager()->createQuery(
+			$query = $this->doctrine->getManager()->createQuery(
 				'SELECT MAX(s.sorting)
 				FROM App\Entity\Section s'
 			);
@@ -54,7 +55,7 @@ class SectionController extends AbstractController
 
 			// ... perform some action, such as saving the task to the database
 			// for example, if Task is a Doctrine entity, save it!
-			$entityManager = $this->getDoctrine()->getManager();
+			$entityManager = $this->doctrine->getManager();
 			$section->setSorting($sorting+1);
 			$section->setDeleted(NULL);
 			$entityManager->persist($section);
@@ -72,9 +73,9 @@ class SectionController extends AbstractController
 	/**
 	 * @Route("/editSection-{id}", name="edit_section")
 	 */
-	public function editSection($id, Request $request, Section $section, EntityManagerInterface $entityManager,FileUploader $fileUploader, SluggerInterface $slugger) : Response
+	public function editSection($id, Request $request, Section $section,FileUploader $fileUploader, SluggerInterface $slugger) : Response
 	{
-		if (null === $section = $entityManager->getRepository(Section::class)->find($id)) {
+		if (null === $section = $this->doctrine->getRepository(Section::class)->find($id)) {
 			throw $this->createNotFoundException('No Section found for id '.$id);
 		}
 		$upload_dir = $this->getParameter('app.path.section_attachments');
@@ -88,6 +89,7 @@ class SectionController extends AbstractController
 		$form = $this->createForm(SectionType::class, $section);
 		$form->handleRequest($request);
 
+        $entityManager = $this->doctrine->getManager();
 		// For attachments
 		if ($form->isSubmitted() && $form->isValid()) {
 
@@ -101,7 +103,7 @@ class SectionController extends AbstractController
 
 
 					//Remove attachments linked to removed content ! remove first attachment, then content
-					$attachments = $entityManager
+					$attachments = $this->doctrine
 						->getRepository(Attachment::class)
 						->findBy(['content'=>$content]);
 					foreach ($attachments as $attachment) {
@@ -156,8 +158,8 @@ class SectionController extends AbstractController
 	 * @param $id
 	 */
 	public function deleteSection(Request $request, $id){
-		$entityManager = $this->getDoctrine()->getManager();
-		$section = $this->getDoctrine()->getManager()
+		$entityManager = $this->doctrine->getManager();
+		$section = $this->doctrine->getManager()
 			->getRepository(Section::class)
 			->find($id);
 		$section->setDeleted(true);
@@ -172,10 +174,10 @@ class SectionController extends AbstractController
 	 */
 	public function deleteAttachment(Request $request, $id) {
 		$upload_dir = $this->getParameter('app.path.section_attachments');
-		$attachment = $this->getDoctrine()->getManager()
+		$attachment = $this->doctrine->getManager()
 			->getRepository(Attachment::class)
 			->find($id);
-		$entityManager = $this->getDoctrine()->getManager();
+		$entityManager = $this->doctrine->getManager();
 		$entityManager->remove($attachment);
 		$entityManager->flush();
 		unlink($upload_dir.'/'.$attachment->getImageFile());
@@ -188,8 +190,8 @@ class SectionController extends AbstractController
 	 * Method({"POST"})
 	 */
 	public function sortAttachments(Request $request,$sorting, $id) {
-		$entityManager = $this->getDoctrine()->getManager();
-		$attachment = $this->getDoctrine()->getManager()
+		$entityManager = $this->doctrine->getManager();
+		$attachment = $this->doctrine->getManager()
 			->getRepository(Attachment::class)
 			->find($id);
 		$attachment->setSorting($sorting);

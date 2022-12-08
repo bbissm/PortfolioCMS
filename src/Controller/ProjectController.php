@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Section;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Entity\Attachment;
@@ -20,12 +21,14 @@ class ProjectController extends AbstractController
 	private $entityManager;
 	private $uploadDir;
 	private $fileUploader;
+	private $doctrine;
 
-	public function __construct(EntityManagerInterface $entityManager,FileUploader $fileUploader,ParameterBagInterface $params)
+	public function __construct(EntityManagerInterface $entityManager,FileUploader $fileUploader,ParameterBagInterface $params, ManagerRegistry $doctrine)
 	{
 		$this->entityManager = $entityManager;
 		$this->uploadDir = $params->get('app.path.project_attachments');
 		$this->fileUploader = $fileUploader;
+		$this->doctrine = $doctrine;
 	}
 
 	/**
@@ -143,8 +146,8 @@ class ProjectController extends AbstractController
      * @Route("/project/{id}/sort/{sorting}")
      */
     public function sortProject($id, $sorting) {
-        $entityManager = $this->getDoctrine()->getManager();
-        $projects = $this->getDoctrine()
+        $entityManager = $this->doctrine->getManager();
+        $projects = $this->doctrine
             ->getRepository(Project::class)
             ->find($id);
         $projects->setSorting($sorting);
