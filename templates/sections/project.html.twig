@@ -24,7 +24,7 @@
                                     <div class="flip-back box">
                                         <h2 class="projectTitle mt-6 is-narrow">{{ project.title }}</h2>
                                         <p class="projectText pl-5 pr-5 has-text-left">{{ project.description }}</p>
-                                        <a onclick="window.openPopup(this,{{ project.id }})"><i class="fas fa-book-open"></i></a>
+                                        <i class="open-popup fas fa-book-open" data-id="{{ project.id }}"></i>
                                     </div>
                                 </div>
                             </div>
@@ -44,20 +44,16 @@
             <div class="modal-background"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
-                    <a onclick="switchProject(this,{{ project.id }},{{ loop.index0 }},'prev')">
-                        <div class="arrow-next prev">
-                            <div class="arrow-next-top"></div>
-                            <div class="arrow-next-bottom"></div>
-                        </div>
-                    </a>
+                    <div class="arrow-next prev switch-project" data-id="{{ project.id }}" data-index="{{ loop.index0 }}" data-direction="prev">
+                        <div class="arrow-next-top" data-id="{{ project.id }}" data-index="{{ loop.index0 }}" data-direction="prev"></div>
+                        <div class="arrow-next-bottom" data-id="{{ project.id }}" data-index="{{ loop.index0 }}" data-direction="prev"></div>
+                    </div>
                     <p class="modal-card-title has-text-centered">{{ project.title }}</p>
-                    <a onclick="switchProject(this,{{ project.id }},{{ loop.index0 }},'next')">
-                        <div class="arrow-next">
-                            <div class="arrow-next-top"></div>
-                            <div class="arrow-next-bottom"></div>
-                        </div>
-                    </a>
-                    <button onclick="closePopup({{ project.id }})" class="delete" aria-label="close"></button>
+                    <div class="arrow-next switch-project" data-id="{{ project.id }}" data-index="{{ loop.index0 }}" data-direction="next">
+                        <div class="arrow-next-top" data-id="{{ project.id }}" data-index="{{ loop.index0 }}" data-direction="next"></div>
+                        <div class="arrow-next-bottom" data-id="{{ project.id }}" data-index="{{ loop.index0 }}" data-direction="next"></div>
+                    </div>
+                    <button class="close-popup delete" data-id="{{ project.id }}" aria-label="close"></button>
                 </header>
                 <section class="modal-card-body">
                     <div class="columns is-multiline is-tablet">

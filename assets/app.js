@@ -11,7 +11,7 @@ import './scss/app.scss';
 import Sortable from 'sortablejs';
 import {hide} from "bulma-extensions/bulma-carousel/src/js/utils/css";
 import SwiperSlide from './scripts/swiper';
-import Project from './scripts/project';
+import ProjectModal from './scripts/project';
 import Modal from './scripts/modal';
 import Functions from './scripts/functions';
 import Attachment from './scripts/attachments';
@@ -26,6 +26,8 @@ collectionHelper();
 Attachment();
 initSortable();
 SwiperSlide();
-Project();
 Modal();
 Functions();
+console.log(ProjectModal)
+const projectModal = new ProjectModal();
+projectModal.init();
