@@ -27,6 +27,8 @@ class Skill
      */
     private $value;
 
+    private $project;
+
     public function getId(): ?int
     {
         return $this->id;

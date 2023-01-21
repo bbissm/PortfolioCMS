@@ -1,2 +1,2 @@
 vich_uploader:
-    db_driver: orm
+  db_driver: orm

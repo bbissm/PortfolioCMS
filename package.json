@@ -1,14 +1,14 @@
 {
   "devDependencies": {
-    "@symfony/stimulus-bridge": "^2.0.0",
-    "@symfony/webpack-encore": "^1.0.0",
-    "core-js": "^3.0.0",
-    "file-loader": "^6.0.0",
-    "regenerator-runtime": "^0.13.2",
-    "sass": "^1.35.2",
-    "sass-loader": "^12.1.0",
-    "stimulus": "^2.0.0",
-    "webpack-notifier": "^1.6.0"
+    "@symfony/stimulus-bridge": "^3.2.1",
+    "@symfony/webpack-encore": "^4.2.0",
+    "core-js": "^3.27.2",
+    "file-loader": "^6.2.0",
+    "regenerator-runtime": "^0.13.11",
+    "sass": "^1.57.1",
+    "sass-loader": "^13.2.0",
+    "stimulus": "^3.2.1",
+    "webpack-notifier": "^1.15.0"
   },
   "license": "UNLICENSED",
   "private": true,
@@ -19,14 +19,14 @@
     "prod": "encore production --progress"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.3",
-    "bulma": "^0.9.3",
+    "@fortawesome/fontawesome-free": "^6.2.1",
+    "bulma": "^0.9.4",
     "bulma-accordion": "^2.0.1",
     "bulma-extensions": "^6.2.7",
-    "bulma-switch": "^2.0.0",
-    "copy-webpack-plugin": "^9.0.1",
-    "node-sass": "^6.0.1",
-    "sortablejs": "^1.14.0",
-    "swiper": "^7.0.8"
+    "bulma-switch": "^2.0.4",
+    "copy-webpack-plugin": "^11.0.0",
+    "node-sass": "^8.0.0",
+    "sortablejs": "^1.15.0",
+    "swiper": "^8.4.6"
   }
 }
