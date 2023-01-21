@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Attachment;
-use App\Entity\Content;
 use App\Entity\Section;
 use App\Form\SectionType;
 use App\Repository\SectionRepository;
@@ -43,14 +42,14 @@ class SectionController extends AbstractController
 		// For attachments
 		if ($form->isSubmitted() && $form->isValid()) {
 
-			// getting highest current id of project // TODO: Make it more simple
-			$query = $this->doctrine->getManager()->createQuery(
-				'SELECT MAX(s.sorting)
-				FROM App\Entity\Section s'
-			);
-			$sorting = $query->getResult()[0][1];
+            $sorting = $this->doctrine->getManager()
+                ->createQueryBuilder()
+                ->select('MAX(s.sorting)')
+                ->from(Section::class, 's')
+                ->getQuery()
+                ->getSingleScalarResult();
 
-			// $form->getData() holds the submitted values
+            // $form->getData() holds the submitted values
 			$section = $form->getData();
 
 			// ... perform some action, such as saving the task to the database
@@ -61,7 +60,7 @@ class SectionController extends AbstractController
 			$entityManager->persist($section);
 			$entityManager->flush();
 			$this->addFlash('success', 'Successfully created new section');
-			return $this->redirectToRoute('edit_section', ['id' => $section->getId()]);
+			return $this->redirectToRoute('edit_section', ['section' => $section->getId()]);
 		}
 		$contents = $section->getContent();
 		return $this->render('form/form_section.html.twig', [
@@ -71,12 +70,12 @@ class SectionController extends AbstractController
 	}
 
 	/**
-	 * @Route("/editSection-{id}", name="edit_section")
+	 * @Route("/editSection-{section}", name="edit_section")
 	 */
-	public function editSection($id, Request $request, Section $section,FileUploader $fileUploader, SluggerInterface $slugger) : Response
-	{
-		if (null === $section = $this->doctrine->getRepository(Section::class)->find($id)) {
-			throw $this->createNotFoundException('No Section found for id '.$id);
+    public function editSection(Section $section,Request $request,FileUploader $fileUploader, SluggerInterface $slugger) : Response
+    {
+		if (null === $section = $this->doctrine->getRepository(Section::class)->find($section)) {
+			throw $this->createNotFoundException('No Section found for '.$section);
 		}
 		$upload_dir = $this->getParameter('app.path.section_attachments');
 		$oldContent = new ArrayCollection();
@@ -142,7 +141,7 @@ class SectionController extends AbstractController
 			$entityManager->flush();
 			// FILEUPLOAD END //////////////////////////////////
 			$this->addFlash('success', 'Successfully updated '.$section->getName().' section');
-			return $this->redirectToRoute('edit_section', ['id' => $id]);
+			return $this->redirectToRoute('edit_section', ['section' => $section->getId()]);
 		}
 
 		$contents = $section->getContent();
@@ -153,7 +152,7 @@ class SectionController extends AbstractController
 	}
 
 	/**
-	 * @Route("/deleteSection-{id}", name="delete_section")
+	 * @Route("/deleteSection-{section}", name="delete_section")
 	 * @param Request $request
 	 * @param $id
 	 */

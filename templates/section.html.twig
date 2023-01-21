@@ -6,10 +6,10 @@
         <div class="tooltip">
             <div class="columns has-background-white is-justify-content-center">
                 <div class="column is-narrow">
-                    <a class="button centered mb-6 is-success {{ disabled }}" href="{{ path('edit_section', {'id':section.id}) }}">Edit section</a>
+                    <a class="button centered mb-6 is-success {{ disabled }}" href="{{ path('edit_section', {'section':section.id}) }}">Edit section</a>
                 </div>
                 <div class="column is-narrow">
-                    <a class="button centered mb-6 is-danger {{ disabled }}" href="{{ path('delete_section', {'id':section.id}) }}">Delete section</a>
+                    <a class="button centered mb-6 is-danger {{ disabled }}" href="{{ path('delete_section', {'section':section.id}) }}">Delete section</a>
                 </div>
             </div>
             {% if disabled %}
