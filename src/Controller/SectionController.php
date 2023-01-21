@@ -21,12 +21,14 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SectionController extends AbstractController
 {
-	private $doctrine;
+    private $em;
+    private $sectionRepository;
 
-	public function __construct(ManagerRegistry $doctrine)
-	{
-		$this->doctrine = $doctrine;
-	}
+    public function __construct(EntityManagerInterface $em, SectionRepository $sectionRepository)
+    {
+        $this->em = $em;
+        $this->sectionRepository = $sectionRepository;
+    }
 
 	/**
 	 * @Route("/addSection", name="add_section")
@@ -34,47 +36,32 @@ class SectionController extends AbstractController
 	public function addSection(Request $request) : Response
 	{
 		$section = new Section();
-		$form = $this->createForm(SectionType::class, $section);
-
-
-		$form->handleRequest($request);
-
-		// For attachments
-		if ($form->isSubmitted() && $form->isValid()) {
-
-            $sorting = $this->doctrine->getManager()
-                ->createQueryBuilder()
-                ->select('MAX(s.sorting)')
-                ->from(Section::class, 's')
-                ->getQuery()
-                ->getSingleScalarResult();
-
-            // $form->getData() holds the submitted values
-			$section = $form->getData();
-
-			// ... perform some action, such as saving the task to the database
-			// for example, if Task is a Doctrine entity, save it!
-			$entityManager = $this->doctrine->getManager();
-			$section->setSorting($sorting+1);
-			$section->setDeleted(NULL);
-			$entityManager->persist($section);
-			$entityManager->flush();
-			$this->addFlash('success', 'Successfully created new section');
-			return $this->redirectToRoute('edit_section', ['section' => $section->getId()]);
-		}
-		$contents = $section->getContent();
-		return $this->render('form/form_section.html.twig', [
-			'form' => $form->createView(),
-			'contents' => $contents
-		]);
+        return $this->handleForm($request, $section);
 	}
+
+    private function handleForm(Request $request, Section $section): Response
+    {
+        $form = $this->createForm(SectionType::class, $section);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($section);
+            $this->em->flush();
+            return $this->redirectToRoute('edit_section', ['section' => $section->getId()]);
+        }
+
+        return $this->render('form/form_section.html.twig', [
+            'form' => $form->createView(),
+            'contents' => $section->getContent()
+        ]);
+    }
 
 	/**
 	 * @Route("/editSection-{section}", name="edit_section")
 	 */
     public function editSection(Section $section,Request $request,FileUploader $fileUploader, SluggerInterface $slugger) : Response
     {
-		if (null === $section = $this->doctrine->getRepository(Section::class)->find($section)) {
+		if (null === $section = $this->sectionRepository->find($section)) {
 			throw $this->createNotFoundException('No Section found for '.$section);
 		}
 		$upload_dir = $this->getParameter('app.path.section_attachments');
@@ -88,7 +75,7 @@ class SectionController extends AbstractController
 		$form = $this->createForm(SectionType::class, $section);
 		$form->handleRequest($request);
 
-        $entityManager = $this->doctrine->getManager();
+        $entityManager = $this->em;
 		// For attachments
 		if ($form->isSubmitted() && $form->isValid()) {
 
@@ -156,11 +143,9 @@ class SectionController extends AbstractController
 	 * @param Request $request
 	 * @param $id
 	 */
-	public function deleteSection(Request $request, $id){
-		$entityManager = $this->doctrine->getManager();
-		$section = $this->doctrine->getManager()
-			->getRepository(Section::class)
-			->find($id);
+	public function deleteSection(Request $request, $section){
+		$entityManager = $this->em;
+		$section = $this->sectionRepository->find($section);
 		$section->setDeleted(true);
 		$entityManager->persist($section);
 		$entityManager->flush();
@@ -173,10 +158,10 @@ class SectionController extends AbstractController
 	 */
 	public function deleteAttachment(Request $request, $id) {
 		$upload_dir = $this->getParameter('app.path.section_attachments');
-		$attachment = $this->doctrine->getManager()
+		$attachment = $this->em
 			->getRepository(Attachment::class)
 			->find($id);
-		$entityManager = $this->doctrine->getManager();
+		$entityManager = $this->em;
 		$entityManager->remove($attachment);
 		$entityManager->flush();
 		unlink($upload_dir.'/'.$attachment->getImageFile());
@@ -189,8 +174,8 @@ class SectionController extends AbstractController
 	 * Method({"POST"})
 	 */
 	public function sortAttachments(Request $request,$sorting, $id) {
-		$entityManager = $this->doctrine->getManager();
-		$attachment = $this->doctrine->getManager()
+		$entityManager = $this->em;
+		$attachment = $this->em
 			->getRepository(Attachment::class)
 			->find($id);
 		$attachment->setSorting($sorting);

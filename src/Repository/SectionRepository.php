@@ -19,6 +19,15 @@ class SectionRepository extends ServiceEntityRepository
         parent::__construct($registry, Section::class);
     }
 
+    public function getMaxSortingValue(): int
+    {
+        return (int) $this->createQueryBuilder('s')
+            ->select('MAX(s.sorting)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
     // /**
     //  * @return Section[] Returns an array of Section objects
     //  */
