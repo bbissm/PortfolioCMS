@@ -7,6 +7,8 @@ parameters:
     app.path.hobby_attachments: '%kernel.project_dir%/public/uploads/hobby'
     app.path.project_attachments: '%kernel.project_dir%/public/uploads/project'
     app.path.section_attachments: '%kernel.project_dir%/public/uploads/section'
+    app.RECAPTCHA_SECRET_KEY: '%env(RECAPTCHA_SECRET_KEY)%'
+    app.RECAPTCHA_SITE_KEY: '%env(RECAPTCHA_SITE_KEY)%'
 services:
     # default configuration for services in *this* file
     _defaults:

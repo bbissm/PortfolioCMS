@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Attachment;
 use App\Entity\Hobby;
+use ReCaptcha\ReCaptcha;
 use App\Entity\Project;
 use App\Entity\Section;
 use App\Form\ContactType;
 use ArrayObject;
+use Symfony\Component\Form\FormError;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
@@ -34,12 +36,12 @@ class HomeController extends AbstractController
 	private $mailer;
 	private $doctrine;
 
-	public function __construct(Security $security, MailerInterface $mailer, ManagerRegistry $doctrine)
+    public function __construct(Security $security, MailerInterface $mailer, ManagerRegistry $doctrine)
 	{
 		$this->isAuthenticated = $security->isGranted('ROLE_DEV') || $security->isGranted('ROLE_USER');
 		$this->mailer = $mailer;
 		$this->doctrine = $doctrine;
-	}
+    }
 
 	/**
      * @Route("/", name="homepage")
@@ -61,12 +63,24 @@ class HomeController extends AbstractController
 		$readMe = file_get_contents($this->getParameter('kernel.project_dir').'/DOCS.md');
 
 		// Contactform
-		$form = $this->createForm(ContactType::class);
+        $site_key = $this->getParameter('app.RECAPTCHA_SITE_KEY');
+        $secret_key = $this->getParameter('app.RECAPTCHA_SECRET_KEY');
+        $recaptcha = new ReCaptcha($secret_key);
+        $form = $this->createForm(ContactType::class);
 		$form->handleRequest($request);
-		if ($form->isSubmitted() && $form->isValid()) {
-			$this->sendEmail($form);
-			return $this->redirect($this->generateUrl('homepage').'#contact');
-		}
+        if ($form->isSubmitted() && $form->isValid()) {
+            $captcha = $form->get('captcha')->getData();
+            if(!empty($captcha)) {
+                $resp = $recaptcha->verify($captcha, $_SERVER['REMOTE_ADDR']);
+                if ($resp->isSuccess()) {
+                    $this->sendEmail($form);
+                    return $this->redirect($this->generateUrl('homepage').'#contact');
+                } else {
+                    $form->get('captcha')->addError(new FormError('Captcha is not valid'));
+                    return new Response('Captcha is not valid', 400);
+                }
+            }
+        }
 		// contactform end
 
 		$return = [

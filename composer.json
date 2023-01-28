@@ -12,6 +12,8 @@
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "^2.9",
         "erusev/parsedown": "^1.7",
+        "google/recaptcha": "^1.2",
+        "gregwar/captcha-bundle": "v2.2.0",
         "sensio/framework-extra-bundle": "^6.1",
         "symfony/console": "6.2.*",
         "symfony/dependency-injection": "6.2.*",
