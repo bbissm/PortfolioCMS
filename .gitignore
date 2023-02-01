@@ -56,3 +56,4 @@ SYMFONY.md
 build
 GOLIVE.md
 package-lock.json
+deployment.json
